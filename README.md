@@ -34,7 +34,7 @@ This repository contains the codes and data for BioScan-1M datasets project. In 
 The datasets contains RGB images, metadata information and the Barcode DNA indexing of the insects. Three sizes of the dataset created for publication are Small, Medium and Big. Our Small, Medium and Big datasets respectively contain 82728, 200K and 1.2M RGB images of the insects. Due to extreme class inbalances not all orders have sufficient samples for splitting data into Train, Validation and Test sets. 
 
  
-Due to limited space, there are only metadats files of the small dataset and its train, validation and test splits available in dataset folder together with a small set of RGB images.
+Due to limited space, there are only metadata files of the small dataset and its train, validation and test splits available in dataset folder together with a small set of RGB images.
  
 To see statistics of the small dataset run the follwoing:
 ```bash
