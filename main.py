@@ -23,6 +23,7 @@ def make_configurations():
         "dataset_dir": "./dataset",       # root directory of the dataset, where images and dataframe files are saved
         "dataset_name": "small_dataset",  # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "data_type": "order",
+        "data_format": "hdf5",
         "exp_name": "bioscan_order_classification",
         "download": False,
         "make_split": False,
@@ -61,6 +62,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default=config["dataset_name"], help='name of the experiment', required=False)
     parser.add_argument('--dataset_name', type=str, default=config["dataset_name"], help='name of the dataset', required=False)
     parser.add_argument('--data_type', type=str, default=config["data_type"], help='type of the data', required=False)
+    parser.add_argument('--data_format', type=str, default=config["data_format"], help='format of the dataset', required=False)
     parser.add_argument('--log', type=str, default="runs", help='Path to the log file', required=False)
     parser.add_argument('--download_dir', type=str, help='Directory to download our dataset',
                         default=config["download_dir"], required=False)

@@ -5,7 +5,7 @@ import os
 import shutil
 import pandas as pd
 from BioScanDataSet import BioScan
-from utils import extract_tar, move_to_dir, make_tar, make_tsv, copy_to_dir
+from utils import extract_tar, move_to_dir, make_tar, make_tsv, copy_to_dir, make_hdf5
 
 
 class BioScanSplit(Dataset):
@@ -117,6 +117,21 @@ class BioScanSplit(Dataset):
         make_tsv(validation_df, name=f"{dataset_name}_validation_metadata.tsv", path=f"{data_dir}/{dataset_name}/")
         make_tsv(test_df, name=f"{dataset_name}_test_metadata.tsv", path=f"{data_dir}/{dataset_name}/")
 
+    def save_hdf5(self, dataset_name='small_dataset', data_dir=None, save_hdf5=False):
+
+        """
+        This function is written to save dataset images in HDF5 format, which is more efficient to handle the large-size
+        datasets.
+        :param dataset_name: Name of the dataset
+        :param data_dir: Path to the dataset directory.
+        :return: hdf5 saved file.
+        """
+
+        if not save_hdf5:
+            return
+
+        make_hdf5(dataset_name=dataset_name, path=data_dir)
+
     def save_images(self, image_tar, image_list, train_indexes, validation_indexes, test_indexes,
                     dataset_name="small_dataset", data_dir=None, save_split_images=False):
 
@@ -205,6 +220,10 @@ def make_split(args):
     # Split the whole dataset into Train, Validation and Test sets: Save Split Metadata (.tsv)
     data_split.save_split_metadata(dataset.df, tr_indexes, val_indexes, ts_indexes,
                                    dataset_name=args['dataset_name'], data_dir=args['dataset_dir'])
+
+    # Save dataset in HDF5 format
+    data_split.save_hdf5(dataset_name=args['dataset_name'], data_dir=args['dataset_dir'], save_hdf5=False)
+
 
 
 

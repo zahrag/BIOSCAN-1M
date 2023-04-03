@@ -6,6 +6,10 @@ import numpy as np
 import tarfile
 import os
 import shutil
+import pandas as pd
+from tqdm import tqdm
+import h5py
+
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -205,8 +209,22 @@ def save_configs(datetime, config, log_dir=None):
 
     info = f"Configurations of Experiment Run on {datetime}\n"
     for item in config.keys():
-        print(item)
         info += f'{item}:{config[item]}\n'
 
     with open(log_dir + f"{config['exp_name']}_configs.txt", "w") as fp:
         fp.write(info)
+
+
+def make_hdf5(dataset_name='small_dataset', path=None):
+
+    dataset_dir = f"{path}/{dataset_name}"
+    hdf5_file = h5py.File(f"{dataset_dir}/{dataset_name}_hdf5", 'w')
+    df = pd.read_table(f"{dataset_dir}/{dataset_name}_metadata.tsv")
+    list_of_dict = df.to_dict(orient='records')
+    for image_data in tqdm(list_of_dict):
+        orgpic_id = image_data['orgpic_id']
+        image_dir = f"{dataset_dir}/{dataset_name}_images/{image_data['image_file']}"
+        with open(image_dir, 'rb') as img_f:
+            binary_data = img_f.read()
+        binary_data_np = np.asarray(binary_data)
+        hdf5_file.create_dataset(str(orgpic_id), data=binary_data_np)
