@@ -25,11 +25,11 @@ $${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \
   
 $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
-###### <h3> Overview
 
 ###### <h4> Authors: ("Zahra Gharaee" <zahra.gharaee@uwaterloo.ca>) &  ("Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca>) & ("Ming Gong" <ming_gong@sfu.ca>)
 
- 
+
+###### <h3> Overview
 This repository contains the codes and data for BioScan-1M datasets project. In this project, three datasets of different number of images are published. The dataset files can be downloaded throuh **link**. We also conducted "Order" level clasification experiments based on RGB images of the insects using basline method inspired by [PlantNet-300K](https://github.com/plantnet/PlantNet-300K/edit/main/README.md) and a transformer based approach the **ViT** as well. 
  
  
