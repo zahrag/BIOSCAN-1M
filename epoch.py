@@ -82,11 +82,11 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
 
             # Predicted labels as output of the model
             batch_output_val = model(batch_x_val)
-            print(f"Batch {batch_idx} Output:{batch_output_val}")
+            # print(f"Batch {batch_idx} Output:{batch_output_val}")
 
             # Probability vector of all classes
             batch_proba = F.softmax(batch_output_val)
-            print(f"Batch {batch_idx} Probability:{batch_proba}")
+            # print(f"Batch {batch_idx} Probability:{batch_proba}")
 
             # Store batch probas and labels
             list_val_proba.append(batch_proba)

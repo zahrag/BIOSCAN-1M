@@ -86,14 +86,21 @@ def get_dataloader(args):
     if not args['loader']:
         return [], [], [], []
 
-    transform_train = transforms.Compose([transforms.Resize(size=args['image_size']), transforms.RandomCrop(size=args['crop_size']),
+    transform_train = transforms.Compose([transforms.Resize(size=args['image_size']),
+                                          transforms.RandomCrop(size=args['crop_size']),
+                                          transforms.RandomHorizontalFlip(),
                                           transforms.ToTensor()])
 
-    transform_test = transforms.Compose([transforms.Resize(size=args['image_size']), transforms.CenterCrop(size=args['crop_size']),
+    transform_val = transforms.Compose([transforms.Resize(size=args['image_size']),
+                                        transforms.CenterCrop(size=args['crop_size']),
+                                        transforms.ToTensor()])
+
+    transform_test = transforms.Compose([transforms.Resize(size=args['image_size']),
+                                         transforms.CenterCrop(size=args['crop_size']),
                                          transforms.ToTensor()])
 
     train_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_train, split='train')
-    val_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_train, split='validation')
+    val_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_val, split='validation')
     test_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_test, split='test')
 
     train_dataloader = DataLoader(train_dataset, batch_size=args['batch_size'], shuffle=True, num_workers=args['num_workers'])
