@@ -5,6 +5,7 @@ from bioscan_datadownload import download_data_files
 from bioscan_datasplit import make_split
 from bioscan_dataloader import get_dataloader
 from train import train
+from test import test
 from utils import save_configs, make_directory
 import torch
 import os
@@ -19,36 +20,38 @@ def make_configurations():
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
 
     config = {
-        "download_dir": "",               # where to download data files
-        "dataset_dir": "./dataset",       # root directory of the dataset, where images and dataframe files are saved
+        "download_dir": "",  # where to download data files
+        "dataset_dir": "",  # root directory of the dataset, where images and dataframe files are saved
+        "results_dir": "",
         "dataset_name": "small_dataset",  # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "data_type": "order",
         "data_format": "hdf5",
-        "exp_name": "bioscan_order_classification",
+        "exp_name": "bioscan_classification",
         "download": False,
         "make_split": False,
-        "print_statistics": False,
-        "dataloader": False,
-        "train": False,
+        "print_statistics": True,
+        "dataloader": True,
+        "train": True,
         "test": False,
         "batch_size": 32,
         "image_size": 256,
         "crop_size": 224,
         "num_workers": 4,
         "seed": 1,
-        "n_epochs": 3,
+        "n_epochs": 10,
         "epoch_decay": [20, 25],
-        "mu": 0.0001,
         "momentum": 0.9,
+        "mu": 0.0001,
         "lr": 0.01,
         "k": [1, 3, 5, 10],
         "model": "resnet50",
     }
 
-    save_dir = os.path.join(os.getcwd(), 'results', config['dataset_name'])
+    save_dir = os.path.join(os.getcwd(), 'results')
+    save_dir += "/{timestamp:s}/".format(timestamp=timestamp)
     make_directory(save_dir)
     save_configs(timestamp, config, log_dir=save_dir)
-
+    args["results_dir"] = save_dir
     return config
 
 
@@ -58,16 +61,23 @@ if __name__ == '__main__':
     # #### get configurations ######
     config = make_configurations()
 
+    # ################################# HYPER_PARAMETER SETTINGS ##############################################
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     # #### Path Settings ######
-    parser.add_argument('--exp_name', type=str, default=config["dataset_name"], help='name of the experiment', required=False)
-    parser.add_argument('--dataset_name', type=str, default=config["dataset_name"], help='name of the dataset', required=False)
+    parser.add_argument('--exp_name', type=str, default=config["dataset_name"], help='name of the experiment',
+                        required=False)
+    parser.add_argument('--dataset_name', type=str, default=config["dataset_name"], help='name of the dataset',
+                        required=False)
     parser.add_argument('--data_type', type=str, default=config["data_type"], help='type of the data', required=False)
-    parser.add_argument('--data_format', type=str, default=config["data_format"], help='format of the dataset', required=False)
+    parser.add_argument('--data_format', type=str, default=config["data_format"], help='format of the dataset',
+                        required=False)
     parser.add_argument('--log', type=str, default="runs", help='Path to the log file', required=False)
     parser.add_argument('--download_dir', type=str, help='Directory to download our dataset',
                         default=config["download_dir"], required=False)
-    parser.add_argument('--dataset_dir', type=str, help='Directory of our dataset', default=config["dataset_dir"], required=False)
+    parser.add_argument('--dataset_dir', type=str, help='Directory of our dataset', default=config["dataset_dir"],
+                        required=False)
+    parser.add_argument('--results_dir', type=str, help='Directory to save results', default=config["results_dir"],
+                        required=False)
 
     # #### Condition Settings #####
     parser.add_argument('--download', help='Whether to download from drive?',
@@ -82,13 +92,14 @@ if __name__ == '__main__':
                         default=config["train"], action='store_true')
 
     # #### Training Settings ######
-    parser.add_argument('--seed', type=int, default=config["seed"], help='set the seed for reproducibility', required=False)
+    parser.add_argument('--seed', type=int, default=config["seed"], help='set the seed for reproducibility',
+                        required=False)
     parser.add_argument('--n_epochs', type=int, default=config["n_epochs"], required=False)
     parser.add_argument('--epoch_decay', nargs='+', type=int, default=config["epoch_decay"], required=False)
     parser.add_argument('--mu', type=float, default=config["mu"], help='weight decay parameter', required=False)
     parser.add_argument('--momentum', type=float, default=config["momentum"], help='momentum', required=False)
     parser.add_argument('--lr', type=float, default=config["lr"], help='learning rate to use', required=False)
-    parser.add_argument('--batch_size', type=int, default=config["batch_size"], help='Batch size', required=False)
+    parser.add_argument('--batch_size', type=int, default=config["batch_size"], help='default is 32', required=False)
     parser.add_argument('--pretrained', default=True, action='store_true', required=False)
     parser.add_argument('--image_size', type=int, default=config["image_size"], required=False)
     parser.add_argument('--crop_size', type=int, default=config["crop_size"], required=False)
@@ -98,16 +109,16 @@ if __name__ == '__main__':
 
     # #### Model Settings #####
     parser.add_argument('--model', choices=['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',
-                        'densenet121', 'densenet161', 'densenet169', 'densenet201',
-                        'mobilenet_v2', 'inception_v3', 'alexnet', 'squeezenet',
-                        'shufflenet', 'wide_resnet50_2', 'wide_resnet101_2',
-                        'vgg11', 'mobilenet_v3_large', 'mobilenet_v3_small',
-                        'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
-                        'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
-                        'efficientnet_b4', 'vit_base_patch16_224'],
+                                            'densenet121', 'densenet161', 'densenet169', 'densenet201',
+                                            'mobilenet_v2', 'inception_v3', 'alexnet', 'squeezenet',
+                                            'shufflenet', 'wide_resnet50_2', 'wide_resnet101_2',
+                                            'vgg11', 'mobilenet_v3_large', 'mobilenet_v3_small',
+                                            'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
+                                            'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
+                                            'efficientnet_b4', 'vit_base_patch16_224'],
                         default=config["model"], help='choose the model you want to train on', required=False)
 
-    parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(),)
+    parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )
     args = parser.parse_args()
     dict_args = vars(args)
 
@@ -139,7 +150,10 @@ if __name__ == '__main__':
     train_dataloader, val_dataloader, test_dataloader, dataset_attributes = get_dataloader(dict_args)
 
     # ###################################### TRAINING MODEL ######################################################
-    train(args, train_dataloader, val_dataloader, test_dataloader, dataset_attributes)
+    train(args, train_dataloader, val_dataloader, dataset_attributes)
+
+    # ###################################### TRAINING MODEL ######################################################
+    test(args, test_dataloader, dataset_attributes)
 
 
 
