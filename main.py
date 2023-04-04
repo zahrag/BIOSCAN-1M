@@ -54,7 +54,7 @@ def make_configurations():
     save_dir += "/{timestamp:s}/".format(timestamp=timestamp)
     make_directory(save_dir)
     save_configs(timestamp, config, log_dir=save_dir)
-    args["results_dir"] = save_dir
+    config["results_dir"] = save_dir
 
     return config
 

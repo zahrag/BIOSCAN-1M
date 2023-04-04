@@ -45,7 +45,6 @@ class BioScan(Dataset):
         Insecta_df = [df.iloc[id] for id, cl in enumerate(df['class']) if cl == class_level]
 
         if len(Insecta_df) == len(df):
-            print("\nAll data indexes belong to the Insect class")
             return df
 
         else:
