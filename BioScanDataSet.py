@@ -92,7 +92,7 @@ class BioScan(Dataset):
         self.data_idx_label = self.class_to_ids()
 
         # Get numbered data samples list
-        self.data_list_ids = self.class_to_ids()
+        self.data_list_ids = self.class_list_idx()
 
     def make_data_dict(self):
         """
