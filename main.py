@@ -20,12 +20,12 @@ def make_configurations():
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
 
     config = {
-        "download_dir": "",  # where to download data files
-        "dataset_dir": "",  # root directory of the dataset, where images and dataframe files are saved
-        "results_dir": "",
+        "download_dir": "",               # where to download data files
+        "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
+        "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "small_dataset",  # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "data_type": "order",
-        "data_format": "hdf5",
+        "data_format": "hdf5",            # the file format used (exe., hdf5)
         "exp_name": "bioscan_classification",
         "download": False,
         "make_split": False,
@@ -47,11 +47,15 @@ def make_configurations():
         "model": "resnet50",
     }
 
+    if config["test"]:
+        return config
+
     save_dir = os.path.join(os.getcwd(), 'results')
     save_dir += "/{timestamp:s}/".format(timestamp=timestamp)
     make_directory(save_dir)
     save_configs(timestamp, config, log_dir=save_dir)
     args["results_dir"] = save_dir
+
     return config
 
 
