@@ -30,7 +30,7 @@ def train(args, train_loader, val_loader, test_loader, dataset_attributes):
         model.cuda()
         criteria.cuda()
 
-    optimizer = SGD(model.parameters(), lr=args.lr, momentum=0.9, weight_decay=args.mu, nesterov=True)
+    optimizer = SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.mu, nesterov=True)
 
     # Containers for storing metrics over epochs
     loss_train, acc_train, topk_acc_train = [], [], []

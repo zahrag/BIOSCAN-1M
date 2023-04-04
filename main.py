@@ -39,6 +39,7 @@ def make_configurations():
         "n_epochs": 3,
         "epoch_decay": [20, 25],
         "mu": 0.0001,
+        "momentum": 0.9,
         "lr": 0.01,
         "k": [1, 3, 5, 10],
         "model": "resnet50",
@@ -85,8 +86,9 @@ if __name__ == '__main__':
     parser.add_argument('--n_epochs', type=int, default=config["n_epochs"], required=False)
     parser.add_argument('--epoch_decay', nargs='+', type=int, default=config["epoch_decay"], required=False)
     parser.add_argument('--mu', type=float, default=config["mu"], help='weight decay parameter', required=False)
+    parser.add_argument('--momentum', type=float, default=config["momentum"], help='momentum', required=False)
     parser.add_argument('--lr', type=float, default=config["lr"], help='learning rate to use', required=False)
-    parser.add_argument('--batch_size', type=int, default=config["batch_size"], help='default is 32', required=False)
+    parser.add_argument('--batch_size', type=int, default=config["batch_size"], help='Batch size', required=False)
     parser.add_argument('--pretrained', default=True, action='store_true', required=False)
     parser.add_argument('--image_size', type=int, default=config["image_size"], required=False)
     parser.add_argument('--crop_size', type=int, default=config["crop_size"], required=False)
