@@ -9,6 +9,8 @@ from collections import defaultdict
 
 def train_epoch(model, optimizer, train_loader, criteria, loss_train, acc_train, topk_acc_train, list_k, n_train, use_gpu):
     """Single train epoch pass. At the end of the epoch, updates the lists loss_train, acc_train and topk_acc_train"""
+
+    print("-------------- TRAIN ---------------")
     model.train()
     # Initialize variables
     loss_epoch_train = 0
@@ -23,10 +25,7 @@ def train_epoch(model, optimizer, train_loader, criteria, loss_train, acc_train,
         optimizer.zero_grad()
         batch_output_train = model(batch_x_train)
 
-        # print("batch_output_train", batch_output_train)
-        # print("batch_y_train", batch_y_train)
         loss_batch_train = criteria(batch_output_train, batch_y_train)
-        # print("Loss Batch Train", loss_batch_train)
         loss_epoch_train += loss_batch_train.item()
         loss_batch_train.backward()
         optimizer.step()
@@ -107,10 +106,6 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
                 update_correct_per_class_topk(batch_proba, batch_y_val, class_acc_dict['class_topk_acc'][k], k)
 
         # Get probas and labels for the entire validation set
-        # list_val_proba: tensor of size (num_batch,num_class)
-        # val_probas: tensor of size (num_batch*num_class, 1) probability vectors corresponding to the
-        # output predictions for each validation sample input are concatenated
-
         val_probas = torch.cat(list_val_proba)
         val_labels = torch.cat(list_val_labels)
 
@@ -120,10 +115,6 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         for k in list_k:
             # Computes threshold for every k and count nb of correctly classifier examples in the avg-k sense (globally and for each class)
 
-            # n_val: number of validation samples (100), k: 1, 3, 5, 7
-            # K=1 --- (sorted_probability[99]+sorted_probability[100])/2
-            # K=3 --- (sorted_probability[299]+sorted_probability[300])/2
-            # K=5 --- (sorted_probability[499]+sorted_probability[500])/2
             lmbda_val[k] = 0.5 * (sorted_probas[n_val * k - 1] + sorted_probas[n_val * k])
 
             n_correct_avgk_val[k] += count_correct_avgk(probas=val_probas, labels=val_labels, lmbda=lmbda_val[k]).item()
@@ -157,7 +148,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
 
 def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_attributes):
 
-    print()
+    print("-------------- TEST ---------------")
     model.eval()
     with torch.no_grad():
         n_test = dataset_attributes['n_test']
