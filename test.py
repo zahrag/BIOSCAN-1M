@@ -16,7 +16,7 @@ def test(args, test_loader, dataset_attributes):
     set_seed(args, use_gpu=torch.cuda.is_available())
 
     results = []
-    with (open(f'{args.results_dir}/small_dataset_train_val.pkl', "rb")) as openfile:
+    with (open(f'{args.results_dir}/{args.exp_name}_train_val.pkl', "rb")) as openfile:
         while True:
             try:
                 results.append(pickle.load(openfile))
@@ -43,7 +43,7 @@ def test(args, test_loader, dataset_attributes):
                                 'class_acc_dict': class_acc_test},
                'params': args.__dict__}
 
-    with open(f'{args.results_dir}/small_dataset_test.pkl', 'wb') as f:
+    with open(f'{args.results_dir}/{args.exp_name}_test.pkl', 'wb') as f:
         pickle.dump(results, f)
 
 
