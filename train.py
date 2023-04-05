@@ -104,7 +104,7 @@ def train(args, train_loader, val_loader, dataset_attributes):
                'lmbda_best_acc': lmbda_best_acc,
                'params': args.__dict__}
 
-    with open(os.path.join(save_dir, save_name + 'train_val.pkl'), 'wb') as f:
+    with open(os.path.join(save_dir, save_name + '_train_val.pkl'), 'wb') as f:
         pickle.dump(results, f)
 
     writer.close()

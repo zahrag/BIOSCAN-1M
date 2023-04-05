@@ -148,7 +148,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
 
 def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_attributes):
 
-    print("-------------- TEST ---------------")
+    print("\n-------------- TEST ---------------")
     model.eval()
     with torch.no_grad():
         n_test = dataset_attributes['n_test']

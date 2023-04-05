@@ -94,6 +94,8 @@ if __name__ == '__main__':
                         default=config["dataloader"], action='store_true')
     parser.add_argument('--train', help='Whether to train the model?',
                         default=config["train"], action='store_true')
+    parser.add_argument('--test', help='Whether to test the model?',
+                        default=config["test"], action='store_true')
 
     # #### Training Settings ######
     parser.add_argument('--seed', type=int, default=config["seed"], help='set the seed for reproducibility',
@@ -156,7 +158,7 @@ if __name__ == '__main__':
     # ###################################### TRAINING MODEL ######################################################
     train(args, train_dataloader, val_dataloader, dataset_attributes)
 
-    # ###################################### TRAINING MODEL ######################################################
+    # ###################################### TESTING MODEL ######################################################
     test(args, test_dataloader, dataset_attributes)
 
 
