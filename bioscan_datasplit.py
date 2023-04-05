@@ -143,11 +143,11 @@ class BioScanSplit(Dataset):
 
         make_hdf5(dataset_name=dataset_name, path=data_dir)
 
-    def save_images(self, image_tar, image_list, train_indexes, validation_indexes, test_indexes,
+    def save_images(self, image_list, train_indexes, validation_indexes, test_indexes,
                     dataset_name="small_dataset", data_dir=None, save_split_images=False):
 
         """
-            This function saves images (.jpg) for train, validation and test sets if requested.
+            This function saves images (.jpg) for train, validation and test sets.
             """
 
         if not save_split_images:
@@ -157,46 +157,34 @@ class BioScanSplit(Dataset):
                                                                              train_indexes, validation_indexes,
                                                                              test_indexes)
 
+        image_path = f"{data_dir}/{dataset_name}/{dataset_name}_images"
+
         print("\nSet split directories to save train, validation and test images ...\n")
         train_dir = f"{data_dir}/{dataset_name}/{dataset_name}_train_images"
         validation_dir = f"{data_dir}/{dataset_name}/{dataset_name}_validation_images"
         test_dir = f"{data_dir}/{dataset_name}/{dataset_name}_test_images"
 
-        image_tar_names = []
-        cnt = 0
-        for tar in image_tar:
-            if tar not in image_tar_names:
-                image_tar_names.append(tar)
-                cnt += 1
+        imgs = [image for image in os.listdir(image_path)]
 
-                print("\nSet temporary directory to store images ...\n")
-                tmp_path = f"{data_dir}/tmp/"
+        not_sorted = 0
+        for id, img in enumerate(imgs):
+            if img in train_images:
+                print(f"Train ---- {img} found in image path ----")
+                move_to_dir(source=f"{image_path}{img}", destination=train_dir)
 
-                print(f"Image-Tar-File-{cnt}: {tar} is extracting ...")
-                extract_tar(tar_file=f'{data_dir}/{tar}', path=tmp_path)
-                imgs = [image for image in os.listdir(tmp_path)]
+            elif img in validation_images:
+                print(f"Validation ---- {img} found in image path ----")
+                move_to_dir(source=f"{image_path}{img}", destination=validation_dir)
 
-                not_sorted = 0
-                for id, img in enumerate(imgs):
-                    if img in train_images:
-                        print(f"Train ---- {img} found in {tar} ----")
-                        copy_to_dir(source=f"{tmp_path}{img}", destination=train_dir)
+            elif img in test_images:
+                print(f"Test ---- {img} found in image path ----")
+                move_to_dir(source=f"{image_path}{img}", destination=test_dir)
 
-                    elif img in validation_images:
-                        print(f"Validation ---- {img} found in {tar} ----")
-                        copy_to_dir(source=f"{tmp_path}{img}", destination=validation_dir)
+            else:
+                not_sorted += 1
+                # print(f"Image {img} is not sorted in any split sets! ")
 
-                    elif img in test_images:
-                        print(f"Test ---- {img} found in {tar} ----")
-                        copy_to_dir(source=f"{tmp_path}{img}", destination=test_dir)
-
-                    else:
-                        not_sorted += 1
-                        # print(f"Image {img} is not sorted in any split sets! ")
-
-                print(f"\n Total of {not_sorted} images are not in any split set")
-                print("\n Remove temporary path ...")
-                shutil.rmtree(tmp_path)
+        print(f"\n Total of {not_sorted} images are not in any split set")
 
         print("\nCreate tar folder of Train set ...")
         make_tar(name=f"{dataset_name}_train_images.tar", path=train_dir)

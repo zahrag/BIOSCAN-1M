@@ -4,46 +4,76 @@ from torch.utils.data import Dataset
 
 
 class BioScan(Dataset):
-
     def __init__(self):
        """
            This class handles getting, setting and showing data statistics ...
            """
 
     def get_statistics(self, metadata_dir):
-       """
+        """
            This function sets data attributes read from metadata file of the dataset.
            """
 
-       self.metadata_dir = metadata_dir
-       self.df = pd.read_csv(self.metadata_dir, sep='\t')
-       self.df = self.get_class_insects(self.df, class_level="Insecta")
-       self.processid_list = self.df['processid'].to_list()
-       self.phylum_list = self.df['phylum'].to_list()
-       self.class_list = self.df['class'].to_list()
-       self.order_list = self.df['order'].to_list()
-       self.family_list = self.df['family'].to_list()
-       self.subfamily_list = self.df['subfamily'].to_list()
-       self.genus_list = self.df['genus'].to_list()
-       self.species_list = self.df['species'].to_list()
-       self.uri_list = self.df['uri'].to_list()
-       self.sampleid_list = self.df['sampleid'].to_list()
-       self.image_names = self.df['image_file'].to_list()
-       self.image_tar = self.df['image_tar'].to_list()
-       self.index = self.df.index
+        self.metadata_dir = metadata_dir
+        self.df = pd.read_csv(self.metadata_dir, sep='\t')
+        self.df = self.get_class_insects(self.df, class_level="Insecta", check=False)
+        self.index = self.df.index.to_list()
+        self.df_categories = self.df.keys()
+        print(f"\nMetadata categories extracted from Dataframe are:\n{self.df_categories.to_list()}\n")
+
+        # Biological Taxonomy
+        if 'phylum' in self.df_categories:
+            self.phylum_list = self.df['phylum'].to_list()
+        if 'class' in self.df_categories:
+            self.class_list = self.df['class'].to_list()
+        if 'order' in self.df_categories:
+            self.order_list = self.df['order'].to_list()
+        if 'family' in self.df_categories:
+            self.family_list = self.df['family'].to_list()
+        if 'subfamily' in self.df_categories:
+            self.subfamily_list = self.df['subfamily'].to_list()
+        if 'genus' in self.df_categories:
+            self.genus_list = self.df['genus'].to_list()
+        if 'species' in self.df_categories:
+            self.species_list = self.df['species'].to_list()
+        if 'subspecies' in self.df_categories:
+           self.subspecies_list = self.df['subspecies'].to_list()
+        if 'tribe' in self.df_categories:
+           self.tribes_list = self.df['tribe'].to_list()
+        if 'name' in self.df_categories:
+            self.names = self.df['name'].to_list()
+
+        # Barcode and data Indexing
+        if 'nucraw' in self.df_categories:
+           self.barcods_list = self.df['nucraw'].to_list()
+        if 'processid' in self.df_categories:
+            self.processid_list = self.df['processid'].to_list()
+        if 'sampleid' in self.df_categories:
+            self.sampleid_list = self.df['sampleid'].to_list()
+        if 'uri' in self.df_categories:
+            self.uri_list = self.df['uri'].to_list()
+
+        # Image Indexes
+        if 'image_tar' in self.df_categories:
+           self.image_tar = self.df['image_tar'].to_list()
+        if 'image_file' in self.df_categories:
+           self.image_names = self.df['image_file'].to_list()
+        else:
+           self.image_names = self.df['sampleid'].to_list()
 
     def __len__(self):
-        return len(self.img_names)
+        return len(self.index)
 
-    def get_class_insects(self, df, class_level="Insecta"):
-
+    def get_class_insects(self, df, class_level="Insecta", check=False):
         """
             This function creates Dataframe of the Insect class only.
             :return: Insect Dataframe
             """
 
-        Insecta_df = [df.iloc[id] for id, cl in enumerate(df['class']) if cl == class_level]
+        if not check:
+            return df
 
+        Insecta_df = [df.iloc[id] for id, cl in enumerate(df['class']) if cl == class_level]
         if len(Insecta_df) == len(df):
             return df
 
@@ -56,7 +86,6 @@ class BioScan(Dataset):
 
     def set_statistics(self, data_type="order", metadata_dir=None):
         """
-
         :param data_type: Type of insect attributes used for processing. There are 7 biological categories defined
         in the dataset, which can be utilized to classify an insect including: "Order", "Phylum", "Class", "Family",
         "Subfamily", "Genus", and "Species".
@@ -69,7 +98,7 @@ class BioScan(Dataset):
 
         self.get_statistics(metadata_dir)
 
-        # Get data list
+        # Get data list as one of the Biological Taxonomy
         if data_type == "order":
             self.data_list = self.order_list
         elif data_type == "phylum":
@@ -84,6 +113,10 @@ class BioScan(Dataset):
             self.data_list = self.genus_list
         elif data_type == "species":
             self.data_list = self.species_list
+        elif data_type == "subspecies":
+            self.data_list = self.subspecies_list
+        elif data_type == "tribe":
+            self.data_list = self.tribes_list
 
         # Get the data dictionary
         self.data_dict, self.n_samples_per_class = self.make_data_dict()
@@ -103,7 +136,7 @@ class BioScan(Dataset):
         data_dict = {}
         n_samples_per_class = []
         data_names = []
-        for data in self.data_list:
+        for cnt, data in enumerate(self.data_list):
             if data not in data_names:
                 data_names.append(data)
         for name in data_names:
@@ -114,7 +147,6 @@ class BioScan(Dataset):
         return data_dict, n_samples_per_class
 
     def class_to_ids(self):
-
         """
         This function create index labels (order to numbered labels).
         :return:
@@ -126,7 +158,6 @@ class BioScan(Dataset):
         return data_idx_label
 
     def class_list_idx(self):
-
         """
         This function create data list of numbered labels.
         :return:
@@ -139,7 +170,7 @@ class BioScan(Dataset):
         return data_list_ids
 
 
-def show_statistics(data_type="order", dataset_name="Original", metadata_dir=None, show=False):
+def show_statistics(data_type="order", dataset_name="large_dataset", metadata_dir=None, show=False):
     """
          This function shows data statistics from metadata file of the dataset.
          """
