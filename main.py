@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     # #### Path Settings ######
-    parser.add_argument('--exp_name', type=str, default=config["dataset_name"], help='name of the experiment',
+    parser.add_argument('--exp_name', type=str, default=config["exp_name"], help='name of the experiment',
                         required=False)
     parser.add_argument('--dataset_name', type=str, default=config["dataset_name"], help='name of the dataset',
                         required=False)

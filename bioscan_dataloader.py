@@ -10,7 +10,7 @@ import h5py
 
 class BioScanLoader(Dataset):
 
-    def __init__(self, args, file_format=None, transform=None, split=None):
+    def __init__(self, args, transform=None, split=None):
 
         """
         This function created dataloader.
@@ -22,7 +22,7 @@ class BioScanLoader(Dataset):
         """
 
         self.split = split
-        self.data_format = file_format
+        self.data_format = args['data_format']
         self.transform = transform
         self.image_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_images/"
         self.metadata_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{split}_metadata.tsv"
@@ -86,26 +86,29 @@ def get_dataloader(args):
     if not args['loader']:
         return [], [], [], []
 
+    # ### Train ### #
     transform_train = transforms.Compose([transforms.Resize(size=args['image_size']),
                                           transforms.RandomCrop(size=args['crop_size']),
                                           transforms.RandomHorizontalFlip(),
                                           transforms.ToTensor()])
 
+    train_dataset = BioScanLoader(args, transform=transform_train, split='train')
+    train_dataloader = DataLoader(train_dataset, batch_size=args['batch_size'], shuffle=True,
+                                  num_workers=args['num_workers'])
+
+    # ### Validation ### #
     transform_val = transforms.Compose([transforms.Resize(size=args['image_size']),
                                         transforms.CenterCrop(size=args['crop_size']),
                                         transforms.ToTensor()])
 
-    transform_test = transforms.Compose([transforms.Resize(size=args['image_size']),
-                                         transforms.CenterCrop(size=args['crop_size']),
-                                         transforms.ToTensor()])
+    val_dataset = BioScanLoader(args, transform=transform_val, split='validation')
+    validation_dataloader = DataLoader(val_dataset, batch_size=args['batch_size'], shuffle=True,
+                                       num_workers=args['num_workers'])
 
-    train_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_train, split='train')
-    val_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_val, split='validation')
-    test_dataset = BioScanLoader(args, file_format=args['data_format'], transform=transform_test, split='test')
-
-    train_dataloader = DataLoader(train_dataset, batch_size=args['batch_size'], shuffle=True, num_workers=args['num_workers'])
-    validation_dataloader = DataLoader(val_dataset, batch_size=args['batch_size'], shuffle=True, num_workers=args['num_workers'])
-    test_dataloader = DataLoader(val_dataset, batch_size=args['batch_size'], shuffle=True, num_workers=args['num_workers'])
+    # ### Test ### #
+    test_dataset = BioScanLoader(args, transform=transform_val, split='test')
+    test_dataloader = DataLoader(test_dataset, batch_size=args['batch_size'], shuffle=False,
+                                 num_workers=args['num_workers'])
 
     dataset_attributes = {'n_train': train_dataset.number_of_samples,
                           'n_val': val_dataset.number_of_samples,
