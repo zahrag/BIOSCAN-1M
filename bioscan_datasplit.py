@@ -49,14 +49,25 @@ class BioScanSplit(Dataset):
         val_set = []
         ts_set = []
         for cnt, key in enumerate(data_dict.keys()):
-            n_sample = len(data_dict[key])
             samples = data_dict[key]
+            n_sample = len(samples)
             random.shuffle(samples)
-            n_tr_samples = int(tr_perc * n_sample)
-            n_val_samples = int(val_perc * n_sample)
-            n_ts_samples = int(ts_perc * n_sample)
+            n_tr_samples = int(round(tr_perc * n_sample))
+            n_val_samples = int(round(val_perc * n_sample))
+            n_ts_samples = int(round(ts_perc * n_sample))
 
-            if n_tr_samples != 0 and n_val_samples != 0 and n_ts_samples != 0:
+            if n_sample < 6 and n_sample > 2:
+                tr_set.append([samples[0]])
+                val_set.append([samples[1]])
+                if n_sample == 3:
+                    ts_set.append([samples[2]])
+                else:
+                    ts_set.append(samples[2:])
+
+            elif n_tr_samples != 0 and n_val_samples != 0 and n_ts_samples != 0:
+                n_diff = n_sample - (n_ts_samples + n_val_samples + n_tr_samples)
+                if n_diff != 0:
+                    n_val_samples += n_diff
                 tr_set.append(samples[:n_tr_samples])
                 val_set.append(samples[n_tr_samples:n_tr_samples + n_val_samples])
                 ts_set.append(samples[-n_ts_samples:])
