@@ -170,15 +170,18 @@ class BioScanSplit(Dataset):
         for id, img in enumerate(imgs):
             if img in train_images:
                 print(f"Train ---- {img} found in image path ----")
-                move_to_dir(source=f"{image_path}{img}", destination=train_dir)
+                # move_to_dir(source=f"{image_path}{img}", destination=train_dir)
+                copy_to_dir(source=f"{image_path}{img}", destination=train_dir)
 
             elif img in validation_images:
                 print(f"Validation ---- {img} found in image path ----")
-                move_to_dir(source=f"{image_path}{img}", destination=validation_dir)
+                # move_to_dir(source=f"{image_path}{img}", destination=validation_dir)
+                copy_to_dir(source=f"{image_path}{img}", destination=validation_dir)
 
             elif img in test_images:
                 print(f"Test ---- {img} found in image path ----")
-                move_to_dir(source=f"{image_path}{img}", destination=test_dir)
+                # move_to_dir(source=f"{image_path}{img}", destination=test_dir)
+                copy_to_dir(source=f"{image_path}{img}", destination=test_dir)
 
             else:
                 not_sorted += 1
