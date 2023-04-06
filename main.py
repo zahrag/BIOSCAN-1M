@@ -6,9 +6,8 @@ from bioscan_datasplit import make_split
 from bioscan_dataloader import get_dataloader
 from train import train
 from test import test
-from utils import save_configs, make_directory
+from utils import make_path_configs
 import torch
-import os
 
 
 def make_configurations():
@@ -32,7 +31,7 @@ def make_configurations():
         "image_dir": "",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
-        "group_level": group_levels_large[2],
+        "group_level": group_levels_large[2],  # Set the Taxonomy group level
         "data_format": "hdf5",            # the file format used (exe., hdf5)
         "exp_name": "",
         "download": False,
@@ -55,14 +54,7 @@ def make_configurations():
         "model": "resnet50",
     }
 
-    if config["test"]:
-        return config
-
-    save_dir = os.path.join(os.getcwd(), 'results')
-    save_dir += "/{timestamp:s}/".format(timestamp=timestamp)
-    make_directory(save_dir)
-    save_configs(timestamp, config, log_dir=save_dir)
-    config["results_dir"] = save_dir
+    config = make_path_configs(config, timestamp)
 
     return config
 

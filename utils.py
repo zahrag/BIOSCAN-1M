@@ -215,6 +215,21 @@ def save_configs(datetime, config, log_dir=None):
         fp.write(info)
 
 
+def make_path_configs(config, timestamp):
+
+    if config["train"]:
+        save_dir = os.path.join(os.getcwd(), 'results')
+        save_dir += "/{timestamp:s}_{dataset:s}_epoch{epoch:d}/".format(timestamp=timestamp,
+                                                                        dataset=config['dataset_name'],
+                                                                        epoch=config["n_epochs"])
+        make_directory(save_dir)
+        save_configs(timestamp, config, log_dir=save_dir)
+        config["results_dir"] = save_dir
+        config["exp_name"] = config["dataset_name"]
+
+    return config
+
+
 def make_hdf5(dataset_name='small_dataset', path=None):
 
     dataset_dir = f"{path}/{dataset_name}"
