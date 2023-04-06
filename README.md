@@ -58,8 +58,7 @@ python main.py --loader --train
 The requirements file used to run experiments is available in the requirement.txt.
   
 ###### <h3> Collaborators
-"Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca>
-"Ming Gong" <ming_gong@sfu.ca>  
+"Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca> & "Ming Gong" <ming_gong@sfu.ca>  
 
  
 
