@@ -23,9 +23,9 @@ class BioScanLoader(Dataset):
         self.split = split
         self.data_format = args['data_format']
         self.transform = transform
-        self.image_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_images/"
+        self.image_dir = args['image_dir']
+        self.hdf5_dir = args['hdf5_dir']
         self.metadata_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{split}_metadata.tsv"
-        self.hdf5_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_hdf5"
 
         self.dataset = BioScan()
         self.dataset.set_statistics(group_level="order", metadata_dir=self.metadata_dir)

@@ -28,6 +28,7 @@ def make_configurations():
     config = {
         "download_dir": "",               # where to download data files
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
+        "hdf5_dir": "",                   # root directory to HDF5 data format
         "image_dir": "",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
@@ -80,6 +81,8 @@ if __name__ == '__main__':
                         default=config["download_dir"], required=False)
     parser.add_argument('--dataset_dir', type=str, help='Directory to our dataset', default=config["dataset_dir"],
                         required=False)
+    parser.add_argument('--hdf5_dir', type=str, help='Directory to our hdf5 data format.',
+                        default=config["hdf5_dir"], required=False)
     parser.add_argument('--image_dir', type=str, help='Directory to our images if different from dataset_dir',
                         default=config["image_dir"], required=False)
     parser.add_argument('--results_dir', type=str, help='Directory to save results', default=config["results_dir"],
