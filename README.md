@@ -26,7 +26,8 @@ $${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \
 $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
 
-###### <h4> Authors: ("Zahra Gharaee" <zahra.gharaee@uwaterloo.ca>) &  ("Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca>) & ("Ming Gong" <ming_gong@sfu.ca>)
+###### <h4> Authors: ("Zahra Gharaee" <zahra.gharaee@uwaterloo.ca>) 
+Contributions from ("Ming Gong" <ming_gong@sfu.ca>) & ("Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca>) 
 
 
 ###### <h3> Overview
