@@ -13,12 +13,12 @@ class BioScanSplit(Dataset):
     def __init__(self, method="regular", train_ratio=0.7, validation_ratio=0.1, test_ratio=0.2):
 
        """
-            This class handles data splitting  ...
-           :param method: which method used to split data?
-           :param train_ratio: percentage of all samples used for training set
-           :param validation_ratio: percentage of all samples used for validation set
-           :param test_ratio: percentage of all samples used for test set
-           """
+       This class handles data splitting  ...
+       :param method: which method used to split data?
+       :param train_ratio: percentage of all samples used for training set.
+       :param validation_ratio: percentage of all samples used for validation set.
+       :param test_ratio: percentage of all samples used for test set.
+       """
 
        self.method = method
        self.train_ratio = train_ratio
@@ -27,10 +27,10 @@ class BioScanSplit(Dataset):
 
     def get_split_ids(self, data_dict):
         """
-            This function splits data into train, validation and test sets.
-            The split is generated per class to address class imbalances,
-            which is based on ratios preset for train, validation and test sets.
-            """
+        This function splits data into train, validation and test sets.
+        The split is generated per class to address class imbalances,
+        which is based on ratios preset for train, validation and test sets.
+        """
 
         print(f"\n\n\t\t\t\t\t\t Data Split \t\t\t\t\t\t")
         tr_perc = self.train_ratio
@@ -43,6 +43,14 @@ class BioScanSplit(Dataset):
         return data_dict_remained, tr_indexes, val_indexes, ts_indexes
 
     def make_regular_split(self, data_dict, tr_perc, val_perc, ts_perc):
+        """
+        This function implements class-based split mechanism.
+        :param data_dict: Data dictionary relates sample indexes to class labels.
+        :param tr_perc: Ratio used for the training data samples.
+        :param val_perc: Ratio used for the validation data samples.
+        :param ts_perc: Ratio used for the test data samples.
+        :return:
+        """
 
         data_dict_remained = {}
         tr_set = []
@@ -84,7 +92,6 @@ class BioScanSplit(Dataset):
         return data_dict_remained, train_indexes, validation_indexes, test_indexes
 
     def get_split_images(self, image_list, train_indexes, validation_indexes, test_indexes):
-
         """
             This function creates lists of image names for train, validation and test sets.
             """
@@ -96,7 +103,6 @@ class BioScanSplit(Dataset):
         return train_images, validation_images, test_images
 
     def get_split_metadata(self, df, train_indexes, validation_indexes, test_indexes):
-
         """
            This function creates dataframe files for train, validation and test sets.
            """
@@ -129,7 +135,6 @@ class BioScanSplit(Dataset):
         make_tsv(test_df, name=f"{dataset_name}_test_metadata.tsv", path=f"{data_dir}/{dataset_name}/")
 
     def save_hdf5(self, dataset_name='small_dataset', data_dir=None, save_hdf5=False):
-
         """
         This function is written to save dataset images in HDF5 format, which is more efficient to handle the large-size
         datasets.

@@ -12,6 +12,7 @@ class BioScan(Dataset):
     def get_statistics(self, metadata_dir):
         """
            This function sets data attributes read from metadata file of the dataset.
+           This includes biological taxonomy information, DNA barcode indexes and RGB image labels.
            """
 
         self.metadata_dir = metadata_dir
@@ -86,13 +87,13 @@ class BioScan(Dataset):
 
     def set_statistics(self, data_type="order", metadata_dir=None):
         """
-        :param data_type: Type of insect attributes used for processing. There are 7 biological categories defined
+        :param data_type: Type of insect attributes used for processing. There are 9 biological categories defined
         in the dataset, which can be utilized to classify an insect including: "Order", "Phylum", "Class", "Family",
-        "Subfamily", "Genus", and "Species".
+        "Subfamily", "Genus", "Tribe", "Species" and "SubSpecies".
         In this research we use only "Insect" data in class level.
         In this research we use "Order" information for classifying insects images.
 
-        :param dataset_name: "Original", "Train", "Validation", "Test"
+        :param dataset_name: "Small", "Medium", "Large", "Train", "Validation", "Test"
         :return:
         """
 
@@ -171,9 +172,10 @@ class BioScan(Dataset):
 
 
 def show_statistics(data_type="order", dataset_name="large_dataset", metadata_dir=None, show=False):
+
     """
-         This function shows data statistics from metadata file of the dataset.
-         """
+     This function shows data statistics from metadata file of the dataset.
+     """
     if not show:
         return
 

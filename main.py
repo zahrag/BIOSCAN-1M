@@ -15,6 +15,9 @@ def make_configurations():
     """
         This function delivers model configurations ...
         If you want to set an argument from terminal then set required=True for it.
+
+        :return: By the start of a training experiment, a folder named by the data and time <YrMoDa_HrMiSe> is created
+        in the result directory which contains configuration .txt file and saved logs of the experiment.
         """
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
@@ -75,10 +78,10 @@ if __name__ == '__main__':
     parser.add_argument('--data_type', type=str, default=config["data_type"], help='type of the data', required=False)
     parser.add_argument('--data_format', type=str, default=config["data_format"], help='format of the dataset',
                         required=False)
-    parser.add_argument('--log', type=str, default="runs", help='Path to the log file', required=False)
+    parser.add_argument('--log', type=str, default="runs", help='Path to the tf files', required=False)
     parser.add_argument('--download_dir', type=str, help='Directory to download our dataset',
                         default=config["download_dir"], required=False)
-    parser.add_argument('--dataset_dir', type=str, help='Directory of our dataset', default=config["dataset_dir"],
+    parser.add_argument('--dataset_dir', type=str, help='Directory to our dataset', default=config["dataset_dir"],
                         required=False)
     parser.add_argument('--results_dir', type=str, help='Directory to save results', default=config["results_dir"],
                         required=False)

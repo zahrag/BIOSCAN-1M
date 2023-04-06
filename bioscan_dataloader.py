@@ -16,7 +16,6 @@ class BioScanLoader(Dataset):
         This function created dataloader.
 
         :param args:
-        :param file_format: The format of dataset.
         :param transform: Transformation
         :param split: "train", "validation", "test"
         """
