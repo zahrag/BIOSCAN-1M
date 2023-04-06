@@ -24,12 +24,14 @@ def make_configurations():
     group_levels_large = ["phylum", "class", "order", "family", "subfamily",
                           "genus", "species", "subspecies", "tribe", "name"]
     group_levels_med_small = group_levels_large[:6]
+    dataset_names = ["small_dataset", "medium_dataset", "large_dataset"]
 
     config = {
         "download_dir": "",               # where to download data files
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
+        "image_dir": "",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
-        "dataset_name": "small_dataset",  # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
+        "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "group_level": group_levels_large[2],
         "data_format": "hdf5",            # the file format used (exe., hdf5)
         "exp_name": "",
@@ -86,6 +88,8 @@ if __name__ == '__main__':
                         default=config["download_dir"], required=False)
     parser.add_argument('--dataset_dir', type=str, help='Directory to our dataset', default=config["dataset_dir"],
                         required=False)
+    parser.add_argument('--image_dir', type=str, help='Directory to our images if different from dataset_dir',
+                        default=config["image_dir"], required=False)
     parser.add_argument('--results_dir', type=str, help='Directory to save results', default=config["results_dir"],
                         required=False)
 
