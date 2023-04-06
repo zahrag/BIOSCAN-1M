@@ -42,7 +42,7 @@ class BioScan(Dataset):
         if 'tribe' in self.df_categories:
            self.tribes_list = self.df['tribe'].to_list()
         if 'name' in self.df_categories:
-            self.names = self.df['name'].to_list()
+            self.names_list = self.df['name'].to_list()
 
         # Barcode and data Indexing
         if 'nucraw' in self.df_categories:
@@ -118,6 +118,8 @@ class BioScan(Dataset):
             self.data_list = self.subspecies_list
         elif data_type == "tribe":
             self.data_list = self.tribes_list
+        elif data_type == "name":
+            self.data_list = self.names_list
 
         # Get the data dictionary
         self.data_dict, self.n_samples_per_class = self.make_data_dict()
@@ -165,7 +167,7 @@ class BioScan(Dataset):
         """
 
         data_list_ids = []
-        for order in self.order_list:
+        for order in self.data_list:
             data_list_ids.append(self.data_idx_label[order])
 
         return data_list_ids

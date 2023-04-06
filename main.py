@@ -21,13 +21,15 @@ def make_configurations():
         """
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
+    data_types_large = ["phylum", "class", "order", "family", "subfamily",
+                        "genus", "species", "subspecies", "tribe", "name"]
 
     config = {
         "download_dir": "",               # where to download data files
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "small_dataset",  # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
-        "data_type": "order",
+        "data_type": data_types_large[2],
         "data_format": "hdf5",            # the file format used (exe., hdf5)
         "exp_name": "bioscan_classification",
         "download": False,
