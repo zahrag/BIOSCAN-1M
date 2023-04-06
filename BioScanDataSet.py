@@ -85,9 +85,9 @@ class BioScan(Dataset):
 
             return Insecta_df
 
-    def set_statistics(self, data_type="order", metadata_dir=None):
+    def set_statistics(self, group_level="order", metadata_dir=None):
         """
-        :param data_type: Type of insect attributes used for processing. There are 9 biological categories defined
+        :param group_level: Group level of insect attributes used for processing. There are 9 biological categories defined
         in the dataset, which can be utilized to classify an insect including: "Order", "Phylum", "Class", "Family",
         "Subfamily", "Genus", "Tribe", "Species" and "SubSpecies".
         In this research we use only "Insect" data in class level.
@@ -100,25 +100,25 @@ class BioScan(Dataset):
         self.get_statistics(metadata_dir)
 
         # Get data list as one of the Biological Taxonomy
-        if data_type == "order":
+        if group_level == "order":
             self.data_list = self.order_list
-        elif data_type == "phylum":
+        elif group_level == "phylum":
             self.data_list = self.phylum_list
-        elif data_type == "class":
+        elif group_level == "class":
             self.data_list = self.class_list
-        elif data_type == "family":
+        elif group_level == "family":
             self.data_list = self.family_list
-        elif data_type == "subfamily":
+        elif group_level == "subfamily":
             self.data_list = self.subfamily_list
-        elif data_type == "genus":
+        elif group_level == "genus":
             self.data_list = self.genus_list
-        elif data_type == "species":
+        elif group_level == "species":
             self.data_list = self.species_list
-        elif data_type == "subspecies":
+        elif group_level == "subspecies":
             self.data_list = self.subspecies_list
-        elif data_type == "tribe":
+        elif group_level == "tribe":
             self.data_list = self.tribes_list
-        elif data_type == "name":
+        elif group_level == "name":
             self.data_list = self.names_list
 
         # Get the data dictionary
@@ -173,7 +173,7 @@ class BioScan(Dataset):
         return data_list_ids
 
 
-def show_statistics(data_type="order", dataset_name="large_dataset", metadata_dir=None, show=False):
+def show_statistics(group_level="order", dataset_name="large_dataset", metadata_dir=None, show=False):
 
     """
      This function shows data statistics from metadata file of the dataset.
@@ -182,11 +182,11 @@ def show_statistics(data_type="order", dataset_name="large_dataset", metadata_di
         return
 
     dataset = BioScan()
-    dataset.set_statistics(data_type=data_type, metadata_dir=metadata_dir)
+    dataset.set_statistics(group_level=group_level, metadata_dir=metadata_dir)
 
-    table = [f"{data_type} Name", "label-ID", "Number of Samples"]
+    table = [f"{group_level} Name", "label-ID", "Number of Samples"]
     print("\n\n\n--------------------------------------------------------------")
-    print(f"\t\t Set:{dataset_name}\t\tType:{data_type} \t\t\t\t")
+    print(f"\t\t Set:{dataset_name}\t\tType:{group_level} \t\t\t\t")
     print("--------------------------------------------------------------")
     keys = dataset.data_dict.keys()
     data_idx_label = {}

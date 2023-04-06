@@ -28,7 +28,7 @@ class BioScanLoader(Dataset):
         self.hdf5_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_hdf5"
 
         self.dataset = BioScan()
-        self.dataset.set_statistics(data_type="order", metadata_dir=self.metadata_dir)
+        self.dataset.set_statistics(group_level="order", metadata_dir=self.metadata_dir)
 
         self.img_names = self.dataset.image_names
         self.order_list = self.dataset.data_list

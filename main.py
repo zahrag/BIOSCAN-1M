@@ -21,17 +21,18 @@ def make_configurations():
         """
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
-    data_types_large = ["phylum", "class", "order", "family", "subfamily",
-                        "genus", "species", "subspecies", "tribe", "name"]
+    group_levels_large = ["phylum", "class", "order", "family", "subfamily",
+                          "genus", "species", "subspecies", "tribe", "name"]
+    group_levels_med_small = group_levels_large[:6]
 
     config = {
         "download_dir": "",               # where to download data files
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "small_dataset",  # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
-        "data_type": data_types_large[2],
+        "group_level": group_levels_large[2],
         "data_format": "hdf5",            # the file format used (exe., hdf5)
-        "exp_name": "bioscan_classification",
+        "exp_name": "",
         "download": False,
         "make_split": False,
         "print_statistics": False,
@@ -77,7 +78,7 @@ if __name__ == '__main__':
                         required=False)
     parser.add_argument('--dataset_name', type=str, default=config["dataset_name"], help='name of the dataset',
                         required=False)
-    parser.add_argument('--data_type', type=str, default=config["data_type"], help='type of the data', required=False)
+    parser.add_argument('--group_level', type=str, default=config["group_level"], help='type of the data', required=False)
     parser.add_argument('--data_format', type=str, default=config["data_format"], help='format of the dataset',
                         required=False)
     parser.add_argument('--log', type=str, default="runs", help='Path to the tf files', required=False)
@@ -137,7 +138,7 @@ if __name__ == '__main__':
     download_data_files(config['download_dir']+"/bioscan_dataset", download=dict_args['download'])
 
     # ################################# PRINT DATASET STATISTICS #################################################
-    show_statistics(data_type=dict_args['data_type'], dataset_name=dict_args['dataset_name'],
+    show_statistics(group_level=dict_args['group_level'], dataset_name=dict_args['dataset_name'],
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
                     show=dict_args['print_statistics'])
 
@@ -145,15 +146,15 @@ if __name__ == '__main__':
     make_split(dict_args)
 
     # ################################# PRINT DATA SPLIT STATISTICS ##############################################
-    show_statistics(data_type=dict_args['data_type'], dataset_name=f"{dict_args['dataset_name']}_train",
+    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_train",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_train_metadata.tsv",
                     show=dict_args['print_statistics'])
 
-    show_statistics(data_type=dict_args['data_type'], dataset_name=f"{dict_args['dataset_name']}_validation",
+    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_validation",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_validation_metadata.tsv",
                     show=dict_args['print_statistics'])
 
-    show_statistics(data_type=dict_args['data_type'], dataset_name=f"{dict_args['dataset_name']}_test",
+    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_test",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_test_metadata.tsv",
                     show=dict_args['print_statistics'])
 

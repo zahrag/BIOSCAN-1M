@@ -213,14 +213,14 @@ def make_split(args):
     data_split = BioScanSplit()
 
     # Get data statistics for the whole dataset
-    dataset.set_statistics(data_type=args['data_type'],
+    dataset.set_statistics(group_level=args['group_level'],
                            metadata_dir=f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_metadata.tsv")
 
     # Split the whole dataset into Train, Validation and Test sets: Get indexes
     data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
 
     # Split the whole dataset into Train, Validation and Test sets: Save RGB images
-    data_split.save_images(dataset.image_tar, dataset.image_names, tr_indexes, val_indexes, ts_indexes,
+    data_split.save_images(dataset.image_names, tr_indexes, val_indexes, ts_indexes,
                            dataset_name=args['dataset_name'], data_dir=args['dataset_dir'],
                            save_split_images=False)
 
