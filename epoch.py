@@ -116,7 +116,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
             sorted_sample_probas, _ = torch.sort(val_probas, dim=1, descending=True)
 
             a = [[] for n in range(sorted_sample_probas.shape[1])]
-            for k in sorted_sample_probas.shape[1]:  # n_class
+            for k in range(sorted_sample_probas.shape[1]):  # n_class
                 a[k] = [sample[k] for sample in sorted_sample_probas]
             sorted_probas = list(itertools.chain(*a))
             sorted_probas = torch.tensor(sorted_probas)
