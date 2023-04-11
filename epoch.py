@@ -113,9 +113,11 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         sorted_probas, _ = torch.sort(flat_val_probas, descending=True)
 
         for k in list_k:
-            # Computes threshold for every k and count nb of correctly classifier examples in the avg-k sense (globally and for each class)
-
-            lmbda_val[k] = 0.5 * (sorted_probas[n_val * k - 1] + sorted_probas[n_val * k])
+            # Computes threshold for every k and count nb of correctly classifier examples in the avg-k sense
+            # (globally and for each class)
+            # Zahra: There seems to be a bug in this part of the code:
+            lmbda_val[k] = 0.5 * (sorted_probas[n_val * (k - 1)] + sorted_probas[n_val * k - 1])
+            # lmbda_val[k] = 0.5 * (sorted_probas[n_val * k - 1] + sorted_probas[n_val * k])
 
             n_correct_avgk_val[k] += count_correct_avgk(probas=val_probas, labels=val_labels, lmbda=lmbda_val[k]).item()
             update_correct_per_class_avgk(val_probas, val_labels, class_acc_dict['class_avgk_acc'][k], lmbda_val[k])
