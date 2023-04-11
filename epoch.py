@@ -121,8 +121,6 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
             sorted_probas = list(itertools.chain(*a))
             sorted_probas = torch.tensor(sorted_probas)
 
-            # sorted_probas = torch.flatten(sorted_sample_probas)  # ((n_batch*batch_size*n_class) , 1)
-
         else:
             val_probas = torch.cat(list_val_proba)
             flat_val_probas = torch.flatten(val_probas)
