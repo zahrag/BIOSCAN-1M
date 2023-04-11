@@ -112,9 +112,8 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         debug = True
         if debug:
             val_probas = torch.cat(list_val_proba)  # ((n_batch*batch_size) , n_class)=(n_sample,n_class)
-            for ind, val_proba_sample in enumerate(val_probas):
-                val_probas[ind], _ = torch.sort(val_proba_sample, descending=True)
-            sorted_probas = torch.flatten(val_probas)  # ((n_batch*batch_size*n_class) , 1)
+            sorted_sample_probas, _ = torch.sort(val_probas, dim=1, descending=True)
+            sorted_probas = torch.flatten(sorted_sample_probas)  # ((n_batch*batch_size*n_class) , 1)
 
         else:
             val_probas = torch.cat(list_val_proba)
