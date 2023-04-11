@@ -5,6 +5,7 @@ from utils import count_correct_topk, count_correct_avgk, update_correct_per_cla
 
 import torch.nn.functional as F
 from collections import defaultdict
+import itertools
 
 
 def train_epoch(model, optimizer, train_loader, criteria, loss_train, acc_train, topk_acc_train, list_k, n_train, use_gpu):
@@ -113,7 +114,13 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         if debug:
             val_probas = torch.cat(list_val_proba)  # ((n_batch*batch_size) , n_class)=(n_sample,n_class)
             sorted_sample_probas, _ = torch.sort(val_probas, dim=1, descending=True)
-            sorted_probas = torch.flatten(sorted_sample_probas)  # ((n_batch*batch_size*n_class) , 1)
+
+            a = [[] for n in range(sorted_sample_probas.shape[1])]
+            for k in sorted_sample_probas.shape[1]:  # n_class
+                a[k] = [sample[k] for sample in sorted_sample_probas]
+            sorted_probas = list(itertools.chain(*a))
+
+            # sorted_probas = torch.flatten(sorted_sample_probas)  # ((n_batch*batch_size*n_class) , 1)
 
         else:
             val_probas = torch.cat(list_val_proba)
