@@ -105,19 +105,30 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
                 n_correct_topk_val[k] += count_correct_topk(scores=batch_output_val, labels=batch_y_val, k=k).item()
                 update_correct_per_class_topk(batch_proba, batch_y_val, class_acc_dict['class_topk_acc'][k], k)
 
+        # ########################
         # Get probas and labels for the entire validation set
-        val_probas = torch.cat(list_val_proba)
-        val_labels = torch.cat(list_val_labels)
+        # list_val_proba: tensor of size (n_batch,batch_size,n_class=Nx32x17)
+        # There seems to be a bug in this part of the code:
+        debug = True
+        if debug:
+            val_probas = torch.cat(list_val_proba)  # ((n_batch*batch_size) , n_class)=(n_sample,n_class)
+            for ind, val_proba_sample in enumerate(val_probas):
+                val_probas[ind], _ = torch.sort(val_proba_sample, descending=True)
+            sorted_probas = torch.flatten(val_probas)  # ((n_batch*batch_size*n_class) , 1)
 
-        flat_val_probas = torch.flatten(val_probas)
-        sorted_probas, _ = torch.sort(flat_val_probas, descending=True)
+        else:
+            val_probas = torch.cat(list_val_proba)
+            flat_val_probas = torch.flatten(val_probas)
+            sorted_probas, _ = torch.sort(flat_val_probas, descending=True)
 
+        val_labels = torch.cat(list_val_labels)   # ((n_batch*batch_size) , 1)
         for k in list_k:
             # Computes threshold for every k and count nb of correctly classifier examples in the avg-k sense
             # (globally and for each class)
-            # Zahra: There seems to be a bug in this part of the code:
-            lmbda_val[k] = 0.5 * (sorted_probas[n_val * (k - 1)] + sorted_probas[n_val * k - 1])
-            # lmbda_val[k] = 0.5 * (sorted_probas[n_val * k - 1] + sorted_probas[n_val * k])
+            if debug:
+                lmbda_val[k] = 0.5 * (sorted_probas[n_val * (k - 1)] + sorted_probas[n_val * k - 1])
+            else:
+                lmbda_val[k] = 0.5 * (sorted_probas[n_val * k - 1] + sorted_probas[n_val * k])
 
             n_correct_avgk_val[k] += count_correct_avgk(probas=val_probas, labels=val_labels, lmbda=lmbda_val[k]).item()
             update_correct_per_class_avgk(val_probas, val_labels, class_acc_dict['class_avgk_acc'][k], lmbda_val[k])
