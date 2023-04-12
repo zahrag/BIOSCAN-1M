@@ -109,9 +109,8 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         # ########################
         # Get probas and labels for the entire validation set
         # list_val_proba: tensor of size (n_batch,batch_size,n_class=Nx32x17)
-        # There seems to be a bug in this part of the code:
-        debug = True
-        if debug:
+        new_app = True
+        if new_app:
             val_probas = torch.cat(list_val_proba)  # ((n_batch*batch_size) , n_class)=(n_sample,n_class)
             sorted_sample_probas, _ = torch.sort(val_probas, dim=1, descending=True)
 
@@ -130,7 +129,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         for k in list_k:
             # Computes threshold for every k and count nb of correctly classifier examples in the avg-k sense
             # (globally and for each class)
-            if debug:
+            if new_app:
                 lmbda_val[k] = 0.5 * (sorted_probas[n_val * (k - 1)] + sorted_probas[n_val * k - 1])
             else:
                 lmbda_val[k] = 0.5 * (sorted_probas[n_val * k - 1] + sorted_probas[n_val * k])

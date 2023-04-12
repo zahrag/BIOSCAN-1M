@@ -55,16 +55,14 @@ def make_configurations():
         "model": "resnet50",
     }
 
-    config = make_path_configs(config, timestamp)
-
-    return config
+    return config, timestamp
 
 
 if __name__ == '__main__':
 
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
     # #### get configurations ######
-    config = make_configurations()
+    config, timestamp = make_configurations()
 
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
@@ -132,6 +130,9 @@ if __name__ == '__main__':
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )
     args = parser.parse_args()
     dict_args = vars(args)
+
+    # ################################ Save Configurations of the Experiment ######################################
+    config = make_path_configs(dict_args, timestamp)
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
     download_data_files(config['download_dir']+"/bioscan_dataset", download=dict_args['download'])
