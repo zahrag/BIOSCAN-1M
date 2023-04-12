@@ -1,6 +1,7 @@
 
 import pandas as pd
 from torch.utils.data import Dataset
+import math
 
 
 class BioScan(Dataset):
@@ -138,10 +139,18 @@ class BioScan(Dataset):
 
         data_dict = {}
         n_samples_per_class = []
-        data_names = []
         for cnt, data in enumerate(self.data_list):
+            if not isinstance(data, str):
+                if math.isnan(data):
+                    self.data_list[cnt] = "not_classified"
+                else:
+                    print("Not a string type data name is detected!")
+
+        data_names = []
+        for data in self.data_list:
             if data not in data_names:
                 data_names.append(data)
+
         for name in data_names:
             indexes = [ind for ind in self.index if self.data_list[ind] == name]
             data_dict[name] = indexes

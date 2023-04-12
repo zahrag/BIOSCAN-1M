@@ -22,7 +22,7 @@ def make_configurations():
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
     group_levels_large = ["phylum", "class", "order", "family", "subfamily",
                           "genus", "species", "subspecies", "tribe", "name"]
-    group_levels_med_small = group_levels_large[:6]
+    group_levels_med_small = group_levels_large[:7]
     dataset_names = ["small_dataset", "medium_dataset", "large_dataset"]
 
     config = {
@@ -38,6 +38,7 @@ def make_configurations():
         "download": False,
         "make_split": False,
         "print_statistics": False,
+        "print_split_statistics": False,
         "dataloader": False,
         "train": False,
         "test": False,
@@ -93,6 +94,8 @@ if __name__ == '__main__':
                         default=config["make_split"], action='store_true')
     parser.add_argument('--print_statistics', help='Whether to print dataset statistics?',
                         default=config["print_statistics"], action='store_true')
+    parser.add_argument('--print_split_statistics', help='Whether to print dataset statistics?',
+                        default=config["print_split_statistics"], action='store_true')
     parser.add_argument('--loader', help='Whether to generate dataloader?',
                         default=config["dataloader"], action='store_true')
     parser.add_argument('--train', help='Whether to train the model?',
@@ -148,15 +151,15 @@ if __name__ == '__main__':
     # ################################# PRINT DATA SPLIT STATISTICS ##############################################
     show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_train",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_train_metadata.tsv",
-                    show=dict_args['print_statistics'])
+                    show=dict_args['print_split_statistics'])
 
     show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_validation",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_validation_metadata.tsv",
-                    show=dict_args['print_statistics'])
+                    show=dict_args['print_split_statistics'])
 
     show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_test",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_test_metadata.tsv",
-                    show=dict_args['print_statistics'])
+                    show=dict_args['print_split_statistics'])
 
     # ###################################### DATALOADER ##########################################################
     train_dataloader, val_dataloader, test_dataloader, dataset_attributes = get_dataloader(dict_args)
