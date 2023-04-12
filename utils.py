@@ -213,6 +213,7 @@ def save_configs(datetime, config, log_dir=None):
 
     with open(log_dir + f"{config['exp_name']}_configs.txt", "w") as fp:
         fp.write(info)
+    fp.close()
 
 
 def make_path_configs(config, timestamp):
