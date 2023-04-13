@@ -189,10 +189,18 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
         return
 
     print("\n\nCreating data statistics ...")
-    print("Attention:This process can take time especially if the dataset is big!")
+    print("ATTENTION:This process can take time especially if the dataset is big!")
 
     dataset = BioScan()
     dataset.get_statistics(metadata_dir=metadata_dir)
+
+    print("\n\n----------------------------------------------------------------------------------------")
+    print(f"\t\t\t\t\t\t\t\tCopyright")
+    print("----------------------------------------------------------------------------------------")
+    print("Copyright Holder: CBG Photography Group")
+    print("Copyright Institution: Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)")
+    print("Photographer: CBG Robotic Imager")
+    print("----------------------------------------------------------------------------------------")
 
     # Get taxonomy ranking statistics
     taxa_gt_sored = ["domain", "kingdom", "phylum", "class", "order", "family", "subfamily", "tribe", "genus",
@@ -210,7 +218,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
             group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)-1
 
     # Show statistics
-    print(f"\n\n\t\t\t\tDataset: {dataset_name} with a total of {len(dataset.df.index)} data samples")
+    print(f"\n\n\t\t\tStatistics of the {dataset_name} with a total of {len(dataset.df.index)} data samples")
     print("----------------------------------------------------------------------------------------")
     print("\t\t\t\t\t\t\tTaxonomy Group Ranking")
     print("-----------------------------------------------------------------------------------------")
@@ -221,11 +229,10 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
         N1 = group_level_dict[f"{taxa}_n_subgroups"]
         N2 = group_level_dict[f"{taxa}_n_not_grouped_samples"]
         print('G({:1d}): {:18s} {:20d} {:20d} '.format(cnt + 1, taxa, N1, N2))
-    print("\n----------------------------------------End-----------------------------------------------")
 
     DNA_barcode = ["nucraw", "sampleid", "processid", "uri"]
     dataset_barcodes = [bar for bar in DNA_barcode if bar in dataset.df_categories]
-    print("\n\n----------------------------------------------------------------------------------------")
+    print("\n----------------------------------------------------------------------------------------")
     print("\t\t\t\t\t\t\tBarcode Indexing and Labelling")
     print("-----------------------------------------------------------------------------------------\n")
 
