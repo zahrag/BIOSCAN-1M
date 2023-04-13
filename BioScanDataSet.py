@@ -20,8 +20,7 @@ class BioScan(Dataset):
         self.df = pd.read_csv(self.metadata_dir, sep='\t')
         self.df = self.get_class_insects(self.df, class_level="Insecta", check=False)
         self.index = self.df.index.to_list()
-        self.df_categories = self.df.keys()
-        print(f"\nMetadata categories extracted from Dataframe are:\n{self.df_categories.to_list()}\n")
+        self.df_categories = self.df.keys().to_list()
 
         # Biological Taxonomy
         if 'phylum' in self.df_categories:
@@ -180,6 +179,49 @@ class BioScan(Dataset):
             data_list_ids.append(self.data_idx_label[order])
 
         return data_list_ids
+
+
+def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, show=False):
+    """
+         This function shows data statistics from metadata file of the dataset.
+         """
+    if not show:
+        return
+
+    print("\n\nCreating data statistics ...")
+    print("Attention:This process can take time especially if the dataset is big!")
+
+    dataset = BioScan()
+    dataset.get_statistics(metadata_dir=metadata_dir)
+
+    # Get taxonomy ranking statistics
+    taxa_gt_sored = ["domain", "kingdom", "phylum", "class", "order", "family", "subfamily", "tribe", "genus",
+                     "species", "subspecies"]
+    dataset_taxa = [taxa for taxa in taxa_gt_sored if taxa in dataset.df_categories]
+
+    # Get subgroups statistics
+    group_level_dict = {}
+    for taxa in dataset_taxa:
+        dataset.set_statistics(group_level=taxa, metadata_dir=metadata_dir)
+        group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)
+        group_level_dict[f"{taxa}_n_not_grouped_samples"] = 0
+        if "not_classified" in dataset.data_dict:
+            group_level_dict[f"{taxa}_n_not_grouped_samples"] = len(dataset.data_dict["not_classified"])
+            group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)-1
+
+    # Show statistics
+    print(f"\n\n\t\t\t\tDataset: {dataset_name} with a total of {len(dataset.df.index)} data samples")
+    print("----------------------------------------------------------------------------------------")
+    print("\t\t\t\t\t\t\tTaxonomy Group Ranking")
+    print("-----------------------------------------------------------------------------------------")
+    table = [f"Taxonomy Group Name", "Number of Subgroups", "Number of Not-grouped Samples"]
+    print('{:30s} {:25s} {:25s} '.format(table[0], table[1], table[2]))
+    print("-----------------------------------------------------------------------------------------\n")
+    for cnt, taxa in enumerate(dataset_taxa):
+        N1 = group_level_dict[f"{taxa}_n_subgroups"]
+        N2 = group_level_dict[f"{taxa}_n_not_grouped_samples"]
+        print('G({:1d}): {:18s} {:20d} {:20d} '.format(cnt + 1, taxa, N1, N2))
+    print("\n----------------------------------------End-----------------------------------------------")
 
 
 def show_statistics(group_level="order", dataset_name="large_dataset", metadata_dir=None, show=False):

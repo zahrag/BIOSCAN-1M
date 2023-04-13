@@ -1,6 +1,6 @@
 import datetime
 import argparse
-from BioScanDataSet import show_statistics
+from BioScanDataSet import show_statistics, show_dataset_statistics
 from bioscan_datadownload import download_data_files
 from bioscan_datasplit import make_split
 from bioscan_dataloader import get_dataloader
@@ -141,9 +141,9 @@ if __name__ == '__main__':
     download_data_files(config['download_dir']+"/bioscan_dataset", download=dict_args['download'])
 
     # ################################# PRINT DATASET STATISTICS #################################################
-    show_statistics(group_level=dict_args['group_level'], dataset_name=dict_args['dataset_name'],
-                    metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
-                    show=dict_args['print_statistics'])
+    show_dataset_statistics(dataset_name=dict_args['dataset_name'],
+                            metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
+                            show=dict_args['print_statistics'])
 
     # ################################### CREATE DATASET SPLIT ###################################################
     make_split(dict_args)
