@@ -196,7 +196,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
 
     # Get taxonomy ranking statistics
     taxa_gt_sored = ["domain", "kingdom", "phylum", "class", "order", "family", "subfamily", "tribe", "genus",
-                     "species", "subspecies"]
+                     "species", "subspecies", "name"]
     dataset_taxa = [taxa for taxa in taxa_gt_sored if taxa in dataset.df_categories]
 
     # Get subgroups statistics
@@ -221,6 +221,25 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
         N1 = group_level_dict[f"{taxa}_n_subgroups"]
         N2 = group_level_dict[f"{taxa}_n_not_grouped_samples"]
         print('G({:1d}): {:18s} {:20d} {:20d} '.format(cnt + 1, taxa, N1, N2))
+    print("\n----------------------------------------End-----------------------------------------------")
+
+    DNA_barcode = ["nucraw", "sampleid", "processid", "uri"]
+    dataset_barcodes = [bar for bar in DNA_barcode if bar in dataset.df_categories]
+    print("\n\n-----------------------------------------------------------------------------------------\n")
+    print(f"Dataset also contains\n")
+    cnt = 1
+    if "nucraw" in dataset_barcodes:
+        print(f"Label ({(cnt)}): Barcode Sequence")
+        cnt += 1
+    if "uri" in dataset_barcodes:
+        print(f"Label ({(cnt)}): Barcode Index Name (BIN)")
+        cnt += 1
+    if "sampleid" in dataset_barcodes:
+        print(f"Label ({(cnt)}): Sample ID Number")
+        cnt += 1
+    if "processid" in dataset_barcodes:
+        print(f"Label ({(cnt)}): BOLD Separation Record Number")
+        cnt += 1
     print("\n----------------------------------------End-----------------------------------------------")
 
 
