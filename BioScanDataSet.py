@@ -225,8 +225,10 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
 
     DNA_barcode = ["nucraw", "sampleid", "processid", "uri"]
     dataset_barcodes = [bar for bar in DNA_barcode if bar in dataset.df_categories]
-    print("\n\n-----------------------------------------------------------------------------------------\n")
-    print(f"Dataset also contains\n")
+    print("\n\n----------------------------------------------------------------------------------------")
+    print("\t\t\t\t\t\t\tBarcode Indexing and Labelling")
+    print("-----------------------------------------------------------------------------------------\n")
+
     cnt = 1
     if "nucraw" in dataset_barcodes:
         print(f"Label ({(cnt)}): Barcode Sequence")
