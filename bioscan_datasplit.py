@@ -72,6 +72,8 @@ class BioScanSplit(Dataset):
                 else:
                     ts_set.append(samples[2:])
 
+                data_dict_remained[key] = data_dict[key]
+
             elif n_tr_samples != 0 and n_val_samples != 0 and n_ts_samples != 0:
                 n_diff = n_sample - (n_ts_samples + n_val_samples + n_tr_samples)
                 if n_diff != 0:
