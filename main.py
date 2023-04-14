@@ -145,6 +145,10 @@ if __name__ == '__main__':
                             metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
                             show=dict_args['print_statistics'])
 
+    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}",
+                    metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
+                    show=dict_args['print_statistics'])
+
     # ################################### CREATE DATASET SPLIT ###################################################
     make_split(dict_args)
 
