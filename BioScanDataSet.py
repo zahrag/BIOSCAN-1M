@@ -253,28 +253,26 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
 
 
 def show_statistics(group_level="order", dataset_name="large_dataset", metadata_dir=None, show=False):
-
     """
-     This function shows data statistics from metadata file of the dataset.
-     """
+         This function shows data statistics from metadata file of the dataset.
+         """
     if not show:
         return
 
     dataset = BioScan()
     dataset.set_statistics(group_level=group_level, metadata_dir=metadata_dir)
 
-    table = [f"{group_level} Name", "label-ID", "Number of Samples"]
+    table = [f"{group_level} Name", "Class Number", "Number of Samples"]
     print("\n\n\n--------------------------------------------------------------")
     print(f"\t\t Set:{dataset_name}\t\tType:{group_level} \t\t\t\t")
     print("--------------------------------------------------------------")
     keys = dataset.data_dict.keys()
     data_idx_label = {}
-    print('{:25s} {:15s} {:5s} '.format(table[0], table[1], table[2]))
+    print('{:27s} {:15s} {:5s} '.format(table[0], table[1], table[2]))
     print("--------------------------------------------------------------")
     for cnt, key in enumerate(keys):
         data_idx_label[key] = cnt
-        print('{:18s} {:10d} {:20d} '.format(key, cnt + 1, len(dataset.data_dict[key])))
+        print('{:25s} {:10d} {:20d} '.format(key, cnt + 1, len(dataset.data_dict[key])))
     print("--------------------------------------------------------------")
     print('{:18s} {:10d} {:25d} '.format("total", cnt + 1, len(dataset.data_list)))
     print("--------------------------------------------------------------")
-
