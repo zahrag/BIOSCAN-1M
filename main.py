@@ -151,7 +151,7 @@ if __name__ == '__main__':
                     show=dict_args['print_statistics'])
 
     # ################################### CREATE DATASET SPLIT ###################################################
-    make_split(dict_args)
+    data_idx_label = make_split(dict_args)
 
     # ################################# PRINT DATA SPLIT STATISTICS ##############################################
     show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_train",
@@ -167,7 +167,7 @@ if __name__ == '__main__':
                     show=dict_args['print_split_statistics'])
 
     # ###################################### DATALOADER ##########################################################
-    train_dataloader, val_dataloader, test_dataloader, dataset_attributes = get_dataloader(dict_args)
+    train_dataloader, val_dataloader, test_dataloader, dataset_attributes = get_dataloader(dict_args, data_idx_label)
 
     # ###################################### TRAINING MODEL ######################################################
     train(args, train_dataloader, val_dataloader, dataset_attributes)

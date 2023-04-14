@@ -219,6 +219,9 @@ def make_split(args):
     # Split the whole dataset into Train, Validation and Test sets: Get indexes
     data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
 
+    # Get Ground-Truth Class Label-IDs
+    data_idx_label = dataset.class_to_ids(data_dict_remained)
+
     # Split the whole dataset into Train, Validation and Test sets: Save RGB images
     data_split.save_images(dataset.image_names, tr_indexes, val_indexes, ts_indexes,
                            dataset_name=args['dataset_name'], data_dir=args['dataset_dir'],
@@ -231,6 +234,7 @@ def make_split(args):
     # Save dataset in HDF5 format
     data_split.save_hdf5(dataset_name=args['dataset_name'], data_dir=args['dataset_dir'], save_hdf5=False)
 
+    return data_idx_label
 
 
 

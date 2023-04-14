@@ -10,12 +10,12 @@ import h5py
 
 class BioScanLoader(Dataset):
 
-    def __init__(self, args, transform=None, split=None):
-
+    def __init__(self, args, data_idx_label, transform=None, split=None):
         """
         This function created dataloader.
 
         :param args:
+        :param data_idx_label: Ground-Truth Class Label-IDs
         :param transform: Transformation
         :param split: "train", "validation", "test"
         """
@@ -28,16 +28,14 @@ class BioScanLoader(Dataset):
         self.metadata_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{split}_metadata.tsv"
 
         self.dataset = BioScan()
-        self.dataset.set_statistics(group_level="order", metadata_dir=self.metadata_dir)
+        self.dataset.set_statistics(group_level=args['group_level'], metadata_dir=self.metadata_dir)
 
+        self.sample_idx_label = data_idx_label
         self.img_names = self.dataset.image_names
-        self.order_list = self.dataset.data_list
-        self.order_ids = self.dataset.data_idx_label
-        self.order_list_ids = self.dataset.data_list_ids
-        self.n_samples_per_order = self.dataset.n_samples_per_class
-        self.number_of_orders = len(self.order_ids)
-        self.number_of_samples = len(self.order_list_ids)
-        self.index = self.dataset.index
+        self.sample_list = self.dataset.data_list
+        self.n_samples_per_class = self.dataset.get_n_sample_class(self.sample_list, data_idx_label)
+        self.number_of_class = len(data_idx_label)
+        self.number_of_samples = len(self.sample_list)
 
     def __len__(self):
         return len(self.img_names)
@@ -62,8 +60,8 @@ class BioScanLoader(Dataset):
         :return: a sample of data as a dict
         """
 
-        order_name = self.order_list[index]
-        label = self.order_ids[order_name]
+        sample_name = self.sample_list[index]
+        label = self.sample_idx_label[sample_name]
         image = self.load_image(index)
         show = False
         if show:
@@ -76,7 +74,7 @@ class BioScanLoader(Dataset):
         return image, label
 
 
-def get_dataloader(args):
+def get_dataloader(args, data_idx_label):
     """
     :param args:
     :return: dataloader of train, validation and test sets with data attributes
@@ -91,7 +89,7 @@ def get_dataloader(args):
                                           transforms.RandomHorizontalFlip(),
                                           transforms.ToTensor()])
 
-    train_dataset = BioScanLoader(args, transform=transform_train, split='train')
+    train_dataset = BioScanLoader(args, data_idx_label, transform=transform_train, split='train')
     train_dataloader = DataLoader(train_dataset, batch_size=args['batch_size'], shuffle=True,
                                   num_workers=args['num_workers'])
 
@@ -100,23 +98,23 @@ def get_dataloader(args):
                                         transforms.CenterCrop(size=args['crop_size']),
                                         transforms.ToTensor()])
 
-    val_dataset = BioScanLoader(args, transform=transform_val, split='validation')
+    val_dataset = BioScanLoader(args, data_idx_label, transform=transform_val, split='validation')
     validation_dataloader = DataLoader(val_dataset, batch_size=args['batch_size'], shuffle=True,
                                        num_workers=args['num_workers'])
 
     # ### Test ### #
-    test_dataset = BioScanLoader(args, transform=transform_val, split='test')
+    test_dataset = BioScanLoader(args, data_idx_label, transform=transform_val, split='test')
     test_dataloader = DataLoader(test_dataset, batch_size=args['batch_size'], shuffle=False,
                                  num_workers=args['num_workers'])
 
     dataset_attributes = {'n_train': train_dataset.number_of_samples,
                           'n_val': val_dataset.number_of_samples,
                           'n_test': test_dataset.number_of_samples,
-                          'n_classes': train_dataset.number_of_orders,
-                          'class2num_instances': {'train': train_dataset.n_samples_per_order,
-                                                  'val': val_dataset.n_samples_per_order,
-                                                  'test': test_dataset.n_samples_per_order},
-                          'class_to_idx': train_dataset.order_ids}
+                          'n_classes': train_dataset.number_of_class,
+                          'class2num_instances': {'train': train_dataset.n_samples_per_class,
+                                                  'val': val_dataset.n_samples_per_class,
+                                                  'test': test_dataset.n_samples_per_class},
+                          'class_to_idx': data_idx_label}
 
     return train_dataloader, validation_dataloader, test_dataloader, dataset_attributes
 

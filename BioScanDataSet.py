@@ -122,15 +122,18 @@ class BioScan(Dataset):
             self.data_list = self.names_list
 
         # Get the data dictionary
-        self.data_dict, self.n_samples_per_class = self.make_data_dict()
+        self.data_dict = self.make_data_dict(self.data_list, self.index)
 
         # Get numbered labels of the classes
-        self.data_idx_label = self.class_to_ids()
+        self.data_idx_label = self.class_to_ids(self.data_dict)
+
+        # Get number of samples per class
+        self.n_sample_per_class = self.get_n_sample_class(self.data_list, self.data_idx_label)
 
         # Get numbered data samples list
-        self.data_list_ids = self.class_list_idx()
+        self.data_list_ids = self.class_list_idx(self.data_list, self.data_idx_label)
 
-    def make_data_dict(self):
+    def make_data_dict(self, data_list, index):
         """
         This function create data dict key:label(exe., order name), value:indexes in data list
         :return:
@@ -138,45 +141,55 @@ class BioScan(Dataset):
 
         data_dict = {}
         n_samples_per_class = []
-        for cnt, data in enumerate(self.data_list):
+        for cnt, data in enumerate(data_list):
             if not isinstance(data, str):
                 if math.isnan(data):
-                    self.data_list[cnt] = "not_classified"
+                    data_list[cnt] = "not_classified"
                 else:
                     print("Not a string type data name is detected!")
 
         data_names = []
-        for data in self.data_list:
+        for data in data_list:
             if data not in data_names:
                 data_names.append(data)
 
         for name in data_names:
-            indexes = [ind for ind in self.index if self.data_list[ind] == name]
+            indexes = [ind for ind in index if data_list[ind] == name]
             data_dict[name] = indexes
-            n_samples_per_class.append(len(indexes))
 
-        return data_dict, n_samples_per_class
+        return data_dict
 
-    def class_to_ids(self):
+    def class_to_ids(self, data_dict):
         """
         This function create index labels (order to numbered labels).
         :return:
         """
         data_idx_label = {}
-        for num_id, key in enumerate(self.data_dict.keys()):
+        for num_id, key in enumerate(data_dict.keys()):
             data_idx_label[key] = num_id
 
         return data_idx_label
 
-    def class_list_idx(self):
+    def get_n_sample_class(self, data_list, data_idx_label):
+
+        n_sample_per_class = {}
+        for class_name in data_idx_label.keys():
+            n_sample_per_class[class_name] = 0
+
+        for data in data_list:
+            n_sample_per_class[data] += 1
+
+        return n_sample_per_class
+
+    def class_list_idx(self, data_list, data_idx_label):
         """
         This function create data list of numbered labels.
         :return:
         """
 
         data_list_ids = []
-        for order in self.data_list:
-            data_list_ids.append(self.data_idx_label[order])
+        for data in data_list:
+            data_list_ids.append(data_idx_label[data])
 
         return data_list_ids
 
