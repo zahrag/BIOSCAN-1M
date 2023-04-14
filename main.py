@@ -118,6 +118,9 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=config["num_workers"], required=False)
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=config["k"], type=int, required=False)
+    parser.add_argument('--no_transform', default=False, action='store_true', required=False)
+
+
 
     # #### Model Settings #####
     parser.add_argument('--model', choices=['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',

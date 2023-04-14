@@ -84,10 +84,15 @@ def get_dataloader(args, data_idx_label):
         return [], [], [], []
 
     # ### Train ### #
-    transform_train = transforms.Compose([transforms.Resize(size=args['image_size']),
-                                          transforms.RandomCrop(size=args['crop_size']),
-                                          transforms.RandomHorizontalFlip(),
-                                          transforms.ToTensor()])
+
+    if args['no_transform']:
+        transform_train = transforms.Compose([transforms.Resize(size=[args['crop_size'], args['crop_size']]),
+                                              transforms.ToTensor()])
+    else:
+        transform_train = transforms.Compose([transforms.Resize(size=args['image_size']),
+                                              transforms.RandomCrop(size=args['crop_size']),
+                                              transforms.RandomHorizontalFlip(),
+                                              transforms.ToTensor()])
 
     train_dataset = BioScanLoader(args, data_idx_label, transform=transform_train, split='train')
     train_dataloader = DataLoader(train_dataset, batch_size=args['batch_size'], shuffle=True,
