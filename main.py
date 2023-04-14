@@ -134,7 +134,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     dict_args = vars(args)
 
-    # ################################ Save Configurations of the Experiment ######################################
+    # ################################ Save Configurations of the Experiment ####################################
     config = make_path_configs(dict_args, timestamp)
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
@@ -145,6 +145,7 @@ if __name__ == '__main__':
                             metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
                             show=dict_args['print_statistics'])
 
+    # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
     show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
                     show=dict_args['print_statistics'])
