@@ -151,24 +151,25 @@ if __name__ == '__main__':
                             metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
                             show=dict_args['print_statistics'])
 
-    # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
-    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}",
-                    metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
-                    show=dict_args['print_statistics'])
-
     # ################################### CREATE DATASET SPLIT ###################################################
     data_idx_label = make_split(dict_args)
 
+    # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
+    show_statistics(gt_ID=data_idx_label, group_level=dict_args['group_level'],
+                    dataset_name=f"{dict_args['dataset_name']}",
+                    metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_metadata.tsv",
+                    show=dict_args['print_statistics'])
+
     # ################################# PRINT DATA SPLIT STATISTICS ##############################################
-    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_train",
+    show_statistics(gt_ID=data_idx_label, group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_train",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_train_metadata.tsv",
                     show=dict_args['print_split_statistics'])
 
-    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_validation",
+    show_statistics(gt_ID=data_idx_label, group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_validation",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_validation_metadata.tsv",
                     show=dict_args['print_split_statistics'])
 
-    show_statistics(group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_test",
+    show_statistics(gt_ID=data_idx_label, group_level=dict_args['group_level'], dataset_name=f"{dict_args['dataset_name']}_test",
                     metadata_dir=f"{dict_args['dataset_dir']}/{dict_args['dataset_name']}/{dict_args['dataset_name']}_test_metadata.tsv",
                     show=dict_args['print_split_statistics'])
 

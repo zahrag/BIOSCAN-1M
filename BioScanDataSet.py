@@ -265,7 +265,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     print("\n----------------------------------------End-----------------------------------------------")
 
 
-def show_statistics(group_level="order", dataset_name="large_dataset", metadata_dir=None, show=False):
+def show_statistics(gt_ID, group_level="order", dataset_name="large_dataset", metadata_dir=None, show=False):
     """
          This function shows data statistics from metadata file of the dataset.
          """
@@ -274,6 +274,13 @@ def show_statistics(group_level="order", dataset_name="large_dataset", metadata_
 
     dataset = BioScan()
     dataset.set_statistics(group_level=group_level, metadata_dir=metadata_dir)
+
+    label_IDs = {}
+    for class_name in dataset.data_dict.keys():
+        if class_name not in gt_ID.keys():
+            label_IDs[class_name] = 'no_ID'
+        else:
+            label_IDs[class_name] = gt_ID[class_name]
 
     table = [f"{group_level} Name", "Class Number", "Number of Samples"]
     print("\n\n\n--------------------------------------------------------------")
@@ -285,7 +292,13 @@ def show_statistics(group_level="order", dataset_name="large_dataset", metadata_
     print("--------------------------------------------------------------")
     for cnt, key in enumerate(keys):
         data_idx_label[key] = cnt
-        print('{:25s} {:10d} {:20d} '.format(key, cnt + 1, len(dataset.data_dict[key])))
+        if not isinstance(label_IDs[key], str):
+            print('{:25s} {:10d} {:20d} '.format(key, label_IDs[key], len(dataset.data_dict[key])))
+        else:
+            print('{:30s} {:10s} {:15} '.format(key, label_IDs[key], len(dataset.data_dict[key])))
     print("--------------------------------------------------------------")
-    print('{:18s} {:10d} {:25d} '.format("total", cnt + 1, len(dataset.data_list)))
+    print('{:25s} {:10d} {:25d} '.format("total", cnt+1, len(dataset.data_list)))
     print("--------------------------------------------------------------")
+    print("no_ID Class(es) are deducted from experiments!")
+    print("--------------------------------------------------------------")
+
