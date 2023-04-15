@@ -23,36 +23,21 @@ class BioScan(Dataset):
         self.df_categories = self.df.keys().to_list()
 
         # Biological Taxonomy
-        if 'phylum' in self.df_categories:
-            self.phylum_list = self.df['phylum'].to_list()
-        if 'class' in self.df_categories:
-            self.class_list = self.df['class'].to_list()
-        if 'order' in self.df_categories:
-            self.order_list = self.df['order'].to_list()
-        if 'family' in self.df_categories:
-            self.family_list = self.df['family'].to_list()
-        if 'subfamily' in self.df_categories:
-            self.subfamily_list = self.df['subfamily'].to_list()
-        if 'genus' in self.df_categories:
-            self.genus_list = self.df['genus'].to_list()
-        if 'species' in self.df_categories:
-            self.species_list = self.df['species'].to_list()
-        if 'subspecies' in self.df_categories:
-           self.subspecies_list = self.df['subspecies'].to_list()
-        if 'tribe' in self.df_categories:
-           self.tribes_list = self.df['tribe'].to_list()
-        if 'name' in self.df_categories:
-            self.names_list = self.df['name'].to_list()
+        self.taxa_gt_sored = ["domain", "kingdom", "phylum", "class", "order", "family",
+                              "subfamily", "tribe", "genus", "species", "subspecies", "name"]
+
+        self.taxonomy_groups_list_dict = {}
+        for taxa in self.taxa_gt_sored:
+            if taxa in self.df_categories:
+                self.taxonomy_groups_list_dict[taxa] = self.df[taxa].to_list()
 
         # Barcode and data Indexing
-        if 'nucraw' in self.df_categories:
-           self.barcods_list = self.df['nucraw'].to_list()
-        if 'processid' in self.df_categories:
-            self.processid_list = self.df['processid'].to_list()
-        if 'sampleid' in self.df_categories:
-            self.sampleid_list = self.df['sampleid'].to_list()
-        if 'uri' in self.df_categories:
-            self.uri_list = self.df['uri'].to_list()
+        self.barcode_indexes = ['nucraw', 'uri', 'processid', 'sampleid']
+
+        self.barcode_list_dict = {}
+        for bar in self.barcode_indexes:
+            if bar in self.df_categories:
+                self.barcode_list_dict[bar] = self.df[bar].to_list()
 
         # Image Indexes
         if 'image_tar' in self.df_categories:
@@ -100,26 +85,11 @@ class BioScan(Dataset):
         self.get_statistics(metadata_dir)
 
         # Get data list as one of the Biological Taxonomy
-        if group_level == "order":
-            self.data_list = self.order_list
-        elif group_level == "phylum":
-            self.data_list = self.phylum_list
-        elif group_level == "class":
-            self.data_list = self.class_list
-        elif group_level == "family":
-            self.data_list = self.family_list
-        elif group_level == "subfamily":
-            self.data_list = self.subfamily_list
-        elif group_level == "genus":
-            self.data_list = self.genus_list
-        elif group_level == "species":
-            self.data_list = self.species_list
-        elif group_level == "subspecies":
-            self.data_list = self.subspecies_list
-        elif group_level == "tribe":
-            self.data_list = self.tribes_list
-        elif group_level == "name":
-            self.data_list = self.names_list
+        if group_level in self.taxonomy_groups_list_dict.keys():
+            self.data_list = self.taxonomy_groups_list_dict[group_level]
+
+        else:
+            print(f"Dataset Does NOT contain Taxonomy Group Ranking {group_level}")
 
         # Get the data dictionary
         self.data_dict = self.make_data_dict(self.data_list, self.index)
@@ -216,9 +186,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     print("----------------------------------------------------------------------------------------")
 
     # Get taxonomy ranking statistics
-    taxa_gt_sored = ["domain", "kingdom", "phylum", "class", "order", "family", "subfamily", "tribe", "genus",
-                     "species", "subspecies", "name"]
-    dataset_taxa = [taxa for taxa in taxa_gt_sored if taxa in dataset.df_categories]
+    dataset_taxa = [taxa for taxa in dataset.taxa_gt_sored if taxa in dataset.df_categories]
 
     # Get subgroups statistics
     group_level_dict = {}
