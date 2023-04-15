@@ -42,6 +42,8 @@ def make_configurations():
         "dataloader": False,
         "train": False,
         "test": False,
+        "no_transform": False,
+        "cropped": True,
         "batch_size": 32,
         "image_size": 256,
         "crop_size": 224,
@@ -86,6 +88,8 @@ if __name__ == '__main__':
                         default=config["image_dir"], required=False)
     parser.add_argument('--results_dir', type=str, help='Directory to save results', default=config["results_dir"],
                         required=False)
+    parser.add_argument('--no_transform', default=config["no_transform"], action='store_true', required=False)
+    parser.add_argument('--cropped', default=config["cropped"], action='store_true', required=False)
 
     # #### Condition Settings #####
     parser.add_argument('--download', help='Whether to download from drive?',
@@ -118,7 +122,6 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=config["num_workers"], required=False)
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=config["k"], type=int, required=False)
-    parser.add_argument('--no_transform', default=False, action='store_true', required=False)
 
 
 

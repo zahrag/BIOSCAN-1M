@@ -21,6 +21,7 @@ class BioScanLoader(Dataset):
         """
 
         self.split = split
+        self.cropped = args['cropped']
         self.data_format = args['data_format']
         self.transform = transform
         self.image_dir = args['image_dir']
@@ -48,6 +49,8 @@ class BioScanLoader(Dataset):
             data = np.asarray(file[key])
             image = Image.open(io.BytesIO(data))
 
+        elif self.cropped:
+            image = Image.open(self.image_dir + "CROPPED_" + self.img_names[index]).convert('RGB')
         else:
             image = Image.open(self.image_dir + self.img_names[index]).convert('RGB')
 
