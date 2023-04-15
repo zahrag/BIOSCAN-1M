@@ -119,9 +119,10 @@ def get_dataloader(args, data_idx_label):
                           'n_val': val_dataset.number_of_samples,
                           'n_test': test_dataset.number_of_samples,
                           'n_classes': train_dataset.number_of_class,
-                          'class2num_instances': {'train': train_dataset.n_samples_per_class.values(),
-                                                  'val': val_dataset.n_samples_per_class.values(),
-                                                  'test': test_dataset.n_samples_per_class.values()},
+                          'class2num_instances': {'train': list(train_dataset.n_samples_per_class.values()),
+                                                  'val': list(val_dataset.n_samples_per_class.values()),
+                                                  'test': list(test_dataset.n_samples_per_class.values()),
+                                                  },
                           'class_to_idx': data_idx_label}
 
     return train_dataloader, validation_dataloader, test_dataloader, dataset_attributes
