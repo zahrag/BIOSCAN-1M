@@ -207,12 +207,21 @@ class BioScanSplit(Dataset):
 
 
 def make_split(args):
-
-    if not args['make_split']:
-        return
+    """
+        :param args: Argumnets
+        :return: Ground-Truth Class Label-IDs
+                 A dict which correspond each class string name to a numeric label ID.
+        """
 
     dataset = BioScan()
     data_split = BioScanSplit()
+
+    if not args['make_split']:
+        # Get Ground-Truth Class Label-IDs from Train set
+        dataset.set_statistics(group_level=args['group_level'],
+                               metadata_dir=f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_train_metadata.tsv")
+
+        return dataset.data_idx_label
 
     # Get data statistics for the whole dataset
     dataset.set_statistics(group_level=args['group_level'],
@@ -221,7 +230,7 @@ def make_split(args):
     # Split the whole dataset into Train, Validation and Test sets: Get indexes
     data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
 
-    # Get Ground-Truth Class Label-IDs
+    # Get Ground-Truth Class Label-IDs from remaining classes after making split
     data_idx_label = dataset.class_to_ids(data_dict_remained)
 
     # Split the whole dataset into Train, Validation and Test sets: Save RGB images
