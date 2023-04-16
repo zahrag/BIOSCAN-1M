@@ -6,6 +6,7 @@ import torchvision.transforms as transforms
 from BioScanDataSet import BioScan
 import io
 import h5py
+import os
 
 
 class BioScanLoader(Dataset):
@@ -50,7 +51,7 @@ class BioScanLoader(Dataset):
             image = Image.open(io.BytesIO(data))
 
         elif self.cropped:
-            image = Image.open(self.image_dir + "CROPPED_" + self.img_names[index]).convert('RGB')
+            image = Image.open(os.path.join(self.image_dir, "CROPPED_" + self.img_names[index])).convert('RGB')
         else:
             image = Image.open(self.image_dir + self.img_names[index]).convert('RGB')
 
