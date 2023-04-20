@@ -8,7 +8,7 @@ from torch.nn import CrossEntropyLoss
 from utils import set_seed, load_model, save, get_model, update_optimizer, make_directory
 from epoch import train_epoch, val_epoch, test_epoch
 from torch.utils.tensorboard import SummaryWriter
-
+from utils import MulticlassFocalLoss
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
 
@@ -24,7 +24,11 @@ def train(args, train_loader, val_loader, dataset_attributes):
     writer = SummaryWriter(args.log + "/")
 
     model = get_model(args, n_classes=dataset_attributes['n_classes'])
+
     criteria = CrossEntropyLoss()
+
+    if args.loss == "Focal":
+        criteria = MulticlassFocalLoss(gamma=2)
 
     if args.use_gpu:
         print('USING GPU')

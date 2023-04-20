@@ -29,7 +29,7 @@ def make_configurations():
         "download_dir": "",               # where to download data files
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
-        "image_dir": "",                  # root where images are saved if different from dataset_dir
+        "image_dir": "datasets/medium_dataset/medium_dataset_images",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "group_level": group_levels_large[2],  # Set the Taxonomy group level
@@ -122,7 +122,8 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=config["num_workers"], required=False)
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=config["k"], type=int, required=False)
-
+    parser.add_argument('--loss', type=str, help='decide which loss to use during training', default=config["loss"],
+                        required=False, choices=["CE", "Focal"])
 
 
     # #### Model Settings #####

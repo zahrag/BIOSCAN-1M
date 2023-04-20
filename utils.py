@@ -9,6 +9,7 @@ import shutil
 import pandas as pd
 from tqdm import tqdm
 import h5py
+import torch.nn.functional as F
 
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
@@ -166,13 +167,11 @@ def get_model(args, n_classes):
 
 
 def make_directory(path):
-
     if not os.path.exists(path):
         os.makedirs(path)
 
 
 def extract_tar(tar_file=None, path=None):
-
     make_directory(path)
     tar_file = tarfile.open(tar_file)
     tar_file.extractall(path)  # specify which folder to extract to
@@ -180,19 +179,16 @@ def extract_tar(tar_file=None, path=None):
 
 
 def move_to_dir(source=None, destination=None):
-
     make_directory(destination)
     shutil.move(source, destination)
 
 
 def copy_to_dir(source=None, destination=None):
-
     make_directory(destination)
     shutil.copy(source, destination)
 
 
 def make_tar(name=None, path=None):
-
     make_directory(path)
     print(path)
     with tarfile.open(name, "w:gz") as tar:
@@ -200,13 +196,11 @@ def make_tar(name=None, path=None):
 
 
 def make_tsv(file, name=None, path=None):
-
     make_directory(path)
     file.to_csv(path + name, sep='\t', index=False)
 
 
 def save_configs(datetime, config, log_dir=None):
-
     info = f"Configurations of Experiment Run on {datetime}\n"
     for item in config.keys():
         info += f'{item}:{config[item]}\n'
@@ -217,7 +211,6 @@ def save_configs(datetime, config, log_dir=None):
 
 
 def make_path_configs(config, timestamp):
-
     if config["train"]:
         save_dir = os.path.join(os.getcwd(), 'results')
         save_dir += "/{timestamp:s}_{dataset:s}_epoch{epoch:d}/".format(timestamp=timestamp,
@@ -232,7 +225,6 @@ def make_path_configs(config, timestamp):
 
 
 def make_hdf5(dataset_name='small_dataset', path=None):
-
     dataset_dir = f"{path}/{dataset_name}"
     hdf5_file = h5py.File(f"{dataset_dir}/{dataset_name}_hdf5", 'w')
     df = pd.read_table(f"{dataset_dir}/{dataset_name}_metadata.tsv")
@@ -244,3 +236,21 @@ def make_hdf5(dataset_name='small_dataset', path=None):
             binary_data = img_f.read()
         binary_data_np = np.asarray(binary_data)
         hdf5_file.create_dataset(str(orgpic_id), data=binary_data_np)
+
+
+class MulticlassFocalLoss(torch.nn.Module):
+    def __init__(self, gamma=2.0, reduction='mean'):
+        super(MulticlassFocalLoss, self).__init__()
+        self.gamma = gamma
+        self.reduction = reduction
+
+    def forward(self, inputs, targets):
+        CE_loss = F.cross_entropy(inputs, targets, reduction='none')
+        pt = torch.exp(-CE_loss)
+        F_loss = (1-pt)**self.gamma * CE_loss
+        if self.reduction == 'mean':
+            return F_loss.mean()
+        elif self.reduction == 'sum':
+            return F_loss.sum()
+        else:
+            return F_loss
