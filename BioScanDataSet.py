@@ -17,7 +17,7 @@ class BioScan(Dataset):
            """
 
         self.metadata_dir = metadata_dir
-        self.df = pd.read_csv(self.metadata_dir, sep='\t')
+        self.df = pd.read_csv(self.metadata_dir, sep='\t', low_memory=False)
         self.df = self.get_class_insects(self.df, class_level="Insecta", check=False)
         self.index = self.df.index.to_list()
         self.df_categories = self.df.keys().to_list()

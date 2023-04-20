@@ -52,7 +52,7 @@ def train_epoch(model, optimizer, train_loader, criteria, loss_train, acc_train,
 
 
 def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk_acc_val,
-              class_acc_val, list_k, dataset_attributes, use_gpu):
+              class_acc_val, macro_topk_acc_val, list_k, dataset_attributes, use_gpu):
     """Single val epoch pass.
     At the end of the epoch, updates the lists loss_val, acc_val, topk_acc_val and avgk_acc_val"""
 
@@ -64,7 +64,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
         loss_epoch_val = 0
         n_correct_val = 0
         n_correct_topk_val, n_correct_avgk_val = defaultdict(int), defaultdict(int)
-        topk_acc_epoch_val, avgk_acc_epoch_val = {}, {}
+        topk_acc_epoch_val, avgk_acc_epoch_val, macro_topk_acc_epoch_val = {}, {}, {}
         # Store avg-k threshold for every k in list_k
         lmbda_val = {}
         # Store class accuracy, and top-k and average-k class accuracy for every k in list_k
@@ -153,14 +153,20 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
                 class_acc_dict['class_topk_acc'][k][class_id] = class_acc_dict['class_topk_acc'][k][class_id] / n_class_val
                 class_acc_dict['class_avgk_acc'][k][class_id] = class_acc_dict['class_avgk_acc'][k][class_id] / n_class_val
 
+        # Add Macro Acc
+        for k in list_k:
+            class_acc_topk_list = list(class_acc_dict['class_topk_acc'][k].values())
+            macro_topk_acc_epoch_val[k] = sum(class_acc_topk_list) / dataset_attributes['n_classes']
+
         # Update containers with current epoch values
         loss_val.append(loss_epoch_val)
         acc_val.append(epoch_accuracy_val)
         topk_acc_val.append(topk_acc_epoch_val)
         avgk_acc_val.append(avgk_acc_epoch_val)
         class_acc_val.append(class_acc_dict)
+        macro_topk_acc_val.append(macro_topk_acc_epoch_val)
 
-    return loss_epoch_val, epoch_accuracy_val, topk_acc_epoch_val, avgk_acc_epoch_val, lmbda_val
+    return loss_epoch_val, epoch_accuracy_val, topk_acc_epoch_val, avgk_acc_epoch_val, macro_topk_acc_epoch_val, lmbda_val
 
 
 def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_attributes):
@@ -171,7 +177,7 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
         n_test = dataset_attributes['n_test']
         loss_epoch_test = 0
         n_correct_test = 0
-        topk_acc_epoch_test, avgk_acc_epoch_test = {}, {}
+        topk_acc_epoch_test, avgk_acc_epoch_test, macro_topk_acc_epoch_test = {}, {}, {}
         n_correct_topk_test, n_correct_avgk_test = defaultdict(int), defaultdict(int)
 
         class_acc_dict = {}
@@ -210,4 +216,9 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
                 class_acc_dict['class_topk_acc'][k][class_id] = class_acc_dict['class_topk_acc'][k][class_id] / n_class_test
                 class_acc_dict['class_avgk_acc'][k][class_id] = class_acc_dict['class_avgk_acc'][k][class_id] / n_class_test
 
-    return loss_epoch_test, acc_epoch_test, topk_acc_epoch_test, avgk_acc_epoch_test, class_acc_dict
+        # Add Macro Acc
+        for k in list_k:
+            class_acc_topk_list = list(class_acc_dict['class_topk_acc'][k].values())
+            macro_topk_acc_epoch_test[k] = sum(class_acc_topk_list) / dataset_attributes['n_classes']
+
+    return loss_epoch_test, acc_epoch_test, topk_acc_epoch_test, avgk_acc_epoch_test, class_acc_dict, macro_topk_acc_epoch_test

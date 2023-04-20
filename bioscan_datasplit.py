@@ -56,7 +56,7 @@ class BioScanSplit(Dataset):
         tr_set = []
         val_set = []
         ts_set = []
-        for cnt, key in enumerate(data_dict.keys()):
+        for key in data_dict.keys():
             samples = data_dict[key]
             n_sample = len(samples)
             random.shuffle(samples)

@@ -40,7 +40,7 @@ def train(args, train_loader, val_loader, dataset_attributes):
 
     # Containers for storing metrics over epochs
     loss_train, acc_train, topk_acc_train = [], [], []
-    loss_val, acc_val, topk_acc_val, avgk_acc_val, class_acc_val = [], [], [], [], []
+    loss_val, acc_val, topk_acc_val, avgk_acc_val, class_acc_val, macro_topk_acc_val = [], [], [], [], [], []
 
     print('args.k : ', args.k)
 
@@ -66,9 +66,10 @@ def train(args, train_loader, val_loader, dataset_attributes):
 
         # #### Validation
         loss_epoch_val, acc_epoch_val, topk_acc_epoch_val, \
-        avgk_acc_epoch_val, lmbda_val = val_epoch(model, val_loader, criteria,
-                                                  loss_val, acc_val, topk_acc_val, avgk_acc_val,
-                                                  class_acc_val, args.k, dataset_attributes, args.use_gpu)
+        avgk_acc_epoch_val, macro_topk_acc_epoch_val, lmbda_val = val_epoch(model, val_loader, criteria,
+                                                                            loss_val, acc_val, topk_acc_val, avgk_acc_val,
+                                                                            class_acc_val, macro_topk_acc_val,
+                                                                            args.k, dataset_attributes, args.use_gpu)
 
         writer.add_scalar('loss_epoch_val', loss_epoch_val, epoch)
         writer.add_scalar('acc_epoch_val', acc_epoch_val, epoch)
@@ -105,6 +106,7 @@ def train(args, train_loader, val_loader, dataset_attributes):
                'topk_acc_val': topk_acc_val,
                'class_acc_val': class_acc_val,
                'avgk_acc_val': avgk_acc_val,
+               'macro_topk_acc_val': macro_topk_acc_val,
                'lmbda_best_acc': lmbda_best_acc,
                'params': args.__dict__}
 
