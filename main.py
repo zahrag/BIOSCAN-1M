@@ -56,6 +56,7 @@ def make_configurations():
         "lr": 0.01,
         "k": [1, 3, 5, 10],
         "model": "resnet50",
+        "loss": "CE"
     }
 
     return config, timestamp
