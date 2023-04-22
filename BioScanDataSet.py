@@ -98,7 +98,7 @@ class BioScan(Dataset):
         self.data_idx_label = self.class_to_ids(self.data_dict)
 
         # Get number of samples per class
-        self.n_sample_per_class = self.get_n_sample_class(self.data_list, self.data_idx_label)
+        self.n_sample_per_class = self.get_n_sample_class(self.data_dict)
 
         # Get numbered data samples list
         self.data_list_ids = self.class_list_idx(self.data_list, self.data_idx_label)
@@ -135,19 +135,16 @@ class BioScan(Dataset):
         :return:
         """
         data_idx_label = {}
-        for num_id, key in enumerate(data_dict.keys()):
-            data_idx_label[key] = num_id
+        data_names = list(data_dict.keys())
+        for name in data_names:
+            data_idx_label[name] = data_names.index(name)
 
         return data_idx_label
 
-    def get_n_sample_class(self, data_list, data_idx_label):
+    def get_n_sample_class(self, data_dict):
 
-        n_sample_per_class = {}
-        for class_name in data_idx_label.keys():
-            n_sample_per_class[class_name] = 0
-
-        for data in data_list:
-            n_sample_per_class[data] += 1
+        data_samples_list = list(data_dict.values())
+        n_sample_per_class = [len(class_samples) for class_samples in data_samples_list]
 
         return n_sample_per_class
 

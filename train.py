@@ -108,6 +108,7 @@ def train(args, train_loader, val_loader, dataset_attributes):
                'avgk_acc_val': avgk_acc_val,
                'macro_topk_acc_val': macro_topk_acc_val,
                'lmbda_best_acc': lmbda_best_acc,
+               'class_to_idx': dataset_attributes['class_to_idx'],
                'params': args.__dict__}
 
     with open(os.path.join(save_dir, save_name + '_train_val.pkl'), 'wb') as f:

@@ -41,7 +41,8 @@ def test(args, test_loader, dataset_attributes):
                                 'topk_accuracy': topk_acc_test_ba,
                                 'avgk_accuracy': avgk_acc_test_ba,
                                 'class_acc_dict': class_acc_test,
-                                'macro_topk_acc_test': macro_topk_acc_test
+                                'macro_topk_acc_test': macro_topk_acc_test,
+                                'class_to_idx': dataset_attributes['class_to_idx'],
                                 },
                'params': args.__dict__}
 

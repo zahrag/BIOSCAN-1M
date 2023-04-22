@@ -35,7 +35,7 @@ class BioScanLoader(Dataset):
         self.sample_idx_label = data_idx_label
         self.img_names = self.dataset.image_names
         self.sample_list = self.dataset.data_list
-        self.n_samples_per_class = self.dataset.get_n_sample_class(self.sample_list, data_idx_label)
+        self.n_samples_per_class = self.dataset.get_n_sample_class(self.dataset.data_dict)
         self.number_of_class = len(data_idx_label)
         self.number_of_samples = len(self.sample_list)
 
