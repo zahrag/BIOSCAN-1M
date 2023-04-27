@@ -234,22 +234,22 @@ def show_statistics(gt_ID, group_level="order", dataset_name="large_dataset", me
             label_IDs[class_name] = gt_ID[class_name]
 
     table = [f"{group_level} Name", "Class Number", "Number of Samples"]
-    print("\n\n\n--------------------------------------------------------------")
-    print(f"\t\t Set:{dataset_name}\t\tType:{group_level} \t\t\t\t")
-    print("--------------------------------------------------------------")
+    print("\n\n\n------------------------------------------------------------------------")
+    print(f"Set:{dataset_name}\t\tGroup Level:{group_level} \t\t\t\t")
+    print("------------------------------------------------------------------------")
     keys = dataset.data_dict.keys()
     data_idx_label = {}
     print('{:27s} {:15s} {:5s} '.format(table[0], table[1], table[2]))
-    print("--------------------------------------------------------------")
+    print("------------------------------------------------------------------------")
     for cnt, key in enumerate(keys):
         data_idx_label[key] = cnt
         if not isinstance(label_IDs[key], str):
             print('{:25s} {:10d} {:20d} '.format(key, label_IDs[key], len(dataset.data_dict[key])))
         else:
             print('{:30s} {:10s} {:15} '.format(key, label_IDs[key], len(dataset.data_dict[key])))
-    print("--------------------------------------------------------------")
-    print('{:25s} {:10d} {:25d} '.format("total", cnt+1, len(dataset.data_list)))
-    print("--------------------------------------------------------------")
+    print("------------------------------------------------------------------------")
+    print('{:25s} {:10d} {:22d} '.format("total", cnt + 1, len(dataset.data_list)))
+    print("------------------------------------------------------------------------")
     print("no_ID Class(es) are deducted from experiments!")
-    print("--------------------------------------------------------------")
+    print("------------------------------------------------------------------------")
 
