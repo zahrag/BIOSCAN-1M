@@ -18,16 +18,16 @@ class BioScan(Dataset):
 
         self.metadata_dir = metadata_dir
         self.df = pd.read_csv(self.metadata_dir, sep='\t', low_memory=False)
-        self.df = self.get_class_insects(self.df, class_level="Insecta", check=False)
         self.index = self.df.index.to_list()
         self.df_categories = self.df.keys().to_list()
 
         # Biological Taxonomy
-        self.taxa_gt_sored = ["domain", "kingdom", "phylum", "class", "order", "family",
-                              "subfamily", "tribe", "genus", "species", "subspecies", "name"]
+        self.taxa_gt_sored = {'0': 'domain',      '1': 'kingdom',   '2': 'phylum', '3': 'class', '4': 'order',
+                              '5': 'family',      '6': 'subfamily', '7': 'tribe',  '8': 'genus', '9': 'species',
+                              '10': 'subspecies', '11': 'name'}
 
         self.taxonomy_groups_list_dict = {}
-        for taxa in self.taxa_gt_sored:
+        for taxa in self.taxa_gt_sored.values():
             if taxa in self.df_categories:
                 self.taxonomy_groups_list_dict[taxa] = self.df[taxa].to_list()
 
@@ -39,36 +39,11 @@ class BioScan(Dataset):
             if bar in self.df_categories:
                 self.barcode_list_dict[bar] = self.df[bar].to_list()
 
-        # Image Indexes
-        if 'image_tar' in self.df_categories:
-           self.image_tar = self.df['image_tar'].to_list()
-        if 'image_file' in self.df_categories:
-           self.image_names = self.df['image_file'].to_list()
-        else:
-           self.image_names = self.df['sampleid'].to_list()
+        # RGB Images
+        self.image_names = self.df['image_file'].to_list()
 
     def __len__(self):
         return len(self.index)
-
-    def get_class_insects(self, df, class_level="Insecta", check=False):
-        """
-            This function creates Dataframe of the Insect class only.
-            :return: Insect Dataframe
-            """
-
-        if not check:
-            return df
-
-        Insecta_df = [df.iloc[id] for id, cl in enumerate(df['class']) if cl == class_level]
-        if len(Insecta_df) == len(df):
-            return df
-
-        else:
-            print(f"\n{len(df)-len(Insecta_df)} of the samples are NOT Insect class")
-            Insecta_df = pd.DataFrame(Insecta_df)
-            Insecta_df.reset_index(inplace=True, drop=True)
-
-            return Insecta_df
 
     def set_statistics(self, group_level="order", metadata_dir=None):
         """
@@ -110,7 +85,6 @@ class BioScan(Dataset):
         """
 
         data_dict = {}
-        n_samples_per_class = []
         for cnt, data in enumerate(data_list):
             if not isinstance(data, str):
                 if math.isnan(data):
@@ -127,7 +101,19 @@ class BioScan(Dataset):
             indexes = [ind for ind in index if data_list[ind] == name]
             data_dict[name] = indexes
 
-        return data_dict
+        n_sample_per_class = [len(class_samples) for class_samples in list(data_dict.values())]
+        indexed_list = list(enumerate(n_sample_per_class))
+        sorted_list = sorted(indexed_list, key=lambda x: x[1], reverse=True)
+        original_indices_sorted = [x[0] for x in sorted_list]
+
+        class_names = list(data_dict.keys())
+        sorted_class_names = [class_names[ind] for ind in original_indices_sorted]
+
+        sorted_data_dict = {}
+        for name in sorted_class_names:
+            sorted_data_dict[name] = data_dict[name]
+
+        return sorted_data_dict
 
     def class_to_ids(self, data_dict):
         """
@@ -183,7 +169,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     print("----------------------------------------------------------------------------------------")
 
     # Get taxonomy ranking statistics
-    dataset_taxa = [taxa for taxa in dataset.taxa_gt_sored if taxa in dataset.df_categories]
+    dataset_taxa = [taxa for taxa in dataset.taxa_gt_sored.values() if taxa in dataset.df_categories]
 
     # Get subgroups statistics
     group_level_dict = {}

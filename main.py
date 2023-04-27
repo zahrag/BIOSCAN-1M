@@ -20,22 +20,25 @@ def make_configurations():
         """
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
-    group_levels_large = ["phylum", "class", "order", "family", "subfamily",
-                          "genus", "species", "subspecies", "tribe", "name"]
-    group_levels_med_small = group_levels_large[:7]
-    dataset_names = ["small_dataset", "medium_dataset", "large_dataset"]
+
+    group_levels = {'0': 'domain', '1': 'kingdom', '2': 'phylum', '3': 'class', '4': 'order',
+                    '5': 'family', '6': 'subfamily', '7': 'tribe', '8': 'genus', '9': 'species',
+                    '10': 'subspecies', '11': 'name'}
+
+    dataset_names = {'1': '200K_dataset', '2': '200K_insect_dataset', '3': '200K_insect_diptera_dataset',
+                     '4': 'bioscan_dataset', '5': 'bioscan_insect_dataset', '6': 'bioscan_insect_diptera_dataset',
+                     '7': '80K_dataset', '8': '80K_insect_dataset', '9': '80K_insect_diptera_dataset'
+                     }
 
     config = {
-        "download_dir": "",               # where to download data files
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
-        "image_dir": "datasets/medium_dataset/medium_dataset_images",                  # root where images are saved if different from dataset_dir
+        "image_dir": "",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
-        "group_level": group_levels_large[2],  # Set the Taxonomy group level
+        "group_level": group_levels['4'],  # Set the Taxonomy group level
         "data_format": "hdf5",            # the file format used (exe., hdf5)
         "exp_name": "",
-        "download": False,
         "make_split": False,
         "print_statistics": False,
         "print_split_statistics": False,
@@ -80,7 +83,7 @@ if __name__ == '__main__':
                         required=False)
     parser.add_argument('--log', type=str, default="runs", help='Path to the tf files', required=False)
     parser.add_argument('--download_dir', type=str, help='Directory to download our dataset',
-                        default=config["download_dir"], required=False)
+                        default="", required=False)
     parser.add_argument('--dataset_dir', type=str, help='Directory to our dataset', default=config["dataset_dir"],
                         required=False)
     parser.add_argument('--hdf5_dir', type=str, help='Directory to our hdf5 data format.',
@@ -94,7 +97,7 @@ if __name__ == '__main__':
 
     # #### Condition Settings #####
     parser.add_argument('--download', help='Whether to download from drive?',
-                        default=config["download"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--make_split', help='Whether to split dataset into train, validation and test sets?',
                         default=config["make_split"], action='store_true')
     parser.add_argument('--print_statistics', help='Whether to print dataset statistics?',
@@ -125,7 +128,6 @@ if __name__ == '__main__':
                         default=config["k"], type=int, required=False)
     parser.add_argument('--loss', type=str, help='decide which loss to use during training', default=config["loss"],
                         required=False, choices=["CE", "Focal"])
-
 
     # #### Model Settings #####
     parser.add_argument('--model', choices=['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',
