@@ -32,11 +32,11 @@ def make_configurations():
                      }
 
     config = {
-        "dataset_dir": "datasets/200K_datasets",                # root directory of the dataset, where images and dataframe files are saved
+        "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
-        "image_dir": "datasets/medium_dataset/medium_dataset_images",                  # root where images are saved if different from dataset_dir
-        "results_dir": "temp_result/temp_result",                # where results are saved (set for evaluation of the trained model)
-        "dataset_name": "200K_insect_dataset",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
+        "image_dir": "",                  # root where images are saved if different from dataset_dir
+        "results_dir": "",                # where results are saved (set for evaluation of the trained model)
+        "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "group_level": group_levels['4'],  # Set the Taxonomy group level
         "data_format": "",            # the file format used (exe., hdf5)
         "exp_name": "",
