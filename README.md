@@ -1,5 +1,28 @@
 # BioScan-1M
-  <p align="middle">
+
+###### <h3> Overview
+This repository contains the codes and data for BioScan-1M datasets project. 
+In this project, three datasets of different sizes are published. 
+The dataset files can be downloaded through the **link**. 
+There are different classification experiments conducted using RGB images in this project.
+ 
+ 
+###### <h3> Datasets
+BioScan dataset provides researchers with information about living organisms. 
+Three main sources of information published by the BioScan dataset are: 
+
+###### <h4> I. Biological taxonomy ranking of the organisms
+
+![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
+
+###### <h4> II. DNA barcode sequences and barcode indexing
+
+* DNA sequence
+* Barcode Index Number (BIN)
+
+###### <h4> III. RGB images of the individual organisms
+
+ <p align="middle">
   <img src="dataset/bioscan_images/3995976_Blattodea.jpg"     alt="Blattodea"     title="Blattodea" width="150" hspace="2"/>
   <img src="dataset/bioscan_images/4049775_Hemiptera.jpg"     alt="Hemiptera"     title="Hemiptera" width="150" hspace="2"/>
   <img src="dataset/bioscan_images/4079301_Archaeognatha.jpg" alt="Archaeognatha" title="Archaeognatha" width="150" hspace="2"/>
@@ -26,22 +49,6 @@ $${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \
 $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
 
-###### <h3> Overview
-This repository contains the codes and data for BioScan-1M datasets project. 
-In this project, three datasets of different sizes are published. 
-The dataset files can be downloaded through **link**. 
-There are different classification experiments conducted using RGB images.
- 
- 
-###### <h3> Datasets
-BioScan dataset contains information about living organisms. Three main sources of information published by
-BioScan dataset are: 
-
-* Biological taxonomy ranking of the organisms
-* DNA barcode sequences and barcode indexing
-* RGB images of the individual organisms
-
-![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
 
 To facilitate different levels of computational processing, we publish three varying sizes of the dataset: 
 
