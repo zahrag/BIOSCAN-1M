@@ -11,16 +11,16 @@ There are different classification experiments conducted using RGB images in thi
 BioScan dataset provides researchers with information about living organisms. 
 Three main sources of information published by the BioScan dataset are: 
 
-###### <h4> I. Biological taxonomy ranking 
+###### <h4> I. Biological Taxonomy Ranking 
 
 ![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
 
-###### <h4> II. DNA barcode sequences and barcode indexing
+###### <h4> II. DNA Barcode Sequences and Barcode Indexing
 
-* DNA sequence
+* DNA barcode sequence
 * Barcode Index Number (BIN)
 
-###### <h4> III. RGB images 
+###### <h4> III. RGB Images 
 
  <p align="middle">
   <img src="dataset/bioscan_images/3995976_Blattodea.jpg"     alt="Blattodea"     title="Blattodea" width="150" hspace="2"/>
