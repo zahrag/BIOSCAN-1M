@@ -7,6 +7,7 @@ from bioscan_dataloader import get_dataloader
 from train import train
 from test import test
 from utils import make_path_configs
+from crop_image import run_crop_tool
 import torch
 
 
@@ -111,6 +112,14 @@ if __name__ == '__main__':
     parser.add_argument('--test', help='Whether to test the model?',
                         default=config["test"], action='store_true')
 
+    # #### Preprocessing: Cropping Settings ######
+    parser.add_argument('--mata_path', type=str, default="", help="path to the meta directory")
+    parser.add_argument('--image_hdf5', type=str, default="", help="path to the image hdf5y")
+    parser.add_argument('--output_dir', type=str, default="", help="path to the image directory")
+    parser.add_argument('--output_hdf5', type=str, default="", help="path to the image hdf5y")
+    parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
+    parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
+
     # #### Training Settings ######
     parser.add_argument('--seed', type=int, default=config["seed"], help='set the seed for reproducibility',
                         required=False)
@@ -149,6 +158,9 @@ if __name__ == '__main__':
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
     download_data_files(config['download_dir']+"/bioscan_dataset", download=dict_args['download'])
+
+    # ##################################### RUN PRE-PROCESSING ###################################################
+    run_crop_tool(dict_args, crop_images=False)
 
     # ################################# PRINT DATASET STATISTICS #################################################
     show_dataset_statistics(dataset_name=dict_args['dataset_name'],
