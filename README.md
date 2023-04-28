@@ -49,7 +49,7 @@ $${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \
 $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
 
-
+###### <h3> BioScan Subsets
 To facilitate different levels of computational processing, we publish three varying sizes of the dataset: 
 
 * **BioScan-80K**: Small size dataset with 82,728 data samples.
@@ -59,6 +59,8 @@ To facilitate different levels of computational processing, we publish three var
 Due to limited space, there are only metadata files of the small dataset (BioScan-80K) and its train, 
 validation and test splits available in dataset folder together with a small set of RGB images.
  
+###### <h3> Datset Statistics
+
 To see statistics of the small dataset run the following:
 ```bash
 python main.py --print_statistics 
