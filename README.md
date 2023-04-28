@@ -7,7 +7,7 @@ The dataset files can be downloaded through the **link**.
 There are different classification experiments conducted using RGB images in this project.
  
  
-###### <h3> Datasets
+###### <h3> Dataset
 BioScan dataset provides researchers with information about living organisms. 
 Three main sources of information published by the BioScan dataset are: 
 
