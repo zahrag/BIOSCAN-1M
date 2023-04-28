@@ -120,7 +120,9 @@ def get_model(args, n_classes):
                       'mobilenet_v3_small': mobilenet_v3_small
                       }
     timm_models = {'inception_resnet_v2', 'inception_v4', 'efficientnet_b0', 'efficientnet_b1',
-                   'efficientnet_b2', 'efficientnet_b3', 'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'}
+                   'efficientnet_b2', 'efficientnet_b3', 'efficientnet_b4', 'vit_base_patch16_224',
+                   'vit_small_patch16_224'
+                   }
 
     if args.model in pytorch_models.keys() and not args.pretrained:
         if args.model == 'inception_v3':
