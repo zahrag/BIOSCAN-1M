@@ -40,6 +40,7 @@ def make_configurations():
         "group_level": group_levels['4'],  # Set the Taxonomy group level
         "data_format": "",            # the file format used (exe., hdf5)
         "exp_name": "",
+        "crop_image": False,
         "make_split": False,
         "print_statistics": False,
         "print_split_statistics": False,
@@ -107,6 +108,8 @@ if __name__ == '__main__':
                         default=config["print_split_statistics"], action='store_true')
     parser.add_argument('--loader', help='Whether to generate dataloader?',
                         default=config["dataloader"], action='store_true')
+    parser.add_argument('--crop_image', help='Whether to crop the images?',
+                        default=config["crop_image"], action='store_true')
     parser.add_argument('--train', help='Whether to train the model?',
                         default=config["train"], action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
@@ -160,7 +163,7 @@ if __name__ == '__main__':
     download_data_files(config['download_dir']+"/bioscan_dataset", download=dict_args['download'])
 
     # ##################################### RUN PRE-PROCESSING ###################################################
-    run_crop_tool(dict_args, crop_images=False)
+    run_crop_tool(dict_args, crop_images=dict_args['crop_image'])
 
     # ################################# PRINT DATASET STATISTICS #################################################
     show_dataset_statistics(dataset_name=dict_args['dataset_name'],

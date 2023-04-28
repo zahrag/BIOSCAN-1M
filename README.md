@@ -1,20 +1,20 @@
 # BioScan-1M
   <p align="middle">
-  <img src="dataset/bioscan_insect_images/3995976_Blattodea.jpg"     alt="Blattodea"     title="Blattodea" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4049775_Hemiptera.jpg"     alt="Hemiptera"     title="Hemiptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4079301_Archaeognatha.jpg" alt="Archaeognatha" title="Archaeognatha" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4079804_Psocodea.jpg"      alt="Psocodea"      title="Psocodea" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4091453_Embioptera.jpg"    alt="Embioptera"    title="Embioptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4273164_Dermaptera.jpg"    alt="Dermaptera"    title="Dermaptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4279962_Ephemeroptera.jpg" alt="Ephemeroptera" title="Ephemeroptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4284053_Odonata.jpg"       alt="Odonata"       title="Odonata" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/4285466_Plecoptera.jpg"    alt="Plecoptera"    title="Plecoptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/5071176_Thysanoptera.jpg"  alt="Thysanoptera"  title="Thysanoptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/5131549_Neuroptera.jpg"    alt="Neuroptera"    title="Neuroptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/5154627_Trichoptera.jpg"   alt="Trichoptera"   title="Trichoptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/5189695_Hymenoptera.jpg"   alt="Hymenoptera"   title="Hymenoptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/5578509_Zoraptera.jpg"     alt="Zoraptera"     title="Zoraptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_insect_images/5580278_Coleoptera.jpg"    alt="Coleoptera"    title="Coleoptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/3995976_Blattodea.jpg"     alt="Blattodea"     title="Blattodea" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4049775_Hemiptera.jpg"     alt="Hemiptera"     title="Hemiptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4079301_Archaeognatha.jpg" alt="Archaeognatha" title="Archaeognatha" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4079804_Psocodea.jpg"      alt="Psocodea"      title="Psocodea" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4091453_Embioptera.jpg"    alt="Embioptera"    title="Embioptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4273164_Dermaptera.jpg"    alt="Dermaptera"    title="Dermaptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4279962_Ephemeroptera.jpg" alt="Ephemeroptera" title="Ephemeroptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4284053_Odonata.jpg"       alt="Odonata"       title="Odonata" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/4285466_Plecoptera.jpg"    alt="Plecoptera"    title="Plecoptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5071176_Thysanoptera.jpg"  alt="Thysanoptera"  title="Thysanoptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5131549_Neuroptera.jpg"    alt="Neuroptera"    title="Neuroptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5154627_Trichoptera.jpg"   alt="Trichoptera"   title="Trichoptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5189695_Hymenoptera.jpg"   alt="Hymenoptera"   title="Hymenoptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5578509_Zoraptera.jpg"     alt="Zoraptera"     title="Zoraptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5580278_Coleoptera.jpg"    alt="Coleoptera"    title="Coleoptera" width="150" hspace="2"/>
 </p>
 
 <p align="middle">  $$ Insect \space Orders $$ </p>
@@ -27,32 +27,69 @@ $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \co
 
 
 ###### <h3> Overview
-This repository contains the codes and data for BioScan-1M datasets project. In this project, three datasets of different number of images are published. The dataset files can be downloaded throuh **link**. We also conducted "Order" level clasification experiments based on RGB images of the insects using basline method inspired by [PlantNet-300K](https://github.com/plantnet/PlantNet-300K/edit/main/README.md) and a transformer based approach the **ViT** as well. 
+This repository contains the codes and data for BioScan-1M datasets project. 
+In this project, three datasets of different sizes are published. 
+The dataset files can be downloaded through **link**. 
+There are different classification experiments conducted using RGB images.
  
  
 ###### <h3> Datasets
-The datasets contains RGB images, metadata information and the Barcode DNA indexing of the insects. Three sizes of the dataset created for publication are Small, Medium and Big. Our Small, Medium and Big datasets respectively contain 82728, 200K and 1.2M RGB images of the insects. Due to extreme class inbalances not all orders have sufficient samples for splitting data into Train, Validation and Test sets. 
+BioScan dataset contains information about living organisms. Three main sources of information published by
+BioScan dataset are: 
 
+* Biological taxonomy ranking of the organisms
+* DNA barcode sequences and barcode indexing
+* RGB images of the individual organisms
+
+![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
+
+To facilitate different levels of computational processing, we publish three varying sizes of the dataset: 
+
+* **BioScan-80K**: Small size dataset with 82,728 data samples.
+* **BioScan-200K**: Medium size dataset with 195,585.
+* **BioScan-1M**: Large size dataset with 1,285,378.
+
+Due to limited space, there are only metadata files of the small dataset (BioScan-80K) and its train, 
+validation and test splits available in dataset folder together with a small set of RGB images.
  
-Due to limited space, there are only metadata files of the small dataset and its train, validation and test splits available in dataset folder together with a small set of RGB images.
- 
-To see statistics of the small dataset run the follwoing:
+To see statistics of the small dataset run the following:
 ```bash
-python main.py --print_statistics
+python main.py --print_statistics 
 ``` 
  
 To split the small dataset into Train, Validation and Test sets run the follwoing:
 ```bash
-python main.py --make_split
+python main.py --make_split --print_split_statistics
 ``` 
  
-###### <h3> Insect Order Classification 
-We conducted multi-class classification experiments using BioScan datasets. There are two sets of experiments. First we ran experiments based on the baseline method and then we utilized a transformer based model ViT to run our experiments.  
+###### <h3> BioScan Classification 
+We conducted multi-class classification experiments using RGB images of the BioScan datasets. 
+We addressed two classification problems based on biological taxonomy ranking annotation 
+available by the BioScan dataset.
+
+* Insect-Class Order-Level image classification: In total 16 different **orders** of insects are predicted.
+* Insect-Class Order-Diptera image classification: In total 40 **families** of the Diptera from insect class are predicted.  
 
 To train the model on classification task using a baseline model run:
 ```bash
 python main.py --loader --train
 ``` 
+
+###### <h3> Preprocessing
+To increase efficiency with respect to time and computational resources required for running experiments 
+with RGB images of the BioScan dataset, we performed offline preprocessing by applying a cropping tool 
+on the original RGB images. 
+
+To use the cropping tool, first add the module:
+
+```bash
+git submodule add git@github.com:zmgong/BioScan-croptool.git crop_tool --force
+``` 
+
+```bash
+python main.py --crop_image
+``` 
+
 
 ###### <h3> Requirement 
 The requirements file used to run experiments is available in the requirement.txt.
