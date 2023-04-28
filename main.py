@@ -31,13 +31,13 @@ def make_configurations():
                      }
 
     config = {
-        "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
+        "dataset_dir": "datasets/200K_datasets",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
-        "image_dir": "",                  # root where images are saved if different from dataset_dir
-        "results_dir": "",                # where results are saved (set for evaluation of the trained model)
-        "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
+        "image_dir": "datasets/medium_dataset/medium_dataset_images",                  # root where images are saved if different from dataset_dir
+        "results_dir": "temp_result/temp_result",                # where results are saved (set for evaluation of the trained model)
+        "dataset_name": "200K_insect_dataset",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "group_level": group_levels['4'],  # Set the Taxonomy group level
-        "data_format": "hdf5",            # the file format used (exe., hdf5)
+        "data_format": "",            # the file format used (exe., hdf5)
         "exp_name": "",
         "make_split": False,
         "print_statistics": False,
@@ -52,13 +52,13 @@ def make_configurations():
         "crop_size": 224,
         "num_workers": 4,
         "seed": 1,
-        "n_epochs": 10,
+        "n_epochs": 100,
         "epoch_decay": [20, 25],
         "momentum": 0.9,
         "mu": 0.0001,
         "lr": 0.01,
         "k": [1, 3, 5, 10],
-        "model": "resnet50",
+        "model": "vit_small_patch16_224",
         "loss": "CE"
     }
 
@@ -137,7 +137,7 @@ if __name__ == '__main__':
                                             'vgg11', 'mobilenet_v3_large', 'mobilenet_v3_small',
                                             'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                                             'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
-                                            'efficientnet_b4', 'vit_base_patch16_224'],
+                                            'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
                         default=config["model"], help='choose the model you want to train on', required=False)
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )

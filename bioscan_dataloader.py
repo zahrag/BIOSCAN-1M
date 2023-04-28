@@ -27,7 +27,7 @@ class BioScanLoader(Dataset):
         self.transform = transform
         self.image_dir = args['image_dir']
         self.hdf5_dir = args['hdf5_dir']
-        self.metadata_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{split}_metadata.tsv"
+        self.metadata_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{args['group_level']}_{split}_metadata.tsv"
 
         self.dataset = BioScan()
         self.dataset.set_statistics(group_level=args['group_level'], metadata_dir=self.metadata_dir)
@@ -120,9 +120,9 @@ def get_dataloader(args, data_idx_label):
                           'n_val': val_dataset.number_of_samples,
                           'n_test': test_dataset.number_of_samples,
                           'n_classes': train_dataset.number_of_class,
-                          'class2num_instances': {'train': list(train_dataset.n_samples_per_class.values()),
-                                                  'val': list(val_dataset.n_samples_per_class.values()),
-                                                  'test': list(test_dataset.n_samples_per_class.values()),
+                          'class2num_instances': {'train': list(train_dataset.n_samples_per_class),
+                                                  'val': list(val_dataset.n_samples_per_class),
+                                                  'test': list(test_dataset.n_samples_per_class),
                                                   },
                           'class_to_idx': data_idx_label}
 
