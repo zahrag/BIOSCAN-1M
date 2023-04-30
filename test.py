@@ -10,13 +10,13 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
 def test(args, test_loader, dataset_attributes):
 
-    if not args.test:
+    if not args['test']:
         return
 
     set_seed(args, use_gpu=torch.cuda.is_available())
 
     results = []
-    with (open(f'{args.results_dir}/{args.exp_name}/{args.dataset_name}_train_val.pkl', "rb")) as openfile:
+    with (open(f"{args['results_dir']}/{args['exp_name']}/{args['dataset_name']}_train_val.pkl", "rb")) as openfile:
         while True:
             try:
                 results.append(pickle.load(openfile))
@@ -25,14 +25,14 @@ def test(args, test_loader, dataset_attributes):
 
     lmbda_best_acc = results[0]['lmbda_best_acc']
     model = get_model(args, n_classes=dataset_attributes['n_classes'])
-    best_model = f'{args.results_dir}/{args.exp_name}/{args.dataset_name}_weights_best_acc.tar'
-    load_model(model, best_model, args.use_gpu)
+    best_model = f"{args['results_dir']}/{args['exp_name']}/{args['dataset_name']}_weights_best_acc.tar"
+    load_model(model, best_model, args['use_gpu'])
     model.cuda()
     criteria = CrossEntropyLoss()
 
     loss_test_ba, acc_test_ba, topk_acc_test_ba, \
-    avgk_acc_test_ba, class_acc_test, macro_topk_acc_test = test_epoch(model, test_loader, criteria, args.k,
-                                                                       lmbda_best_acc, args.use_gpu,
+    avgk_acc_test_ba, class_acc_test, macro_topk_acc_test = test_epoch(model, test_loader, criteria, args['k'],
+                                                                       lmbda_best_acc, args['use_gpu'],
                                                                        dataset_attributes)
 
     # Save Test results as a dictionary and save it as a pickle file in desired location
@@ -46,6 +46,6 @@ def test(args, test_loader, dataset_attributes):
                                 },
                'params': args.__dict__}
 
-    with open(f'{args.results_dir}/{args.exp_name}/{args.dataset_name}_test.pkl', 'wb') as f:
+    with open(f"{args['results_dir']}/{args['exp_name']}/{args['dataset_name']}_test.pkl", 'wb') as f:
         pickle.dump(results, f)
 

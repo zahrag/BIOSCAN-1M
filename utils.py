@@ -202,30 +202,6 @@ def make_tsv(file, name=None, path=None):
     file.to_csv(path + name, sep='\t', index=False)
 
 
-def save_configs(datetime, config, log_dir=None):
-    info = f"Configurations of Experiment Run on {datetime}\n"
-    for item in config.keys():
-        info += f'{item}:{config[item]}\n'
-
-    with open(log_dir + f"{config['exp_name']}_configs.txt", "w") as fp:
-        fp.write(info)
-    fp.close()
-
-
-def make_path_configs(config, timestamp):
-    if config["train"]:
-        save_dir = os.path.join(os.getcwd(), config["results_dir"])
-        save_dir += "/{timestamp:s}_{dataset:s}_epoch{epoch:d}/".format(timestamp=timestamp,
-                                                                        dataset=config['dataset_name'],
-                                                                        epoch=config["n_epochs"])
-        make_directory(save_dir)
-        save_configs(timestamp, config, log_dir=save_dir)
-        config["results_dir"] = save_dir
-        config["exp_name"] = config["dataset_name"]
-
-    return config
-
-
 def make_hdf5(dataset_name='small_dataset', path=None):
     dataset_dir = f"{path}/{dataset_name}"
     hdf5_file = h5py.File(f"{dataset_dir}/{dataset_name}_hdf5", 'w')
