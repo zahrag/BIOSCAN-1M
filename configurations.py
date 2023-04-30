@@ -48,6 +48,8 @@ def set_configurations(config=None):
                         default=config["train"], action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
                         default=config["test"], action='store_true')
+    parser.add_argument('--crop_image', help='Whether to crop dataset images?',
+                        default=config["crop_image"], action='store_true')
 
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--mata_path', type=str, default="", help="path to the meta directory")
