@@ -76,11 +76,9 @@ if __name__ == '__main__':
     # Save model configurations
     configs = make_path_configs(configs, timestamp)
 
-    # ################################ Save Configurations of the Experiment ####################################
-    config = make_path_configs(configs, timestamp)
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
-    download_data_files(config['download_dir']+"/bioscan_dataset", download=configs['download'])
+    download_data_files(configs['download_dir']+"/bioscan_dataset", download=configs['download'])
 
     # ##################################### RUN PRE-PROCESSING ###################################################
     run_crop_tool(configs, crop_images=configs['crop_image'])
