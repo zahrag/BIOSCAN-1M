@@ -6,8 +6,7 @@ from bioscan_dataloader import get_dataloader
 from train import train
 from test import test
 from crop_image import run_crop_tool
-from configurations import set_configurations
-from configurations import make_path_configs
+from configurations import set_configurations, make_path_configs
 
 
 def get_exp_configs():
@@ -71,11 +70,10 @@ if __name__ == '__main__':
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
     # Get experiment's specific configurations
     exp_configs, timestamp = get_exp_configs()
-    # Get model configurations
+    # Get model's configurations
     configs = set_configurations(exp_configs)
-    # Save model configurations
+    # Save model's configurations
     configs = make_path_configs(configs, timestamp)
-
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
     download_data_files(configs['download_dir']+"/bioscan_dataset", download=configs['download'])
