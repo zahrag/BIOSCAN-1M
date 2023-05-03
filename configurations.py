@@ -73,6 +73,8 @@ def set_configurations(config=None):
     parser.add_argument('--num_workers', type=int, default=config["num_workers"], required=False)
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=config["k"], type=int, required=False)
+    parser.add_argument('--loss', type=str, help='decide which loss to use during training', default=config["loss"],
+                        required=False, choices=["CE", "Focal"])
 
     # #### Model Settings #####
     parser.add_argument('--model', choices=['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',
@@ -82,7 +84,7 @@ def set_configurations(config=None):
                         'vgg11', 'mobilenet_v3_large', 'mobilenet_v3_small',
                         'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                         'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
-                        'efficientnet_b4', 'vit_base_patch16_224'],
+                        'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
                         default=config["model"], help='choose the model you want to train on', required=False)
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(),)

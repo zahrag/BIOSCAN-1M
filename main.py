@@ -30,7 +30,7 @@ def get_exp_configs():
                      }
 
     config = {
-        "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
+        "dataset_dir": "datasets/200K_datasets",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
         "image_dir": "",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
