@@ -31,13 +31,13 @@ def save_cropped_image(args, img, cropped_img, output_hdf5, file):
     """
 
     if args.data_format == "":
-        if args.output_dir is not None:
-            cropped_img.save(os.path.join(args.output_dir, "CROPPED_" + os.path.basename(img)))
+        if args.crop_output_dir is not None:
+            cropped_img.save(os.path.join(args.crop_output_dir, "CROPPED_" + os.path.basename(img)))
         else:
             cropped_img.save(os.path.join(os.path.dirname(img), "CROPPED_" + os.path.basename(img)))
 
     if args.data_format == "hdf5":
-        if args.output_dir is not None:
+        if args.crop_output_dir is not None:
             output_hdf5.create_dataset("CROPPED_" + img, data=cropped_img)
         else:
             file[args.dataset_name].create_dataset("CROPPED_" + img, data=cropped_img)
@@ -62,11 +62,13 @@ def crop_image(args_dict, original_images):
     feature_extractor = DetrFeatureExtractor.from_pretrained("facebook/detr-resnet-50")
     model = load_model_from_ckpt(args)
     output_hdf5 = None
+    file = None
     if args.data_format == "hdf5":
         file = h5py.File(args.hdf5_dir, 'a')
         if args.output_hdf5 is not None:
             output_hdf5 = h5py.File(args.output_hdf5, 'w')
     for orig_img in tqdm(original_images):
+        image = None
         if args.data_format == "":
             if os.path.isfile(orig_img):
                 try:
@@ -120,23 +122,31 @@ def detect_uncropped_images(args):
     list_of_uncropped_image_path = []
     df = pd.read_csv(args.mata_path, sep='\t', low_memory=False)
     image_names = df['image_file'].to_list()
-
+    pbar = tqdm(image_names)
     if args.data_format == "":
-        for img in image_names:
+        for img in pbar:
+            pbar.set_description("Detect Uncropped Images: ")
             curr_image_dir = os.path.join(args.image_dir, img)
-            curr_cropped_image_dir = os.path.join(args.image_dir, "CROPPED_" + img)
+            curr_cropped_image_dir = os.path.join(args.crop_output_dir, "CROPPED_" + img)
             if not os.path.isfile(curr_image_dir):
                 sys.exit(curr_image_dir + "does not exit")
             if not os.path.isfile(curr_cropped_image_dir):
                 list_of_uncropped_image_path.append(curr_image_dir)
     elif args.data_format == "hdf5":
-        file = h5py.File(args.image_hdf5, 'a')
-        keys = file[args.dataset_name].keys()
-        for i in image_names:
-            if i not in keys:
-                sys.exit(i + "does not exit")
-            if 'CROPPED_' + i not in keys:
+        if os.path.isfile(args.output_hdf5):
+            file = h5py.File(args.output_hdf5, 'a')
+            keys = file[args.dataset_name].keys()
+            for i in pbar:
+                pbar.set_description("Detect Uncropped Images: ")
+                if i not in keys:
+                    sys.exit(i + "does not exit")
+                if 'CROPPED_' + i not in keys:
+                    list_of_uncropped_image_path.append(i)
+        else:
+            for i in pbar:
+                pbar.set_description("Detect Uncropped Images: ")
                 list_of_uncropped_image_path.append(i)
+
     else:
         sys.exit("Wrong data_format: " + args.data_format + " does not exist.")
 
@@ -151,12 +161,22 @@ def run_crop_tool(args, crop_images=False):
     :param crop_images: If crop images?
     :return:
     """
+    if isinstance(args, dict):
+        args = CustomArg(d=args)
 
     if not crop_images:
         return
 
-    if args.data_format == "" and args.output_dir is not None:
-        os.makedirs(args.data_format, exist_ok=True)
+    if args.data_format == "":
+        if args.crop_output_dir is None or args.crop_output_dir == "":
+            args.crop_output_dir = args.image_dir
+
+    if args.data_format == "hdf5":
+        if args.output_hdf5 is None or args.output_hdf5 == "":
+            args.output_hdf5 = args.image_hdf5
+
+    if args.data_format == "" and args.crop_output_dir is not None:
+        os.makedirs(args.crop_output_dir, exist_ok=True)
     if args.data_format == "hdf5" and args.output_hdf5 is not None:
         with h5py.File(args.output_hdf5, 'a') as f:
             pass

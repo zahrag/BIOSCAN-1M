@@ -34,7 +34,7 @@ def make_configurations():
     config = {
         "dataset_dir": "",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
-        "image_dir": "",                  # root where images are saved if different from dataset_dir
+        "image_dir": "datasets/medium_dataset/medium_dataset_images",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "group_level": group_levels['4'],  # Set the Taxonomy group level
@@ -116,11 +116,11 @@ if __name__ == '__main__':
                         default=config["test"], action='store_true')
 
     # #### Preprocessing: Cropping Settings ######
-    parser.add_argument('--mata_path', type=str, default="", help="path to the meta directory")
+    parser.add_argument('--mata_path', type=str, default="datasets/200K_datasets/200K_dataset_metadata.tsv", help="path to the meta directory")
     parser.add_argument('--image_hdf5', type=str, default="", help="path to the image hdf5y")
-    parser.add_argument('--output_dir', type=str, default="", help="path to the image directory")
+    parser.add_argument('--crop_output_dir', type=str, default="datasets/medium_dataset/medium_dataset_images_cropped_with_bioscan_crop_tool", help="path to the image directory")
     parser.add_argument('--output_hdf5', type=str, default="", help="path to the image hdf5y")
-    parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
+    parser.add_argument('--checkpoint_path', type=str, default="crop_tool/checkpoints/epoch=31-step=600.ckpt", help="Path to the checkpoint.")
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
 
     # #### Training Settings ######
@@ -171,7 +171,9 @@ if __name__ == '__main__':
                             show=dict_args['print_statistics'])
 
     # ################################### CREATE DATASET SPLIT ###################################################
-    data_idx_label = make_split(dict_args)
+    data_idx_label = None
+    if dict_args['print_statistics'] or dict_args['loader'] or dict_args['train'] or dict_args['test']:
+        data_idx_label = make_split(dict_args)
 
     # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
     show_statistics(gt_ID=data_idx_label, group_level=dict_args['group_level'],
