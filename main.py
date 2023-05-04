@@ -32,7 +32,7 @@ def get_exp_configs():
     config = {
         "dataset_dir": "datasets/200K_datasets",                # root directory of the dataset, where images and dataframe files are saved
         "hdf5_dir": "",                   # root directory to HDF5 data format
-        "image_dir": "",                  # root where images are saved if different from dataset_dir
+        "image_dir": "image_dir/medium_dataset_images",                  # root where images are saved if different from dataset_dir
         "results_dir": "",                # where results are saved (set for evaluation of the trained model)
         "dataset_name": "",               # Name of the dataset, exe., small_dataset, medium_dataset, big_dataset
         "group_level": group_levels['4'],  # Set the Taxonomy group level
@@ -87,7 +87,11 @@ if __name__ == '__main__':
                             show=configs['print_statistics'])
 
     # ################################### CREATE DATASET SPLIT ###################################################
-    data_idx_label = make_split(configs)
+
+    if configs['train'] or configs['test'] or configs['print_statistics'] or configs['loader']:
+        data_idx_label = make_split(configs)
+    else:
+        data_idx_label = None
 
     # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
     show_statistics(gt_ID=data_idx_label, group_level=configs['group_level'],

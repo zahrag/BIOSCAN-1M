@@ -52,7 +52,7 @@ def set_configurations(config=None):
                         default=config["crop_image"], action='store_true')
 
     # #### Preprocessing: Cropping Settings ######
-    parser.add_argument('--mata_path', type=str, default="", help="path to the meta directory")
+    parser.add_argument('--meta_path', type=str, default="", help="path to the meta directory")
     parser.add_argument('--image_hdf5', type=str, default="", help="path to the image hdf5y")
     parser.add_argument('--output_dir', type=str, default="", help="path to the image directory")
     parser.add_argument('--output_hdf5', type=str, default="", help="path to the image hdf5y")
