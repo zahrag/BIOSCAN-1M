@@ -7,9 +7,9 @@ from tqdm import tqdm
 from PIL import Image
 
 from transformers import DetrFeatureExtractor
-from crop_tool.util.visualize_and_process_bbox import get_bbox_from_output, scale_bbox
-from crop_tool.scripts.crop_images import expand_image
-from crop_tool.model.detr import load_model_from_ckpt
+from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, scale_bbox
+from crop_tool_sup.scripts.crop_images import expand_image
+from crop_tool_sup.model.detr import load_model_from_ckpt
 
 
 class CustomArg:

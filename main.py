@@ -59,7 +59,8 @@ def get_exp_configs():
         "lr": 0.01,
         "k": [1, 3, 5, 10],
         "model": "vit_small_patch16_224",
-        "loss": "CE"
+        "loss": "CE",
+        "equal_extend": True
     }
 
     return config, timestamp
