@@ -20,6 +20,7 @@ class BioScan(Dataset):
         self.df = pd.read_csv(self.metadata_dir, sep='\t', low_memory=False)
         self.index = self.df.index.to_list()
         self.df_categories = self.df.keys().to_list()
+        self.n_DatasetAttributes = len(self.df_categories)
 
         # Biological Taxonomy
         self.taxa_gt_sored = {'0': 'domain',      '1': 'kingdom',   '2': 'phylum', '3': 'class', '4': 'order',
@@ -41,6 +42,10 @@ class BioScan(Dataset):
 
         # RGB Images
         self.image_names = self.df['image_file'].to_list()
+
+        # Data Chunk index
+        self.chunk_length = 10000
+        self.chunk_index = self.df['Chunk_Index']
 
     def __len__(self):
         return len(self.index)

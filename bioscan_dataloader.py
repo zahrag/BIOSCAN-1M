@@ -11,7 +11,7 @@ import os
 
 class BioScanLoader(Dataset):
 
-    def __init__(self, args, data_idx_label, transform=None, split=None):
+    def __init__(self, args, data_idx_label, transform=None, split=''):
         """
         This function created dataloader.
 
@@ -22,12 +22,12 @@ class BioScanLoader(Dataset):
         """
 
         self.split = split
+        self.transform = transform
         self.cropped = args['cropped']
         self.data_format = args['data_format']
-        self.transform = transform
-        self.image_dir = args['image_dir']
+        self.image_dir = args['image_path']
         self.hdf5_dir = args['hdf5_dir']
-        self.metadata_dir = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{args['group_level']}_{split}_metadata.tsv"
+        self.metadata_dir = args[f'metadata_path_{split}']
 
         self.dataset = BioScan()
         self.dataset.set_statistics(group_level=args['group_level'], metadata_dir=self.metadata_dir)
@@ -38,6 +38,8 @@ class BioScanLoader(Dataset):
         self.n_samples_per_class = self.dataset.get_n_sample_class(self.dataset.data_dict)
         self.number_of_class = len(data_idx_label)
         self.number_of_samples = len(self.sample_list)
+        self.chunk_idx = self.dataset.chunk_index
+        self.chunk_length = self.dataset.chunk_length
 
     def __len__(self):
         return len(self.img_names)
@@ -45,10 +47,10 @@ class BioScanLoader(Dataset):
     def load_image(self, index):
 
         if self.data_format == "hdf5":
-            file = h5py.File(self.hdf5_dir, 'r')
-            key = list(file.keys())[index]
-            data = np.asarray(file[key])
-            image = Image.open(io.BytesIO(data))
+            with h5py.File(f'{self.hdf5_dir}/HDF5_BioScan_Part{self.chunk_idx[index]}_CROPPED', 'r') as file:
+                dataset = file['bioscan_dataset']
+                data = np.asarray(dataset[self.img_names[index]])
+                image = Image.fromarray(data)
 
         elif self.cropped:
             image = Image.open(os.path.join(self.image_dir, "CROPPED_" + self.img_names[index])).convert('RGB')

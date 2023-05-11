@@ -16,7 +16,7 @@ def test(args, test_loader, dataset_attributes):
     set_seed(args, use_gpu=torch.cuda.is_available())
 
     results = []
-    with (open(f"{args['results_dir']}/{args['exp_name']}/{args['dataset_name']}_train_val.pkl", "rb")) as openfile:
+    with (open(f"{args['results_path']}/{args['exp_name']}/{args['dataset_name']}_train_val.pkl", "rb")) as openfile:
         while True:
             try:
                 results.append(pickle.load(openfile))
@@ -25,7 +25,7 @@ def test(args, test_loader, dataset_attributes):
 
     lmbda_best_acc = results[0]['lmbda_best_acc']
     model = get_model(args, n_classes=dataset_attributes['n_classes'])
-    best_model = f"{args['results_dir']}/{args['exp_name']}/{args['dataset_name']}_weights_best_acc.tar"
+    best_model = f"{args['results_path']}/{args['exp_name']}/{args['dataset_name']}_weights_best_acc.tar"
     load_model(model, best_model, args['use_gpu'])
     model.cuda()
     criteria = CrossEntropyLoss()
@@ -44,8 +44,8 @@ def test(args, test_loader, dataset_attributes):
                                 'macro_topk_acc_test': macro_topk_acc_test,
                                 'class_to_idx': dataset_attributes['class_to_idx'],
                                 },
-               'params': args.__dict__}
+               'params': args}
 
-    with open(f"{args['results_dir']}/{args['exp_name']}/{args['dataset_name']}_test.pkl", 'wb') as f:
+    with open(f"{args['results_path']}/{args['exp_name']}/{args['dataset_name']}_test.pkl", 'wb') as f:
         pickle.dump(results, f)
 

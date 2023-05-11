@@ -218,7 +218,7 @@ def make_split(args):
 
     if not args['make_split']:
 
-        metadata = f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_{args['group_level']}_train_metadata.tsv"
+        metadata = f"{args['dataset_path']}/{args['dataset_name']}/{args['dataset_name']}_{args['group_level']}_train_metadata.tsv"
         if not os.path.isfile(metadata):
             raise RuntimeError("You must split the dataset first!")
 
@@ -230,7 +230,7 @@ def make_split(args):
 
     # Get data statistics for the whole dataset
     dataset.set_statistics(group_level=args['group_level'],
-                           metadata_dir=f"{args['dataset_dir']}/{args['dataset_name']}/{args['dataset_name']}_metadata.tsv")
+                           metadata_dir=f"{args['dataset_path']}/{args['dataset_name']}/{args['dataset_name']}_metadata.tsv")
 
     # Split the whole dataset into Train, Validation and Test sets: Get indexes
     data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
@@ -240,15 +240,15 @@ def make_split(args):
 
     # Split the whole dataset into Train, Validation and Test sets: Save RGB images
     data_split.save_images(dataset.image_names, tr_indexes, val_indexes, ts_indexes, group_level=args['group_level'],
-                           dataset_name=args['dataset_name'], data_dir=args['dataset_dir'],
+                           dataset_name=args['dataset_name'], data_dir=args['dataset_path'],
                            save_split_images=False)
 
     # Split the whole dataset into Train, Validation and Test sets: Save Split Metadata (.tsv)
     data_split.save_split_metadata(dataset.df, tr_indexes, val_indexes, ts_indexes, group_level=args['group_level'],
-                                   dataset_name=args['dataset_name'], data_dir=args['dataset_dir'])
+                                   dataset_name=args['dataset_name'], data_dir=args['dataset_path'])
 
     # Save dataset in HDF5 format
-    data_split.save_hdf5(dataset_name=args['dataset_name'], data_dir=args['dataset_dir'], save_hdf5=False)
+    data_split.save_hdf5(dataset_name=args['dataset_name'], data_dir=args['dataset_path'], save_hdf5=False)
 
     return data_idx_label
 

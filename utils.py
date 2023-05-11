@@ -202,18 +202,18 @@ def make_tsv(file, name=None, path=None):
     file.to_csv(path + name, sep='\t', index=False)
 
 
-def make_hdf5(dataset_name='small_dataset', path=None):
-    dataset_dir = f"{path}/{dataset_name}"
-    hdf5_file = h5py.File(f"{dataset_dir}/{dataset_name}_hdf5", 'w')
-    df = pd.read_table(f"{dataset_dir}/{dataset_name}_metadata.tsv")
-    list_of_dict = df.to_dict(orient='records')
-    for image_data in tqdm(list_of_dict):
-        orgpic_id = image_data['orgpic_id']
-        image_dir = f"{dataset_dir}/{dataset_name}_images/{image_data['image_file']}"
-        with open(image_dir, 'rb') as img_f:
-            binary_data = img_f.read()
-        binary_data_np = np.asarray(binary_data)
-        hdf5_file.create_dataset(str(orgpic_id), data=binary_data_np)
+def make_hdf5(date_time, dataset_name='', path='', data_typ='Original', author='Zahra Gharaee'):
+
+    with h5py.File(path, 'w') as hdf5:
+        dataset = hdf5.create_group(dataset_name)
+        dataset.attrs['Description'] = f'BioScan {dataset_name}: {data_typ} Images'
+        dataset.attrs['Copyright Holder'] = 'CBG Photography Group'
+        dataset.attrs['Copyright Institution'] = 'Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)'
+        dataset.attrs['Photographer'] = 'CBG Robotic Imager'
+        dataset.attrs['Author'] = author
+        dataset.attrs['Date'] = date_time
+
+    return dataset
 
 
 class MulticlassFocalLoss(torch.nn.Module):
