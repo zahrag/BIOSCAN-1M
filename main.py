@@ -56,7 +56,11 @@ if __name__ == '__main__':
                             show=configs['print_statistics'])
 
     # ################################### CREATE DATASET SPLIT ###################################################
-    data_idx_label = make_split(configs)
+
+    if configs['train'] or configs['test'] or configs['print_statistics'] or configs['loader']:
+        data_idx_label = make_split(configs)
+    else:
+        data_idx_label = None
 
     # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
     show_statistics(gt_ID=data_idx_label, group_level=configs['group_level'],

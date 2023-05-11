@@ -19,12 +19,12 @@ from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet15
 
 def set_seed(args, use_gpu, print_out=True):
     if print_out:
-        print('Seed:\t {}'.format(args.seed))
-    random.seed(args.seed)
-    np.random.seed(args.seed)
-    torch.manual_seed(args.seed)
+        print('Seed:\t {}'.format(args['seed']))
+    random.seed(args['seed'])
+    np.random.seed(args['seed'])
+    torch.manual_seed(args['seed'])
     if use_gpu:
-        torch.cuda.manual_seed(args.seed)
+        torch.cuda.manual_seed(args['seed'])
 
 
 def update_correct_per_class(batch_output, batch_y, d):
@@ -124,44 +124,44 @@ def get_model(args, n_classes):
                    'vit_small_patch16_224'
                    }
 
-    if args.model in pytorch_models.keys() and not args.pretrained:
-        if args.model == 'inception_v3':
-            model = pytorch_models[args.model](pretrained=False, num_classes=n_classes, aux_logits=False)
+    if args['model'] in pytorch_models.keys() and not args['pretrained']:
+        if args['model'] == 'inception_v3':
+            model = pytorch_models[args['model']](pretrained=False, num_classes=n_classes, aux_logits=False)
         else:
-            model = pytorch_models[args.model](pretrained=False, num_classes=n_classes)
-    elif args.model in pytorch_models.keys() and args.pretrained:
-        if args.model in {'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'wide_resnet50_2',
+            model = pytorch_models[args['model']](pretrained=False, num_classes=n_classes)
+    elif args['model'] in pytorch_models.keys() and args['pretrained']:
+        if args['model'] in {'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'wide_resnet50_2',
                           'wide_resnet101_2', 'shufflenet'}:
-            model = pytorch_models[args.model](pretrained=True)
+            model = pytorch_models[args['model']](pretrained=True)
             num_ftrs = model.fc.in_features
             model.fc = nn.Linear(num_ftrs, n_classes)
-        elif args.model in {'alexnet', 'vgg11'}:
-            model = pytorch_models[args.model](pretrained=True)
+        elif args['model'] in {'alexnet', 'vgg11'}:
+            model = pytorch_models[args['model']](pretrained=True)
             num_ftrs = model.classifier[6].in_features
             model.classifier[6] = nn.Linear(num_ftrs, n_classes)
-        elif args.model in {'densenet121', 'densenet161', 'densenet169', 'densenet201'}:
-            model = pytorch_models[args.model](pretrained=True)
+        elif args['model'] in {'densenet121', 'densenet161', 'densenet169', 'densenet201'}:
+            model = pytorch_models[args['model']](pretrained=True)
             num_ftrs = model.classifier.in_features
             model.classifier = nn.Linear(num_ftrs, n_classes)
-        elif args.model == 'mobilenet_v2':
-            model = pytorch_models[args.model](pretrained=True)
+        elif args['model'] == 'mobilenet_v2':
+            model = pytorch_models[args['model']](pretrained=True)
             num_ftrs = model.classifier[1].in_features
             model.classifier[1] = nn.Linear(num_ftrs, n_classes)
-        elif args.model == 'inception_v3':
+        elif args['model'] == 'inception_v3':
             model = inception_v3(pretrained=True, aux_logits=False)
             num_ftrs = model.fc.in_features
             model.fc = nn.Linear(num_ftrs, n_classes)
-        elif args.model == 'squeezenet':
-            model = pytorch_models[args.model](pretrained=True)
+        elif args['model'] == 'squeezenet':
+            model = pytorch_models[args['model']](pretrained=True)
             model.classifier[1] = nn.Conv2d(512, n_classes, kernel_size=(1, 1), stride=(1, 1))
             model.num_classes = n_classes
-        elif args.model == 'mobilenet_v3_large' or args.model == 'mobilenet_v3_small':
-            model = pytorch_models[args.model](pretrained=True)
+        elif args['model'] == 'mobilenet_v3_large' or args['model'] == 'mobilenet_v3_small':
+            model = pytorch_models[args['model']](pretrained=True)
             num_ftrs = model.classifier[-1].in_features
             model.classifier[-1] = nn.Linear(num_ftrs, n_classes)
 
-    elif args.model in timm_models:
-        model = timm.create_model(args.model, pretrained=args.pretrained, num_classes=n_classes)
+    elif args['model'] in timm_models:
+        model = timm.create_model(args['model'], pretrained=args['pretrained'], num_classes=n_classes)
     else:
         raise NotImplementedError
 
