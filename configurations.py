@@ -62,13 +62,16 @@ def set_configurations(config=None):
                         help="Path to the metadata of the Test set.", required=False)
 
     parser.add_argument('--image_path', type=str, help='Path to the individual RGB images (if any).',
-                        default=config["image_dir"], required=False)
-    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=config["hdf5_dir"],
+                        default=config["image_path"], required=False)
+    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=config["hdf5_path"],
                         required=False)
-    parser.add_argument('--results_path', type=str, help='Path to save results.', default=config["results_dir"],
+    parser.add_argument('--results_path', type=str, help='Path to save results.', default=config["results_path"],
                         required=False)
-    parser.add_argument('--no_transform', default=False, action='store_true', required=False)
-    parser.add_argument('--cropped', default=True, action='store_true', required=False)
+    parser.add_argument('--no_transform', default=False, action='store_true',
+                        help='Not using transformation in dataloader?', required=False)
+    parser.add_argument('--cropped', default=True, action='store_true',
+                        help='Using cropped images?',
+                        required=False)
 
     # #### Condition Settings #####
     parser.add_argument('--download', help='Whether to download from drive?',
