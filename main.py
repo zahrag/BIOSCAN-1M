@@ -28,9 +28,26 @@ def get_exp_configs():
         "hdf5_path": "",
         "image_path": "",
         "results_path": "",
+        "group_level": "",
+        "data_format": "",
         "exp_name": "",
+        "print_statistics": False,
+        # ### Train/Test Tool ####
+        "metadata_path_train": "",
+        "metadata_path_val": "",
+        "metadata_path_test": "",
+        "dataloader": False,
+        "train": False,
+        "test": False,
+        "model": "resnet50",
+        "loss": "CE",
+        # ### Split Tool ####
+        "make_split": False,
+        "print_split_statistics": False,
+        # ### Crop Tool ####
+        "crop_image": False,
+        "checkpoint_path": "",
     }
-
     return config
 
 
@@ -39,10 +56,10 @@ if __name__ == '__main__':
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
     # Get experiment's specific configurations
     exp_configs = get_exp_configs()
-    # Get model's configurations
+    # Get model configurations
     configs = set_configurations(exp_configs)
-    # Save model's configurations
-    configs = make_path_configs(configs, exp_configs["date_time"])
+    # Save model configurations
+    configs = make_path_configs(configs)
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
     download_data_files(f"{configs['download_path']}/bioscan_dataset", download=configs['download'])

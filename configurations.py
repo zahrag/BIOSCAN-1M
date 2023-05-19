@@ -158,14 +158,14 @@ def save_configs(datetime, config, log_dir=None):
     fp.close()
 
 
-def make_path_configs(config, timestamp):
+def make_path_configs(config):
 
     if config["train"]:
         save_dir = os.path.join(os.getcwd(), config["results_path"])
-        save_dir += "/{timestamp:s}_{dataset:s}/".format(timestamp=timestamp,
+        save_dir += "/{timestamp:s}_{dataset:s}/".format(timestamp=config["date_time"],
                                                          dataset=config['dataset_name'])
         make_directory(save_dir)
-        save_configs(timestamp, config, log_dir=save_dir)
+        save_configs(config["date_time"], config, log_dir=save_dir)
         config["results_path"] = save_dir
         config["exp_name"] = config["dataset_name"]
 
