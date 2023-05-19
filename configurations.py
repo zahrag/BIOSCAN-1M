@@ -110,7 +110,7 @@ def set_configurations(config=None):
     parser.add_argument('--output_hdf5', type=str, default="", help="path to the image hdf5y")
     parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
-    parser.add_argument('--equal_extend', type=bool, default=config['equal_extend'], help="Extend cropped images in the height and width with the same length.")
+    parser.add_argument('--equal_extend', type=bool, default=True, help="Extend cropped images in the height and width with the same length.")
 
     # #### Training Settings ######
     parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility', required=False)
