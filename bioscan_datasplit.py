@@ -105,6 +105,7 @@ class BioScanSplit(Dataset):
         return train_images, validation_images, test_images
 
     def get_split_metadata(self, df, train_indexes, validation_indexes, test_indexes):
+
         """
            This function creates dataframe files for train, validation and test sets.
            """
@@ -132,23 +133,17 @@ class BioScanSplit(Dataset):
         train_df, validation_df, test_df = self.get_split_metadata(df, train_indexes, validation_indexes, test_indexes)
 
         # Save DataFrames (.tsv)
-        make_tsv(train_df, name=f"{dataset_name}_{group_level}_train_metadata.tsv", path=f"{data_dir}/{dataset_name}/")
-        make_tsv(validation_df, name=f"{dataset_name}_{group_level}_validation_metadata.tsv", path=f"{data_dir}/{dataset_name}/")
-        make_tsv(test_df, name=f"{dataset_name}_{group_level}_test_metadata.tsv", path=f"{data_dir}/{dataset_name}/")
+        make_tsv(train_df,
+                 name=f"{dataset_name}_{group_level}_train_metadata.tsv",
+                 path=f"{data_dir}/{dataset_name}")
 
-    def save_hdf5(self, dataset_name='small_dataset', data_dir=None, save_hdf5=False):
-        """
-        This function is written to save dataset images in HDF5 format, which is more efficient to handle the large-size
-        datasets.
-        :param dataset_name: Name of the dataset
-        :param data_dir: Path to the dataset directory.
-        :return: hdf5 saved file.
-        """
+        make_tsv(validation_df,
+                 name=f"{dataset_name}_{group_level}_validation_metadata.tsv",
+                 path=f"{data_dir}/{dataset_name}")
 
-        if not save_hdf5:
-            return
-
-        make_hdf5(dataset_name=dataset_name, path=data_dir)
+        make_tsv(test_df,
+                 name=f"{dataset_name}_{group_level}_test_metadata.tsv",
+                 path=f"{data_dir}/{dataset_name}")
 
     def save_images(self, image_list, train_indexes, validation_indexes, test_indexes, group_level='order',
                     dataset_name="small_dataset", data_dir=None, save_split_images=False):
@@ -218,19 +213,18 @@ def make_split(args):
 
     if not args['make_split']:
 
-        metadata = f"{args['dataset_path']}/{args['dataset_name']}/{args['dataset_name']}_{args['group_level']}_train_metadata.tsv"
-        if not os.path.isfile(metadata):
+        if not os.path.isfile(args['metadata_path_train']):
             raise RuntimeError("You must split the dataset first!")
 
         # Get ground-truth labels from Train set
         dataset.set_statistics(group_level=args['group_level'],
-                               metadata_dir=metadata)
+                               metadata_dir=args['metadata_path_train'])
 
         return dataset.data_idx_label
 
     # Get data statistics for the whole dataset
     dataset.set_statistics(group_level=args['group_level'],
-                           metadata_dir=f"{args['dataset_path']}/{args['dataset_name']}/{args['dataset_name']}_metadata.tsv")
+                           metadata_dir=args['metadata_path'])
 
     # Split the whole dataset into Train, Validation and Test sets: Get indexes
     data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
@@ -246,9 +240,6 @@ def make_split(args):
     # Split the whole dataset into Train, Validation and Test sets: Save Split Metadata (.tsv)
     data_split.save_split_metadata(dataset.df, tr_indexes, val_indexes, ts_indexes, group_level=args['group_level'],
                                    dataset_name=args['dataset_name'], data_dir=args['dataset_path'])
-
-    # Save dataset in HDF5 format
-    data_split.save_hdf5(dataset_name=args['dataset_name'], data_dir=args['dataset_path'], save_hdf5=False)
 
     return data_idx_label
 

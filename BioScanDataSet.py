@@ -23,12 +23,12 @@ class BioScan(Dataset):
         self.n_DatasetAttributes = len(self.df_categories)
 
         # Biological Taxonomy
-        self.taxa_gt_sored = {'0': 'domain',      '1': 'kingdom',   '2': 'phylum', '3': 'class', '4': 'order',
-                              '5': 'family',      '6': 'subfamily', '7': 'tribe',  '8': 'genus', '9': 'species',
-                              '10': 'subspecies', '11': 'name'}
+        self.taxa_gt_sorted = {'0': 'domain',      '1': 'kingdom',   '2': 'phylum', '3': 'class', '4': 'order',
+                               '5': 'family',      '6': 'subfamily', '7': 'tribe',  '8': 'genus', '9': 'species',
+                               '10': 'subspecies', '11': 'name'}
 
         self.taxonomy_groups_list_dict = {}
-        for taxa in self.taxa_gt_sored.values():
+        for taxa in self.taxa_gt_sorted.values():
             if taxa in self.df_categories:
                 self.taxonomy_groups_list_dict[taxa] = self.df[taxa].to_list()
 
@@ -174,7 +174,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     print("----------------------------------------------------------------------------------------")
 
     # Get taxonomy ranking statistics
-    dataset_taxa = [taxa for taxa in dataset.taxa_gt_sored.values() if taxa in dataset.df_categories]
+    dataset_taxa = [taxa for taxa in dataset.taxa_gt_sorted.values() if taxa in dataset.df_categories]
 
     # Get subgroups statistics
     group_level_dict = {}
