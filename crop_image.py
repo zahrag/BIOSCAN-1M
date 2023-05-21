@@ -67,7 +67,9 @@ def crop_image(args, original_images):
             else:
                 output_hdf5 = h5py.File(args['output_hdf5'], 'a')
     for orig_img in tqdm(original_images):
+
         if args['data_format'] == "":
+            file = None
             if os.path.isfile(orig_img):
                 try:
                     image = Image.open(orig_img)
@@ -75,6 +77,7 @@ def crop_image(args, original_images):
                     print("Image not found in: " + orig_img)
                     exit(1)
         elif args['data_format'] == "hdf5":
+
             data = np.asarray(file[args['dataset_name']][orig_img])
             image = Image.fromarray(data)
         encoding = feature_extractor(images=image, return_tensors="pt")
@@ -125,7 +128,7 @@ def detect_uncropped_images(args):
         pbar = tqdm(image_names)
         for img in pbar:
             pbar.set_description("Detect uncropped images")
-            curr_image_dir = os.path.join(args['image_dir'], img)
+            curr_image_dir = os.path.join(args['image_path'], img)
             curr_cropped_image_dir = os.path.join(args['output_dir'], "CROPPED_" + img)
             if not os.path.isfile(curr_image_dir):
                 sys.exit(curr_image_dir + " does not exit")

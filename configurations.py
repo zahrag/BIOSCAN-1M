@@ -96,12 +96,7 @@ def set_configurations(config=None):
                         help='Format of the dataset, we want to read from.', required=False)
     parser.add_argument('--write_format', type=str, default="hdf5",
                         help='Format of the dataset, we write cropped images into.', required=False)
-    parser.add_argument('--crop_ratio', type=float, default=1.4,
-                        help="Scale the bbox to crop larger or small area.", required=False)
     parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.',
-                        required=False)
-    parser.add_argument('--checkpoint_path', type=str, default=config["checkpoint_path"],
-                        help="Path to the checkpoint.",
                         required=False)
     parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.', required=False)
     parser.add_argument('--meta_path', type=str, default="", help="path to the meta directory")
@@ -110,7 +105,7 @@ def set_configurations(config=None):
     parser.add_argument('--output_hdf5', type=str, default="", help="path to the image hdf5y")
     parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
-    parser.add_argument('--equal_extend', type=bool, default=True, help="Extend cropped images in the height and width with the same length.")
+    parser.add_argument('--equal_extend', default=True, help="Extend cropped images in the height and width with the same length.", action="store_true")
 
     # #### Training Settings ######
     parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility', required=False)
