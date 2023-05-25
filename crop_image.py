@@ -80,6 +80,7 @@ def crop_image(args, original_images):
 
             data = np.asarray(file[args['dataset_name']][orig_img])
             image = Image.fromarray(data)
+
         encoding = feature_extractor(images=image, return_tensors="pt")
         pixel_values = encoding["pixel_values"].squeeze().unsqueeze(0)
         outputs = model(pixel_values=pixel_values, pixel_mask=None)
