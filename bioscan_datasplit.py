@@ -201,9 +201,9 @@ class BioScanSplit(Dataset):
         make_tar(name=f"{dataset_name}_{group_level}_test_images.tar", path=test_images)
 
 
-def make_split(args):
+def make_split(configs):
     """
-        :param args: Argumnets
+        :param configs: Configurations
         :return: Ground-Truth Class Label-IDs
                  A dict which correspond each class string name to a numeric label ID.
         """
@@ -211,20 +211,18 @@ def make_split(args):
     dataset = BioScan()
     data_split = BioScanSplit()
 
-    if not args['make_split']:
+    if not configs['make_split']:
 
-        if not os.path.isfile(args['metadata_path_train']):
+        if not os.path.isfile(configs['metadata_path_train']):
             raise RuntimeError("You must split the dataset first!")
 
         # Get ground-truth labels from Train set
-        dataset.set_statistics(group_level=args['group_level'],
-                               metadata_dir=args['metadata_path_train'])
+        dataset.set_statistics(configs)
 
         return dataset.data_idx_label
 
     # Get data statistics for the whole dataset
-    dataset.set_statistics(group_level=args['group_level'],
-                           metadata_dir=args['metadata_path'])
+    dataset.set_statistics(configs)
 
     # Split the whole dataset into Train, Validation and Test sets: Get indexes
     data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
@@ -233,13 +231,13 @@ def make_split(args):
     data_idx_label = dataset.class_to_ids(data_dict_remained)
 
     # Split the whole dataset into Train, Validation and Test sets: Save RGB images
-    data_split.save_images(dataset.image_names, tr_indexes, val_indexes, ts_indexes, group_level=args['group_level'],
-                           dataset_name=args['dataset_name'], data_dir=args['dataset_path'],
+    data_split.save_images(dataset.image_names, tr_indexes, val_indexes, ts_indexes, group_level=configs['group_level'],
+                           dataset_name=configs['dataset_name'], data_dir=configs['dataset_path'],
                            save_split_images=False)
 
     # Split the whole dataset into Train, Validation and Test sets: Save Split Metadata (.tsv)
-    data_split.save_split_metadata(dataset.df, tr_indexes, val_indexes, ts_indexes, group_level=args['group_level'],
-                                   dataset_name=args['dataset_name'], data_dir=args['dataset_path'])
+    data_split.save_split_metadata(dataset.df, tr_indexes, val_indexes, ts_indexes, group_level=configs['group_level'],
+                                   dataset_name=configs['dataset_name'], data_dir=configs['dataset_path'])
 
     return data_idx_label
 

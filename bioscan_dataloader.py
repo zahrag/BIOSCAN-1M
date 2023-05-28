@@ -11,11 +11,11 @@ import os
 
 class BioScanLoader(Dataset):
 
-    def __init__(self, args, data_idx_label, transform=None, split=''):
+    def __init__(self, configs, data_idx_label, transform=None, split=''):
         """
         This function created dataloader.
 
-        :param args:
+        :param configs:
         :param data_idx_label: Ground-Truth Class Label-IDs
         :param transform: Transformation
         :param split: "train", "validation", "test"
@@ -23,14 +23,14 @@ class BioScanLoader(Dataset):
 
         self.split = split
         self.transform = transform
-        self.cropped = args['cropped']
-        self.data_format = args['data_format']
-        self.image_dir = args['image_path']
-        self.hdf5_dir = args['hdf5_dir']
-        self.metadata_dir = args[f'metadata_path_{split}']
+        self.cropped = configs['cropped']
+        self.data_format = configs['data_format']
+        self.image_dir = configs['image_path']
+        self.hdf5_dir = configs['hdf5_dir']
+        self.metadata_dir = configs[f'metadata_path']
 
         self.dataset = BioScan()
-        self.dataset.set_statistics(group_level=args['group_level'], metadata_dir=self.metadata_dir)
+        self.dataset.set_statistics(configs, split=split)
 
         self.sample_idx_label = data_idx_label
         self.img_names = self.dataset.image_names

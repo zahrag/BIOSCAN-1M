@@ -68,38 +68,20 @@ if __name__ == '__main__':
     run_crop_tool(configs, crop_images=configs['crop_image'])
 
     # ################################# PRINT DATASET STATISTICS #################################################
-    show_dataset_statistics(dataset_name=configs['dataset_name'],
-                            metadata_dir=configs['metadata_path'],
-                            show=configs['print_statistics'])
+    show_dataset_statistics(configs)
 
     # ################################### CREATE DATASET SPLIT ###################################################
-
-    if configs['train'] or configs['test'] or configs['print_statistics'] or configs['loader']:
-        data_idx_label = make_split(configs)
-    else:
-        data_idx_label = None
+    data_idx_label = make_split(configs)
 
     # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
-    show_statistics(gt_ID=data_idx_label, group_level=configs['group_level'],
-                    dataset_name=f"{configs['dataset_name']}",
-                    metadata_dir=configs['metadata_path'],
-                    show=configs['print_split_statistics'])
+    show_statistics(configs, gt_ID=data_idx_label, split='')
 
     # ################################# PRINT DATA SPLIT STATISTICS ##############################################
-    show_statistics(gt_ID=data_idx_label, group_level=configs['group_level'],
-                    dataset_name=f"{configs['dataset_name']} Train Set",
-                    metadata_dir=configs['metadata_path'],
-                    show=configs['print_split_statistics'])
+    show_statistics(configs, gt_ID=data_idx_label, split='train')
 
-    show_statistics(gt_ID=data_idx_label, group_level=configs['group_level'],
-                    dataset_name=f"{configs['dataset_name']} Validation Set",
-                    metadata_dir=configs['metadata_path'],
-                    show=configs['print_split_statistics'])
+    show_statistics(configs, gt_ID=data_idx_label, split='validation')
 
-    show_statistics(gt_ID=data_idx_label, group_level=configs['group_level'],
-                    dataset_name=f"{configs['dataset_name']} Test Set",
-                    metadata_dir=configs['metadata_path'],
-                    show=configs['print_split_statistics'])
+    show_statistics(configs, gt_ID=data_idx_label, split='test')
 
     # ###################################### DATALOADER ##########################################################
     train_dataloader, val_dataloader, test_dataloader, dataset_attributes = get_dataloader(configs, data_idx_label)

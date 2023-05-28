@@ -2,6 +2,7 @@
 import pandas as pd
 from torch.utils.data import Dataset
 import math
+import os
 
 
 class BioScan(Dataset):
@@ -10,14 +11,14 @@ class BioScan(Dataset):
            This class handles getting, setting and showing data statistics ...
            """
 
-    def get_statistics(self, metadata_dir):
+    def get_statistics(self, metadata_dir, split='', exp=''):
         """
            This function sets data attributes read from metadata file of the dataset.
            This includes biological taxonomy information, DNA barcode indexes and RGB image labels.
            """
 
         self.metadata_dir = metadata_dir
-        self.df = pd.read_csv(self.metadata_dir, sep='\t', low_memory=False)
+        self.df = self.read_metadata(metadata_dir, split, exp)
         self.index = self.df.index.to_list()
         self.df_categories = self.df.keys().to_list()
         self.n_DatasetAttributes = len(self.df_categories)
@@ -45,31 +46,44 @@ class BioScan(Dataset):
 
         # Data Chunk index
         self.chunk_length = 10000
-        self.chunk_index = self.df['Chunk_Index'].to_list()
+        self.chunk_index = self.df['chunk_number'].to_list()
 
     def __len__(self):
         return len(self.index)
 
-    def set_statistics(self, group_level="order", metadata_dir=None):
-        """
-        :param group_level: Group level of insect attributes used for processing. There are 9 biological categories defined
-        in the dataset, which can be utilized to classify an insect including: "Order", "Phylum", "Class", "Family",
-        "Subfamily", "Genus", "Tribe", "Species" and "SubSpecies".
-        In this research we use only "Insect" data in class level.
-        In this research we use "Order" information for classifying insects images.
+    def read_metadata(self, metadata_dir, split, exp):
 
-        :param dataset_name: "Small", "Medium", "Large", "Train", "Validation", "Test"
+        if os.path.isfile(metadata_dir):
+            df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
+        else:
+            raise RuntimeError(f"Not a metadata to read in:\n{metadata_dir}")
+
+        if not split:
+            return df
+
+        df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
+
+        print(f"\n{len(df_split)} of the samples are {split} of {exp}.")
+        df_split = pd.DataFrame(df_split)
+        df_split.reset_index(inplace=True, drop=True)
+
+        return df_split
+
+    def set_statistics(self, configs, split=''):
+        """
+
+        :param configs: Arguments
         :return:
         """
 
-        self.get_statistics(metadata_dir)
+        self.get_statistics(configs["metadata_path"], exp=configs["exp_name"], split=split)
 
         # Get data list as one of the Biological Taxonomy
-        if group_level in self.taxonomy_groups_list_dict.keys():
-            self.data_list = self.taxonomy_groups_list_dict[group_level]
+        if configs["group_level"] in self.taxonomy_groups_list_dict.keys():
+            self.data_list = self.taxonomy_groups_list_dict[configs["group_level"]]
 
         else:
-            print(f"Dataset Does NOT contain Taxonomy Group Ranking {group_level}")
+            print(f'Dataset Does NOT contain Taxonomy Group Ranking {configs["group_level"]}')
 
         # Get the data dictionary
         self.data_dict = self.make_data_dict(self.data_list, self.index)
@@ -152,18 +166,18 @@ class BioScan(Dataset):
         return data_list_ids
 
 
-def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, show=False):
+def show_dataset_statistics(configs):
     """
          This function shows data statistics from metadata file of the dataset.
          """
-    if not show:
+    if not configs["print_statistics"]:
         return
 
     print("\n\nCreating data statistics ...")
     print("ATTENTION:This process can take time especially if the dataset is big!")
 
     dataset = BioScan()
-    dataset.get_statistics(metadata_dir=metadata_dir)
+    dataset.get_statistics(metadata_dir=configs["metadata_path"])
 
     print("\n\n----------------------------------------------------------------------------------------")
     print(f"\t\t\t\t\t\t\t\tCopyright")
@@ -171,6 +185,8 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     print("Copyright Holder: CBG Photography Group")
     print("Copyright Institution: Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)")
     print("Photographer: CBG Robotic Imager")
+    print("Copyright: Creative Commons-Attribution Non-Commercial Share-Alike")
+    print("Copyright Contact: collectionsBIO@gmail.com")
     print("----------------------------------------------------------------------------------------")
 
     # Get taxonomy ranking statistics
@@ -179,7 +195,8 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     # Get subgroups statistics
     group_level_dict = {}
     for taxa in dataset_taxa:
-        dataset.set_statistics(group_level=taxa, metadata_dir=metadata_dir)
+        configs["group_level"] = taxa
+        dataset.set_statistics(configs)
         group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)
         group_level_dict[f"{taxa}_n_not_grouped_samples"] = 0
         if "not_classified" in dataset.data_dict:
@@ -187,7 +204,7 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
             group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)-1
 
     # Show statistics
-    print(f"\n\n\t\t\tStatistics of the {dataset_name} with a total of {len(dataset.df.index)} data samples")
+    print(f"\n\n\t\t\tStatistics of the {configs['dataset_name']} with a total of {len(dataset.df.index)} data samples")
     print("----------------------------------------------------------------------------------------")
     print("\t\t\t\t\t\t\tTaxonomy Group Ranking")
     print("-----------------------------------------------------------------------------------------")
@@ -221,15 +238,15 @@ def show_dataset_statistics(dataset_name="large_dataset", metadata_dir=None, sho
     print("\n----------------------------------------End-----------------------------------------------")
 
 
-def show_statistics(gt_ID, group_level="order", dataset_name="large_dataset", metadata_dir=None, show=False):
+def show_statistics(configs, gt_ID='', split=''):
     """
          This function shows data statistics from metadata file of the dataset.
          """
-    if not show:
+    if not configs["print_split_statistics"]:
         return
 
     dataset = BioScan()
-    dataset.set_statistics(group_level=group_level, metadata_dir=metadata_dir)
+    dataset.set_statistics(configs, split=split)
 
     label_IDs = {}
     for class_name in dataset.data_dict.keys():
@@ -238,9 +255,9 @@ def show_statistics(gt_ID, group_level="order", dataset_name="large_dataset", me
         else:
             label_IDs[class_name] = gt_ID[class_name]
 
-    table = [f"{group_level} Name", "Class Number", "Number of Samples"]
+    table = [f"{configs['group_level']} Name", "Class Number", "Number of Samples"]
     print("\n\n\n------------------------------------------------------------------------")
-    print(f"Set:{dataset_name}\t\tGroup Level:{group_level} \t\t\t\t")
+    print(f"Set:{configs['dataset_name']}\t\tGroup Level:{configs['group_level']} \t\t\t\t")
     print("------------------------------------------------------------------------")
     keys = dataset.data_dict.keys()
     data_idx_label = {}

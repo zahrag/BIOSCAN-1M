@@ -14,17 +14,13 @@ class BioScan_Configurations():
                                        '5': 'family', '6': 'subfamily', '7': 'tribe', '8': 'genus', '9': 'species',
                                        '10': 'subspecies', '11': 'name'}
 
-        self.dataset_names = {'1': '200K_dataset',
-                              '2': '200K_insect_dataset',
-                              '3': '200K_insect_diptera_dataset',
+        self.dataset_names = {'1': 'BioScan_Insect_Dataset',
+                              '2': 'BioScan_Medium_Insect_Dataset',
+                              }
 
-                              '4': 'bioscan_dataset',
-                              '5': 'bioscan_insect_dataset',
-                              '6': 'bioscan_insect_diptera_dataset',
-
-                              '7': '80K_dataset',
-                              '8': '80K_insect_dataset',
-                              '9': '80K_insect_diptera_dataset', }
+        self.experiment_names = {'1': 'insect_order_level',
+                                 '2': 'diptera_family_level',
+                                 }
 
         self.data_formats = ["folder", "hdf5", "tar"]
 
@@ -32,7 +28,7 @@ class BioScan_Configurations():
 def set_configurations(config=None):
 
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
-    print("\n Setting Hyper-parameters of the Experiment ...")
+    print("\nSetting Hyper-parameters of the Experiment ...")
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('--date_time', type=str, default=config["date_time"], help='Data & time of the experiment',
