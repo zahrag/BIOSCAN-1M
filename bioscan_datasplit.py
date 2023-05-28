@@ -212,7 +212,6 @@ def make_split(args):
     data_split = BioScanSplit()
 
     if not args['make_split']:
-
         if not os.path.isfile(args['metadata_path_train']):
             raise RuntimeError("You must split the dataset first!")
 

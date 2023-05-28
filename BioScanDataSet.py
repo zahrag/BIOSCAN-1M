@@ -45,7 +45,7 @@ class BioScan(Dataset):
 
         # Data Chunk index
         self.chunk_length = 10000
-        self.chunk_index = self.df['Chunk_Index'].to_list()
+        self.chunk_index = self.df['chunk_number'].to_list()
 
     def __len__(self):
         return len(self.index)

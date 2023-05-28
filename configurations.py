@@ -132,7 +132,7 @@ def set_configurations(config=None):
                                             'vgg11', 'mobilenet_v3_large', 'mobilenet_v3_small',
                                             'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                                             'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
-                                            'efficientnet_b4', 'vit_base_patch16_224'],
+                                            'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
                         default=config["model"], help='choose the model you want to train on', required=False)
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )

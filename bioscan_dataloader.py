@@ -26,7 +26,7 @@ class BioScanLoader(Dataset):
         self.cropped = args['cropped']
         self.data_format = args['data_format']
         self.image_dir = args['image_path']
-        self.hdf5_dir = args['hdf5_dir']
+        self.hdf5_dir = args['hdf5_path']
         self.metadata_dir = args[f'metadata_path_{split}']
 
         self.dataset = BioScan()
