@@ -70,7 +70,7 @@ class BioScan(Dataset):
             elif exp in self.experiment_names[2:]:
                 df_set = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl in ['train', 'validation', 'test']]
                 set = ['Medium' if ''.join(list(exp)[:3]) == 'med' else 'Small']
-                print(f"\n{len(df_set)} of the samples are {set[0]} set for experiment {exp}.")
+                # print(f"\n{len(df_set)} of the samples are {set[0]} set for experiment {exp}.")
                 df_set = pd.DataFrame(df_set)
                 df_set.reset_index(inplace=True, drop=True)
                 return df_set
@@ -208,6 +208,7 @@ def show_dataset_statistics(configs):
     # Get taxonomy ranking statistics
     dataset_taxa = [taxa for taxa in dataset.taxa_gt_sorted.values() if taxa in dataset.df_categories]
 
+    set_group_level = configs["group_level"]
     # Get subgroups statistics
     group_level_dict = {}
     for taxa in dataset_taxa:
@@ -218,6 +219,7 @@ def show_dataset_statistics(configs):
         if "not_classified" in dataset.data_dict:
             group_level_dict[f"{taxa}_n_not_grouped_samples"] = len(dataset.data_dict["not_classified"])
             group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)-1
+    configs["group_level"] = set_group_level
 
     # Show statistics
     print(f"\n\n\t\t\tStatistics of the {configs['dataset_name']} with a total of {len(dataset.df.index)} data samples")
