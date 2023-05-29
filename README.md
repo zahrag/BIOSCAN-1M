@@ -52,9 +52,9 @@ $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \co
 ###### <h3> BioScan Subsets
 To facilitate different levels of computational processing, we publish three varying sizes of the dataset: 
 
-* **BioScan-Small-Insect-Dataset**: Small size dataset with 82,728 data samples.
-* **BioScan-Medium-Insect-Dataset**: Medium size dataset with 195,585.
-* **BioScan-Large-Insect-Dataset**: Large size dataset with 1,285,378.
+* **BioScan-Small-Insect-Dataset**: Small size dataset with 50,000 data samples.
+* **BioScan-Medium-Insect-Dataset**: Medium size dataset with 194,085.
+* **BioScan-Large-Insect-Dataset**: Large size dataset with 1,200,000.
 
 Due to limited space, there are only metadata files of the small dataset (BioScan-80K) and its train, 
 validation and test splits available in dataset folder together with a small set of RGB images.
