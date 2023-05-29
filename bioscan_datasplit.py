@@ -213,9 +213,6 @@ def make_split(configs):
 
     if not configs['make_split']:
 
-        if not os.path.isfile(configs['metadata_path_train']):
-            raise RuntimeError("You must split the dataset first!")
-
         # Get ground-truth labels from Train set
         dataset.set_statistics(configs)
 

@@ -78,8 +78,11 @@ class BioScan(Dataset):
                 raise RuntimeError(f"No an experiment is set!")
 
         # Get the split metadata
+        if exp not in df.columns:
+            raise RuntimeError("Split for the experiments is NOT available: Do split first!")
+
         df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
-        print(f"\n{len(df_split)} of the samples are {split} of {exp}.")
+        # print(f"\n{len(df_split)} of the samples are {split} of {exp}.")
         df_split = pd.DataFrame(df_split)
         df_split.reset_index(inplace=True, drop=True)
 
@@ -266,6 +269,10 @@ def show_statistics(configs, gt_ID='', split=''):
     dataset = BioScan()
     dataset.set_statistics(configs, split=split)
 
+    Set = split
+    if split not in ['train', 'validation', 'test']:
+        Set = 'All'
+
     label_IDs = {}
     for class_name in dataset.data_dict.keys():
         if class_name not in gt_ID.keys():
@@ -275,7 +282,7 @@ def show_statistics(configs, gt_ID='', split=''):
 
     table = [f"{configs['group_level']} Name", "Class Number", "Number of Samples"]
     print("\n\n\n------------------------------------------------------------------------")
-    print(f"Set:{configs['dataset_name']}\t\tGroup Level:{configs['group_level']} \t\t\t\t")
+    print(f"{configs['dataset_name']}\t\tSet:{Set}\tGroup Level:{configs['group_level']} \t\t\t\t")
     print("------------------------------------------------------------------------")
     keys = dataset.data_dict.keys()
     data_idx_label = {}
