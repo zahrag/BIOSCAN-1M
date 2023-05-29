@@ -80,43 +80,43 @@ class BioScanLoader(Dataset):
         return image, label
 
 
-def get_dataloader(args, data_idx_label):
+def get_dataloader(configs, data_idx_label):
     """
-    :param args:
+    :param configs:
     :return: dataloader of train, validation and test sets with data attributes
     """
 
-    if not args['loader']:
+    if not configs['loader']:
         return [], [], [], []
 
     # ### Train ### #
 
-    if args['no_transform']:
-        transform_train = transforms.Compose([transforms.Resize(size=[args['crop_size'], args['crop_size']]),
+    if configs['no_transform']:
+        transform_train = transforms.Compose([transforms.Resize(size=[configs['crop_size'], configs['crop_size']]),
                                               transforms.ToTensor()])
     else:
-        transform_train = transforms.Compose([transforms.Resize(size=args['image_size']),
-                                              transforms.RandomCrop(size=args['crop_size']),
+        transform_train = transforms.Compose([transforms.Resize(size=configs['image_size']),
+                                              transforms.RandomCrop(size=configs['crop_size']),
                                               transforms.RandomHorizontalFlip(),
                                               transforms.ToTensor()])
 
-    train_dataset = BioScanLoader(args, data_idx_label, transform=transform_train, split='train')
-    train_dataloader = DataLoader(train_dataset, batch_size=args['batch_size'], shuffle=True,
-                                  num_workers=args['num_workers'])
+    train_dataset = BioScanLoader(configs, data_idx_label, transform=transform_train, split='train')
+    train_dataloader = DataLoader(train_dataset, batch_size=configs['batch_size'], shuffle=True,
+                                  num_workers=configs['num_workers'])
 
     # ### Validation ### #
-    transform_val = transforms.Compose([transforms.Resize(size=args['image_size']),
-                                        transforms.CenterCrop(size=args['crop_size']),
+    transform_val = transforms.Compose([transforms.Resize(size=configs['image_size']),
+                                        transforms.CenterCrop(size=configs['crop_size']),
                                         transforms.ToTensor()])
 
-    val_dataset = BioScanLoader(args, data_idx_label, transform=transform_val, split='validation')
-    validation_dataloader = DataLoader(val_dataset, batch_size=args['batch_size'], shuffle=True,
-                                       num_workers=args['num_workers'])
+    val_dataset = BioScanLoader(configs, data_idx_label, transform=transform_val, split='validation')
+    validation_dataloader = DataLoader(val_dataset, batch_size=configs['batch_size'], shuffle=True,
+                                       num_workers=configs['num_workers'])
 
     # ### Test ### #
-    test_dataset = BioScanLoader(args, data_idx_label, transform=transform_val, split='test')
-    test_dataloader = DataLoader(test_dataset, batch_size=args['batch_size'], shuffle=False,
-                                 num_workers=args['num_workers'])
+    test_dataset = BioScanLoader(configs, data_idx_label, transform=transform_val, split='test')
+    test_dataloader = DataLoader(test_dataset, batch_size=configs['batch_size'], shuffle=False,
+                                 num_workers=configs['num_workers'])
 
     dataset_attributes = {'n_train': train_dataset.number_of_samples,
                           'n_val': val_dataset.number_of_samples,
