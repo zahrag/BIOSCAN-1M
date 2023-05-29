@@ -49,8 +49,8 @@ class BioScanLoader(Dataset):
         if self.data_format == "hdf5":
             with h5py.File(f'{self.hdf5_dir}/HDF5_BioScan_Part{self.chunk_idx[index]}_CROPPED', 'r') as file:
                 dataset = file['bioscan_dataset']
-                data = np.asarray(dataset[self.img_names[index]])
-                image = Image.fromarray(data)
+                data = io.BytesIO(np.asarray(dataset[self.img_names[index]]))
+                image = Image.open(data)
 
         elif self.cropped:
             image = Image.open(os.path.join(self.image_dir, "CROPPED_" + self.img_names[index])).convert('RGB')
