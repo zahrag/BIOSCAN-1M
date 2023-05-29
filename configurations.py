@@ -15,11 +15,15 @@ class BioScan_Configurations():
                                        '10': 'subspecies', '11': 'name'}
 
         self.dataset_names = {'1': 'BioScan_Insect_Dataset',
-                              '2': 'BioScan_Medium_Insect_Dataset',
+                              '2': 'BioScan_Insect_Diptera_Dataset',
                               }
 
         self.experiment_names = {'1': 'insect_order_level',
                                  '2': 'diptera_family_level',
+                                 '3': 'medium_insect_order_level',
+                                 '4': 'medium_diptera_family_level',
+                                 '5': 'small_insect_order_level',
+                                 '6': 'small_diptera_family_level',
                                  }
 
         self.data_formats = ["folder", "hdf5", "tar"]
@@ -128,7 +132,7 @@ def set_configurations(config=None):
                                             'vgg11', 'mobilenet_v3_large', 'mobilenet_v3_small',
                                             'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                                             'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
-                                            'efficientnet_b4', 'vit_base_patch16_224'],
+                                            'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
                         default=config["model"], help='choose the model you want to train on', required=False)
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )

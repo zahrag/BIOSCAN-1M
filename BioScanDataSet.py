@@ -17,6 +17,12 @@ class BioScan(Dataset):
            This includes biological taxonomy information, DNA barcode indexes and RGB image labels.
            """
 
+        # Get Samples Roles In Experiments
+        self.experiment_names = ['insect_order_level', 'diptera_family_level',                # Large Dataset
+                                 'medium_insect_order_level', 'medium_diptera_family_level',  # Medium Dataset
+                                 'small_insect_order_level', 'small_diptera_family_level',    # Small Dataset
+                                 ]
+
         self.metadata_dir = metadata_dir
         self.df = self.read_metadata(metadata_dir, split, exp)
         self.index = self.df.index.to_list()
@@ -49,7 +55,7 @@ class BioScan(Dataset):
         self.chunk_index = self.df['chunk_number'].to_list()
 
     def __len__(self):
-        return len(self.index)
+            return len(self.index)
 
     def read_metadata(self, metadata_dir, split, exp):
 
@@ -59,10 +65,20 @@ class BioScan(Dataset):
             raise RuntimeError(f"Not a metadata to read in:\n{metadata_dir}")
 
         if not split:
-            return df
+            if exp in self.experiment_names[:2]:
+                return df
+            elif exp in self.experiment_names[2:]:
+                df_set = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl in ['train', 'validation', 'test']]
+                set = ['Medium' if ''.join(list(exp)[:3]) == 'med' else 'Small']
+                print(f"\n{len(df_set)} of the samples are {set[0]} set for experiment {exp}.")
+                df_set = pd.DataFrame(df_set)
+                df_set.reset_index(inplace=True, drop=True)
+                return df_set
+            else:
+                raise RuntimeError(f"No an experiment is set!")
 
+        # Get the split metadata
         df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
-
         print(f"\n{len(df_split)} of the samples are {split} of {exp}.")
         df_split = pd.DataFrame(df_split)
         df_split.reset_index(inplace=True, drop=True)
@@ -177,7 +193,7 @@ def show_dataset_statistics(configs):
     print("ATTENTION:This process can take time especially if the dataset is big!")
 
     dataset = BioScan()
-    dataset.get_statistics(metadata_dir=configs["metadata_path"])
+    dataset.get_statistics(metadata_dir=configs["metadata_path"], exp=configs["exp_name"])
 
     print("\n\n----------------------------------------------------------------------------------------")
     print(f"\t\t\t\t\t\t\t\tCopyright")
