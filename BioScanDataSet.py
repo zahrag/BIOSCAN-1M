@@ -7,31 +7,31 @@ import os
 
 class BioScan(Dataset):
     def __init__(self):
-       """
-           This class handles getting, setting and showing data statistics ...
-           """
+        """
+            This class handles getting, setting and showing data statistics ...
+            """
 
-    def get_statistics(self, metadata_dir, split='', exp=''):
+    def get_statistics(self, experiment_names, metadata_dir, split='', exp='',
+                       make_split=False, show_split_statistics=False):
         """
            This function sets data attributes read from metadata file of the dataset.
            This includes biological taxonomy information, DNA barcode indexes and RGB image labels.
            """
 
         # Get Samples Roles In Experiments
-        self.experiment_names = ['insect_order_level', 'diptera_family_level',                # Large Dataset
-                                 'medium_insect_order_level', 'medium_diptera_family_level',  # Medium Dataset
-                                 'small_insect_order_level', 'small_diptera_family_level',    # Small Dataset
-                                 ]
+        self.experiment_names = experiment_names
 
         self.metadata_dir = metadata_dir
-        self.df = self.read_metadata(metadata_dir, split, exp)
+        self.df = self.read_metadata(metadata_dir, split, exp,
+                                     make_split=make_split,
+                                     show_split_statistics=show_split_statistics)
         self.index = self.df.index.to_list()
         self.df_categories = self.df.keys().to_list()
         self.n_DatasetAttributes = len(self.df_categories)
 
         # Biological Taxonomy
-        self.taxa_gt_sorted = {'0': 'domain',      '1': 'kingdom',   '2': 'phylum', '3': 'class', '4': 'order',
-                               '5': 'family',      '6': 'subfamily', '7': 'tribe',  '8': 'genus', '9': 'species',
+        self.taxa_gt_sorted = {'0': 'domain', '1': 'kingdom', '2': 'phylum', '3': 'class', '4': 'order',
+                               '5': 'family', '6': 'subfamily', '7': 'tribe', '8': 'genus', '9': 'species',
                                '10': 'subspecies', '11': 'name'}
 
         self.taxonomy_groups_list_dict = {}
@@ -55,38 +55,36 @@ class BioScan(Dataset):
         self.chunk_index = self.df['chunk_number'].to_list()
 
     def __len__(self):
-            return len(self.index)
+        return len(self.index)
 
-    def read_metadata(self, metadata_dir, split, exp):
+    def read_metadata(self, metadata_dir, split, exp, make_split=False, show_split_statistics=False):
 
         if os.path.isfile(metadata_dir):
             df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
         else:
             raise RuntimeError(f"Not a metadata to read in:\n{metadata_dir}")
 
-        if not split:
-            if exp in self.experiment_names[:2]:
-                return df
-            elif exp in self.experiment_names[2:]:
-                df_set = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl in ['train', 'validation', 'test']]
-                set = ['Medium' if ''.join(list(exp)[:3]) == 'med' else 'Small']
-                # print(f"\n{len(df_set)} of the samples are {set[0]} set for experiment {exp}.")
-                df_set = pd.DataFrame(df_set)
-                df_set.reset_index(inplace=True, drop=True)
-                return df_set
+        if make_split:
+            return df
+        else:
+            if not split:
+                if exp == self.experiment_names[1]:
+                    return df
+                else:
+                    df_set = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl != 'no_split']
+                    df_set = pd.DataFrame(df_set)
+                    df_set.reset_index(inplace=True, drop=True)
+                    return df_set
+
             else:
-                raise RuntimeError(f"No an experiment is set!")
-
-        # Get the split metadata
-        if exp not in df.columns:
-            raise RuntimeError("Split for the experiments is NOT available: Do split first!")
-
-        df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
-        # print(f"\n{len(df_split)} of the samples are {split} of {exp}.")
-        df_split = pd.DataFrame(df_split)
-        df_split.reset_index(inplace=True, drop=True)
-
-        return df_split
+                if exp in df.columns:
+                    df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
+                    df_split = pd.DataFrame(df_split)
+                    df_split.reset_index(inplace=True, drop=True)
+                    return df_split
+                else:
+                    print(f"Experiment split is not available:{exp}!")
+                    return
 
     def set_statistics(self, configs, split=''):
         """
@@ -95,7 +93,9 @@ class BioScan(Dataset):
         :return:
         """
 
-        self.get_statistics(configs["metadata_path"], exp=configs["exp_name"], split=split)
+        self.get_statistics(configs['experiment_names'], configs["metadata_path"], exp=configs["exp_name"],
+                            make_split=configs["make_split"], split=split,
+                            show_split_statistics=configs["print_split_statistics"])
 
         # Get data list as one of the Biological Taxonomy
         if configs["group_level"] in self.taxonomy_groups_list_dict.keys():
@@ -196,7 +196,7 @@ def show_dataset_statistics(configs):
     print("ATTENTION:This process can take time especially if the dataset is big!")
 
     dataset = BioScan()
-    dataset.get_statistics(metadata_dir=configs["metadata_path"], exp=configs["exp_name"])
+    dataset.get_statistics(configs['experiment_names'], configs["metadata_path"], exp=configs["exp_name"])
 
     print("\n\n----------------------------------------------------------------------------------------")
     print(f"\t\t\t\t\t\t\t\tCopyright")
@@ -211,8 +211,8 @@ def show_dataset_statistics(configs):
     # Get taxonomy ranking statistics
     dataset_taxa = [taxa for taxa in dataset.taxa_gt_sorted.values() if taxa in dataset.df_categories]
 
-    set_group_level = configs["group_level"]
     # Get subgroups statistics
+    set_group_level = configs["group_level"]
     group_level_dict = {}
     for taxa in dataset_taxa:
         configs["group_level"] = taxa
@@ -221,9 +221,8 @@ def show_dataset_statistics(configs):
         group_level_dict[f"{taxa}_n_not_grouped_samples"] = 0
         if "not_classified" in dataset.data_dict:
             group_level_dict[f"{taxa}_n_not_grouped_samples"] = len(dataset.data_dict["not_classified"])
-            group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)-1
+            group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict) - 1
     configs["group_level"] = set_group_level
-
     # Show statistics
     print(f"\n\n\t\t\tStatistics of the {configs['dataset_name']} with a total of {len(dataset.df.index)} data samples")
     print("----------------------------------------------------------------------------------------")
@@ -282,7 +281,7 @@ def show_statistics(configs, gt_ID='', split=''):
 
     table = [f"{configs['group_level']} Name", "Class Number", "Number of Samples"]
     print("\n\n\n------------------------------------------------------------------------")
-    print(f"{configs['dataset_name']}\t\tSet:{Set}\tGroup Level:{configs['group_level']} \t\t\t\t")
+    print(f"{configs['dataset_name']}\t\tSet:{Set}\t\tGroup Level:{configs['group_level']} \t\t\t\t")
     print("------------------------------------------------------------------------")
     keys = dataset.data_dict.keys()
     data_idx_label = {}

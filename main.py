@@ -6,7 +6,7 @@ from bioscan_dataloader import get_dataloader
 from train import train
 from test import test
 from crop_image import run_crop_tool
-from configurations import set_configurations, make_path_configs
+from configurations import set_configurations, make_path_configs, BioScan_Configurations
 
 
 def get_exp_configs():
@@ -19,6 +19,7 @@ def get_exp_configs():
         """
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
+    base_configs = BioScan_Configurations(exp_ID=5)
 
     config = {
         "date_time": timestamp,
@@ -31,6 +32,7 @@ def get_exp_configs():
         "group_level": "",
         "data_format": "",
         "exp_name": "",
+        "experiment_names": base_configs.experiment_names,
         "print_statistics": False,
         # ### Train/Test Tool ####
         "metadata_path_train": "",

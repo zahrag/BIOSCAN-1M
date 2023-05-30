@@ -5,7 +5,7 @@ import torch
 
 
 class BioScan_Configurations():
-    def __init__(self):
+    def __init__(self, exp_ID):
         """
         This class handles basic configurations of the BioScan Dataset and experiments.
         """
@@ -14,17 +14,27 @@ class BioScan_Configurations():
                                        '5': 'family', '6': 'subfamily', '7': 'tribe', '8': 'genus', '9': 'species',
                                        '10': 'subspecies', '11': 'name'}
 
-        self.dataset_names = {'1': 'BioScan_Insect_Dataset',
-                              '2': 'BioScan_Insect_Diptera_Dataset',
-                              }
+        self.experiment_names = ['large_diptera_family',
+                                 'large_insect_order',
+                                 'medium_insect_order',
+                                 'medium_diptera_family',
+                                 'small_insect_order',
+                                 'small_diptera_family',
+                                 ]
+        self.exp = self.experiment_names[exp_ID]
 
-        self.experiment_names = {'1': 'insect_order_level',
-                                 '2': 'diptera_family_level',
-                                 '3': 'medium_insect_order_level',
-                                 '4': 'medium_diptera_family_level',
-                                 '5': 'small_insect_order_level',
-                                 '6': 'small_diptera_family_level',
-                                 }
+        name = ''.join(list(self.exp)[-6:])
+        if name == "family":
+            self.g_level = 'family'
+        elif name == "_order":
+            self.g_level = 'order'
+
+        if self.exp in self.experiment_names[2:4]:
+            self.max_num_sample = 200000
+        else:
+            self.max_num_sample = 50000
+
+        self.data_formats = ["folder", "hdf5", "tar"]
 
         self.data_formats = ["folder", "hdf5", "tar"]
 
@@ -90,6 +100,13 @@ def set_configurations(config=None):
                         default=config["test"], action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
                         default=config["crop_image"], action='store_true')
+
+    # ####### Data Split and Subset Creation #####
+    parser.add_argument('--max_num_sample', type=int, default=50000,
+                        help='Number of samples of each subset.',
+                        required=False)
+    parser.add_argument('--experiment_names', type=str, default=config["experiment_names"],
+                        help="Name of experiments conducted in BioScan Project.", required=False)
 
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--read_format', type=str, default="hdf5",
