@@ -47,7 +47,7 @@ class BioScanLoader(Dataset):
     def load_image(self, index):
 
         if self.data_format == "hdf5":
-            with h5py.File(f'{self.hdf5_dir}/HDF5_BioScan_Part{self.chunk_idx[index]}_CROPPED', 'r') as file:
+            with h5py.File(self.hdf5_dir, 'r') as file:
                 dataset = file['bioscan_dataset']
                 data = io.BytesIO(np.asarray(dataset[self.img_names[index]]))
                 image = Image.open(data)

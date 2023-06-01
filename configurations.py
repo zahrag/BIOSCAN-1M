@@ -180,7 +180,7 @@ def make_path_configs(config):
         make_directory(save_dir)
         save_configs(config["date_time"], config, log_dir=save_dir)
         config["results_path"] = save_dir
-        config["exp_name"] = config["dataset_name"]
+        # config["exp_name"] = config["dataset_name"]
 
     return config
 
