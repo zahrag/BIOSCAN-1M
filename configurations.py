@@ -15,11 +15,11 @@ class BioScan_Configurations():
                                        '10': 'subspecies', '11': 'name'}
 
         self.experiment_names = ['large_diptera_family',
+                                 'medium_diptera_family',
+                                 'small_diptera_family',
                                  'large_insect_order',
                                  'medium_insect_order',
-                                 'medium_diptera_family',
                                  'small_insect_order',
-                                 'small_diptera_family',
                                  ]
         self.exp = self.experiment_names[exp_ID]
 
@@ -29,9 +29,10 @@ class BioScan_Configurations():
         elif name == "_order":
             self.g_level = 'order'
 
+        self.max_num_sample = 0
         if self.exp in self.experiment_names[2:4]:
             self.max_num_sample = 200000
-        else:
+        elif self.exp in self.experiment_names[4:6]:
             self.max_num_sample = 50000
 
         self.data_formats = ["folder", "hdf5", "tar"]

@@ -68,7 +68,7 @@ class BioScan(Dataset):
             return df
         else:
             if not split:
-                if exp == self.experiment_names[1]:
+                if exp == self.experiment_names[3]:  # Large-Insect-Order
                     return df
                 else:
                     df_set = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl != 'no_split']
@@ -206,6 +206,7 @@ def show_dataset_statistics(configs):
     print("Photographer: CBG Robotic Imager")
     print("Copyright: Creative Commons-Attribution Non-Commercial Share-Alike")
     print("Copyright Contact: collectionsBIO@gmail.com")
+    print("Copyright Year: 2021")
     print("----------------------------------------------------------------------------------------")
 
     # Get taxonomy ranking statistics
