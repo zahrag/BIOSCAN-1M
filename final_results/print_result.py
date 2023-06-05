@@ -1,8 +1,9 @@
+import os
 import pickle
 
 
 def round_2_to_str(number):
-    return str(round(number, 2))
+    return str(round(number, 4))
 
 
 def find_average(l):
@@ -17,8 +18,14 @@ def list_2_string(l):
 
 
 if __name__ == '__main__':
-    path_to_pkl = "/localhome/zmgong/research/BioScan/BioScan-1M/200K_results/family/20230427_182412_200K_insect_diptera_dataset_epoch100/200K_insect_diptera_dataset_train_val.pkl"
-    path_to_config_txt = "/localhome/zmgong/research/BioScan/BioScan-1M/200K_results/family/20230427_182412_200K_insect_diptera_dataset_epoch100/vit_focal_family_configs.txt"
+    input_dir = "results_for_comparing_using_original_and_cropped/small_res_ce_order_cropped_256_results"
+    path_to_pkl = None
+    path_to_config_txt = None
+    for result_file_name in os.listdir(input_dir):
+        if result_file_name.endswith('.pkl'):
+            path_to_pkl = os.path.join(input_dir, result_file_name)
+        if result_file_name.endswith('.txt'):
+            path_to_config_txt = os.path.join(input_dir, result_file_name)
 
     with open(path_to_config_txt, 'r') as file:
         lines = file.readlines()
@@ -34,7 +41,7 @@ if __name__ == '__main__':
     # print(config_dict)
 
     str_1 = config_dict['model'] + " " + config_dict['loss'] + " " + config_dict['n_epochs'] + " " + config_dict[
-        'lr'] + " " + config_dict['momentum'] + " " + config_dict['dataset_name'] + " " + config_dict['group_level']
+        'lr'] + " " + config_dict['momentum'] + " " + config_dict['group_level']
 
     with open(path_to_pkl, 'rb') as f:
         data = pickle.load(f)
