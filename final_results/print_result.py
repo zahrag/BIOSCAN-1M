@@ -1,6 +1,6 @@
 import os
 import pickle
-
+import argparse
 
 def round_2_to_str(number):
     return str(round(number, 4))
@@ -18,14 +18,18 @@ def list_2_string(l):
 
 
 if __name__ == '__main__':
-    input_dir = "results_for_comparing_using_original_and_cropped/small_res_ce_order_cropped_256_results"
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--path_to_result_folder', type=str,
+                        default="results_for_comparing_using_original_and_cropped/small_res_ce_order_cropped_256_results")
+    args = parser.parse_args()
+
     path_to_pkl = None
     path_to_config_txt = None
-    for result_file_name in os.listdir(input_dir):
+    for result_file_name in os.listdir(args.path_to_result_folder):
         if result_file_name.endswith('.pkl'):
-            path_to_pkl = os.path.join(input_dir, result_file_name)
+            path_to_pkl = os.path.join(args.path_to_result_folder, result_file_name)
         if result_file_name.endswith('.txt'):
-            path_to_config_txt = os.path.join(input_dir, result_file_name)
+            path_to_config_txt = os.path.join(args.path_to_result_folder, result_file_name)
 
     with open(path_to_config_txt, 'r') as file:
         lines = file.readlines()
