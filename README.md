@@ -26,8 +26,8 @@ We publish four packages of the BIOSCAN-1M Insect images,
 each package is structured with 113 chunks of 10,000 images each:
 - (1) Original JPEG images.
 - (2) Cropped JPEG images.
-- (3) Original images resized to 256 on the smaller dimensions.
-- (4) Cropped images resized to 256 on their smaller dimension.
+- (3) Original JPEG images resized to 256 on the smaller dimensions.
+- (4) Cropped JPEG images resized to 256 on their smaller dimension.
 
  <p align="middle">
   <img src="dataset/bioscan_images/3995976_Blattodea.jpg"     alt="Blattodea"     title="Blattodea" width="150" hspace="2"/>
