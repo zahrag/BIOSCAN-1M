@@ -1,15 +1,15 @@
-# BioScan-1M
+# BIOSCAN-1M
 
 ###### <h3> Overview
-This repository contains the codes and data for BioScan-1M datasets project. 
-In this project, three datasets of different sizes are published. 
-The dataset files can be downloaded through the **link**. 
-There are different classification experiments conducted using RGB images in this project.
- 
+This repository houses the codes and data pertaining to the BIOSCAN-1M project. 
+Within this project, we introduce the BIOSCAN-1M Insect dataset, which can be accessed 
+for download via the provided link. The repository encompasses code for data sampling and splitting, 
+dataset statistics analysis, as well as image-based classification experiments centered around 
+the taxonomy classification of insects. 
  
 ###### <h3> Dataset
-BioScan dataset provides researchers with information about living organisms. 
-Three main sources of information published by the BioScan dataset are: 
+BIOSCAN dataset provides researchers with information about insects. 
+Three main sources of information published by the BIOSCAN dataset are: 
 
 ###### <h4> I. Biological Taxonomy Ranking 
 
@@ -49,35 +49,22 @@ $${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \
 $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
 
-###### <h3> BioScan Subsets
-To facilitate different levels of computational processing, we publish three varying sizes of the dataset: 
-
-* **BioScan-Small-Insect-Dataset**: Small size dataset with 50,000 data samples.
-* **BioScan-Medium-Insect-Dataset**: Medium size dataset with 194,085.
-* **BioScan-Large-Insect-Dataset**: Large size dataset with 1,200,000.
-
-Due to limited space, there are only metadata files of the small dataset (BioScan-80K) and its train, 
-validation and test splits available in dataset folder together with a small set of RGB images.
- 
-###### <h3> Datset Statistics
-
-To see statistics of the small dataset run the following:
+###### <h3> Dataset Statistics
+To see statistics of the dataset run the following:
 ```bash
 python main.py --print_statistics 
 ``` 
  
-To split the small dataset into Train, Validation and Test sets run the follwoing:
+To split the small dataset into Train, Validation and Test sets run the following:
 ```bash
 python main.py --make_split --print_split_statistics
 ``` 
  
-###### <h3> BioScan Classification 
-We conducted multi-class classification experiments using RGB images of the BioScan datasets. 
-We addressed two classification problems based on biological taxonomy ranking annotation 
-available by the BioScan dataset.
-
-* Insect-Class Order-Level image classification: In total 16 different **orders** of insects are predicted.
-* Insect-Class Order-Diptera image classification: In total 40 **families** of the Diptera from insect class are predicted.  
+###### <h3> Classification Experiments
+Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
+The first set of experiments involved classifying images of insects into 16 Orders. 
+The second set of experiments specifically targeted the Order Diptera and 
+aimed to classify its members into 40 families, which constitute a significant portion of the order.
 
 To train the model on classification task using a baseline model run:
 ```bash
@@ -85,15 +72,12 @@ python main.py --loader --train
 ``` 
 
 ###### <h3> Preprocessing
-To increase efficiency with respect to time and computational resources required for running experiments 
-with RGB images of the BioScan dataset, we performed offline preprocessing by applying a cropping tool 
-on the original RGB images. 
-
+In order to enhance efficiency in terms of time and computational resources for conducting experiments 
+on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step. This involved utilizing 
+a cropping tool to modify the original RGB images. 
+By applying this preprocessing step, we aimed to optimize the subsequent experimental processes.
 To use the cropping tool, first add the module:
 
-```bash
-git submodule add git@github.com:zmgong/BioScan-croptool.git crop_tool --force
-``` 
 
 ```bash
 python main.py --crop_image
