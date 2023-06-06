@@ -15,7 +15,7 @@ Three main sources of information published by the BIOSCAN dataset are:
 * DNA barcode sequence
 * Barcode Index Number (BIN)
 
-![Alt Text](dataset/bioscan_images/output-1.png)
+![Alt Text](dataset/bioscan_images/BIOSCAN_record.png)
 
 ###### <h4> II. Biological Taxonomy Ranking
 ![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
