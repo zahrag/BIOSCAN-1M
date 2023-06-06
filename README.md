@@ -33,7 +33,7 @@ each package is structured with 113 chunks of 10,000 images each:
 
 | <img src="dataset/bioscan_images/3995976_Blattodea.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4049775_Hemiptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4079301_Archaeognatha.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4079804_Psocodea.jpg" width="200px" class="image"> |
 |:---:|:---:|:---:|:---:|
-| **Blattodea** | **Hemiptera** | **Archaeognatha** | **Psocodea** |
+| **\color{red}Blattodea** | **Hemiptera** | **Archaeognatha** | **Psocodea** |
 
 | <img src="dataset/bioscan_images/4091453_Embioptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4273164_Dermaptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4279962_Ephemeroptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4284053_Odonata.jpg" width="200px" class="image"> |
 |:---:|:---:|:---:|:---:|
@@ -49,7 +49,14 @@ each package is structured with 113 chunks of 10,000 images each:
 
 </div>
 
- 
+ <p align="middle">  $$ Insect \space Orders $$ </p>
+
+$${\color{red}Blattodea \space \space \color{blue}Hemiptera \space \space \color{orange}Archaeognatha \space  \space \color{green}Psocodea \space \space \color{purple}Embioptera}$$
+
+$${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \color{orange}Odonata \space \space \color{green}Plecoptera \space \space \color{purple}Thysanoptera}$$
+  
+$${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
+
 
 ###### <h3> Metadata File
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
