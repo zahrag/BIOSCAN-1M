@@ -102,6 +102,18 @@ python main.py --crop_image
 ###### <h3> Requirement 
 The requirements file used to run experiments is available in the requirement.txt.
   
+
+###### <h3> Lic 
+The images included in the BIOSCAN-1M Insect datasets available through this repository are subject to copyright 
+and licensing restrictions shown in the following:
+
+ - Copyright Holder: CBG Photography Group
+ - Copyright Institution: Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)
+ - Photographer: CBG Robotic Imager
+ - Copyright License: Creative Commons-Attribution Non-Commercial Share-Alike
+ - Copyright Contact: collectionsBIO@gmail.com
+ - Copyright Year: 2021
+
 ###### <h3> Collaborators
 "Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca> & "Ming Gong" <ming_gong@sfu.ca>  
 
