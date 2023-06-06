@@ -31,23 +31,24 @@ each package is structured with 113 chunks of 10,000 images each:
 
 <div align="center">
 
-| ![Blattodea](dataset/bioscan_images/3995976_Blattodea.jpg) | ![Hemiptera](dataset/bioscan_images/4049775_Hemiptera.jpg) | ![Archaeognatha](dataset/bioscan_images/4079301_Archaeognatha.jpg) | ![Psocodea](dataset/bioscan_images/4079804_Psocodea.jpg) |
+<div align="center">
+
+| ![Blattodea](dataset/bioscan_images/3995976_Blattodea.jpg){:height="200px" width="200px"} | ![Hemiptera](dataset/bioscan_images/4049775_Hemiptera.jpg){:height="200px" width="200px"} | ![Archaeognatha](dataset/bioscan_images/4079301_Archaeognatha.jpg){:height="200px" width="200px"} | ![Psocodea](dataset/bioscan_images/4079804_Psocodea.jpg){:height="200px" width="200px"} |
 |:---:|:---:|:---:|:---:|
 | **Blattodea** | **Hemiptera** | **Archaeognatha** | **Psocodea** |
 
-| ![Embioptera](dataset/bioscan_images/4091453_Embioptera.jpg) | ![Dermaptera](dataset/bioscan_images/4273164_Dermaptera.jpg) | ![Ephemeroptera](dataset/bioscan_images/4279962_Ephemeroptera.jpg) | ![Odonata](dataset/bioscan_images/4284053_Odonata.jpg) |
+| ![Embioptera](dataset/bioscan_images/4091453_Embioptera.jpg){:height="200px" width="200px"} | ![Dermaptera](dataset/bioscan_images/4273164_Dermaptera.jpg){:height="200px" width="200px"} | ![Ephemeroptera](dataset/bioscan_images/4279962_Ephemeroptera.jpg){:height="200px" width="200px"} | ![Odonata](dataset/bioscan_images/4284053_Odonata.jpg){:height="200px" width="200px"} |
 |:---:|:---:|:---:|:---:|
 | **Embioptera** | **Dermaptera** | **Ephemeroptera** | **Odonata** |
 
-| ![Plecoptera](dataset/bioscan_images/4285466_Plecoptera.jpg) | ![Thysanoptera](dataset/bioscan_images/5071176_Thysanoptera.jpg) | ![Neuroptera](dataset/bioscan_images/5131549_Neuroptera.jpg) | ![Trichoptera](dataset/bioscan_images/5154627_Trichoptera.jpg) |
+| ![Plecoptera](dataset/bioscan_images/4285466_Plecoptera.jpg){:height="200px" width="200px"} | ![Thysanoptera](dataset/bioscan_images/5071176_Thysanoptera.jpg){:height="200px" width="200px"} | ![Neuroptera](dataset/bioscan_images/5131549_Neuroptera.jpg){:height="200px" width="200px"} | ![Trichoptera](dataset/bioscan_images/5154627_Trichoptera.jpg){:height="200px" width="200px"} |
 |:---:|:---:|:---:|:---:|
 | **Plecoptera** | **Thysanoptera** | **Neuroptera** | **Trichoptera** |
 
-| ![Hymenoptera](dataset/bioscan_images/5189695_Hymenoptera.jpg) | ![Orthoptera](dataset/bioscan_images/5321820_Orthoptera.jpg) | ![Coleoptera](dataset/bioscan_images/5580278_Coleoptera.jpg) | ![Diptera](dataset/bioscan_images/BIOUG71614-E03_Diptera.jpg) |
+| ![Hymenoptera](dataset/bioscan_images/5189695_Hymenoptera.jpg){:height="200px" width="200px"} | ![Orthoptera](dataset/bioscan_images/5321820_Orthoptera.jpg){:height="200px" width="200px"} | ![Coleoptera](dataset/bioscan_images/5580278_Coleoptera.jpg){:height="200px" width="200px"} | ![Diptera](dataset/bioscan_images/BIOUG71614-E03_Diptera.jpg){:height="200px" width="200px"} |
 |:---:|:---:|:---:|:---:|
-| **Hymenoptera** | **Orthoptera** | **Coleoptera** | **Diptera** |
+| **Hymenoptera** | **Orthoptera** | **Coleoptera** | **Dipt
 
-</div>
 
 <p align="center">
   <strong>Insect Orders</strong>
