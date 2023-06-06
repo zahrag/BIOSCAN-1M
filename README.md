@@ -33,7 +33,7 @@ each package is structured with 113 chunks of 10,000 images each:
 
 | <img src="dataset/bioscan_images/3995976_Blattodea.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4049775_Hemiptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4079301_Archaeognatha.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4079804_Psocodea.jpg" width="200px" class="image"> |
 |:---:|:---:|:---:|:---:|
-| **\color{red}Blattodea** | **Hemiptera** | **Archaeognatha** | **Psocodea** |
+| \color{red}Blattodea | **Hemiptera** | **Archaeognatha** | **Psocodea** |
 
 | <img src="dataset/bioscan_images/4091453_Embioptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4273164_Dermaptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4279962_Ephemeroptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/4284053_Odonata.jpg" width="200px" class="image"> |
 |:---:|:---:|:---:|:---:|
