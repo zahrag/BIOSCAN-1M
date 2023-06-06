@@ -11,16 +11,14 @@ the taxonomy classification of insects.
 BIOSCAN dataset provides researchers with information about insects. 
 Three main sources of information published by the BIOSCAN dataset are: 
 
-###### <h4> I. Biological Taxonomy Ranking 
-
-![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
-
-###### <h4> II. DNA Barcode Sequences and Barcode Indexing
-
+###### <h4> I. DNA Barcode Sequences and Barcode Indexing 
 * DNA barcode sequence
 * Barcode Index Number (BIN)
 
 ![Alt Text](dataset/bioscan_images/output-1.png)
+
+###### <h4> II. Biological Taxonomy Ranking
+![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
 
 ###### <h4> III. RGB Images 
 
