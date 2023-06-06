@@ -90,6 +90,14 @@ on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing ste
 a cropping tool to modify the original RGB images. 
 By applying this preprocessing step, we aimed to optimize the subsequent experimental processes.
 
+| <img src="dataset/bioscan_images/cropped_images/BIOUG68001-C12.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/BIOUG68020-A01.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/BIOUG68021-F12.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/BIOUG68104-C02.jpg" width="200px" class="image"> |
+|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
+|                                           **Original**                                           |                                           **Original**                                           |                                           **Original**                                           |                                           **Original**                                           |
+
+| <img src="dataset/bioscan_images/cropped_images/cropped_resized_BIOUG68001-C12.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/cropped_resized_BIOUG68020-A01.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/cropped_resized_BIOUG68021-F12.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/cropped_resized_BIOUG68104-C02.jpg" width="200px" class="image"> |
+|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
+|                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |
+
 
 To use our cropping tool, run the following:
 
