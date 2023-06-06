@@ -43,8 +43,9 @@ each package is structured with 113 chunks of 10,000 images each:
   <img src="dataset/bioscan_images/5131549_Neuroptera.jpg"    alt="Neuroptera"    title="Neuroptera" width="150" hspace="2"/>
   <img src="dataset/bioscan_images/5154627_Trichoptera.jpg"   alt="Trichoptera"   title="Trichoptera" width="150" hspace="2"/>
   <img src="dataset/bioscan_images/5189695_Hymenoptera.jpg"   alt="Hymenoptera"   title="Hymenoptera" width="150" hspace="2"/>
-  <img src="dataset/bioscan_images/5578509_Zoraptera.jpg"     alt="Zoraptera"     title="Zoraptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/5321820_Orthoptera.jpg"     alt="Zoraptera"     title="Zoraptera" width="150" hspace="2"/>
   <img src="dataset/bioscan_images/5580278_Coleoptera.jpg"    alt="Coleoptera"    title="Coleoptera" width="150" hspace="2"/>
+  <img src="dataset/bioscan_images/BIOUG71614-E03_Diptera.jpg"    alt="Coleoptera"    title="Coleoptera" width="150" hspace="2"/>
 </p>
 
 <p align="middle">  $$ Insect \space Orders $$ </p>
