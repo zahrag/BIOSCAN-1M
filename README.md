@@ -49,24 +49,6 @@ each package is structured with 113 chunks of 10,000 images each:
 
 </div> 
  
-<p align="center">
-  <strong>Insect Orders</strong>
-</p>
-
-<p align="center">
-  <font color="red">Blattodea</font> |
-  <font color="blue">Hemiptera</font> |
-  <font color="orange">Archaeognatha</font> |
-  <font color="green">Psocodea</font> |
-  <font color="purple">Embioptera</font>
-</p>
-
-<p align="center">
-  <font color="red">Dermaptera</font> |
-  <font color="blue">Ephemeroptera</font> |
-  <font color="orange">Odonata</font> |
-  <font color="green">Plecoptera</font>
-
 
 <p align="middle">  $$ Insect \space Orders $$ </p>
 
