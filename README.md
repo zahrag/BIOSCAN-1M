@@ -22,6 +22,13 @@ Three main sources of information published by the BIOSCAN dataset are:
 
 ###### <h4> III. RGB Images 
 
+We publish four packages of the BIOSCAN-1M Insect images, 
+each package is structured with 113 chunks of 10,000 images each:
+- (1) Original JPEG images.
+- (2) Cropped JPEG images.
+- (3) Original images resized to 256 on the smaller dimensions.
+- (4) Cropped images resized to 256 on their smaller dimension.
+
  <p align="middle">
   <img src="dataset/bioscan_images/3995976_Blattodea.jpg"     alt="Blattodea"     title="Blattodea" width="150" hspace="2"/>
   <img src="dataset/bioscan_images/4049775_Hemiptera.jpg"     alt="Hemiptera"     title="Hemiptera" width="150" hspace="2"/>
@@ -48,14 +55,26 @@ $${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \
   
 $${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
+###### <h3> Metadata File
+In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
+named "BIOSCAN_Insect_Dataset_metadata". This metadata file is available in both dataframe format (.tsv) 
+and JSON-LD format (.jsonld). 
+The metadata file encompasses valuable information, including taxonomy annotations, DNA barcode sequences, 
+and indexes and labels for each data sample. Furthermore, the metadata file includes the image names and unique IDs 
+that reference the corresponding storage location of each image. It also provides insights into the roles of the 
+images within the split sets. Specifically, it indicates whether an image is used for training, validation, or 
+testing in the six experiments conducted in our paper. 
+
+To run the following steps you first need to download dataset and the metadata file, 
+and make path settings appropriately.
 
 ###### <h3> Dataset Statistics
-To see statistics of the dataset run the following:
+To see statistics of the dataset, download the metadata file, set the path to it and run the following:
 ```bash
 python main.py --print_statistics 
 ``` 
  
-To split the small dataset into Train, Validation and Test sets run the following:
+To split dataset into Train, Validation and Test sets run the following:
 ```bash
 python main.py --make_split --print_split_statistics
 ``` 
@@ -66,9 +85,9 @@ The first set of experiments involved classifying images of insects into 16 Orde
 The second set of experiments specifically targeted the Order Diptera and 
 aimed to classify its members into 40 families, which constitute a significant portion of the order.
 
-To train the model on classification task using a baseline model run:
+To train the model on classification task using a baseline model run setting the name of experiments:
 ```bash
-python main.py --loader --train
+python main.py --loader --train --exp_name small_insect_order
 ``` 
 
 ###### <h3> Preprocessing
