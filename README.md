@@ -103,7 +103,7 @@ python main.py --crop_image
 The requirements file used to run experiments is available in the requirement.txt.
   
 
-###### <h3> Lic 
+###### <h3> Copyright and License 
 The images included in the BIOSCAN-1M Insect datasets available through this repository are subject to copyright 
 and licensing restrictions shown in the following:
 
