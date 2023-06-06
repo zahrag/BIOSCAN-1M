@@ -69,7 +69,7 @@ To run the following steps you first need to download dataset and the metadata f
 and make path settings appropriately.
 
 ###### <h3> Dataset Statistics
-To see statistics of the dataset, download the metadata file, set the path to it and run the following:
+To see statistics of the dataset, and run the following:
 ```bash
 python main.py --print_statistics 
 ``` 
