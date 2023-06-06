@@ -50,13 +50,6 @@ each package is structured with 113 chunks of 10,000 images each:
 </div>
 
  
-<p align="middle">  $$ Insect \space Orders $$ </p>
-
-$${\color{red}Blattodea \space \space \color{blue}Hemiptera \space \space \color{orange}Archaeognatha \space  \space \color{green}Psocodea \space \space \color{purple}Embioptera}$$
-
-$${\color{red}Dermaptera \space \space \color{blue}Ephemeroptera \space \space \color{orange}Odonata \space \space \color{green}Plecoptera \space \space \color{purple}Thysanoptera}$$
-  
-$${\color{red}Neuroptera \space \space \color{blue}Trichoptera \space \space \color{orange}Hymenoptera \space \space \color{green}Zoraptera \space \space \color{purple}Coleoptera}$$
 
 ###### <h3> Metadata File
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
