@@ -30,23 +30,26 @@ each package is structured with 113 chunks of 10,000 images each:
 - (4) Cropped JPEG images resized to 256 on their smaller dimension.
 
  <p align="middle">
-  <img src="dataset/bioscan_images/3995976_Blattodea.jpg"       alt="Blattodea"     title="Blattodea" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4049775_Hemiptera.jpg"       alt="Hemiptera"     title="Hemiptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4079301_Archaeognatha.jpg"   alt="Archaeognatha" title="Archaeognatha" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4079804_Psocodea.jpg"        alt="Psocodea"      title="Psocodea" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4091453_Embioptera.jpg"      alt="Embioptera"    title="Embioptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4273164_Dermaptera.jpg"      alt="Dermaptera"    title="Dermaptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4279962_Ephemeroptera.jpg"   alt="Ephemeroptera" title="Ephemeroptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4284053_Odonata.jpg"         alt="Odonata"       title="Odonata" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/4285466_Plecoptera.jpg"      alt="Plecoptera"    title="Plecoptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/5071176_Thysanoptera.jpg"    alt="Thysanoptera"  title="Thysanoptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/5131549_Neuroptera.jpg"      alt="Neuroptera"    title="Neuroptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/5154627_Trichoptera.jpg"     alt="Trichoptera"   title="Trichoptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/5189695_Hymenoptera.jpg"     alt="Hymenoptera"   title="Hymenoptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/5321820_Orthoptera.jpg"      alt="Orthoptera"    title="Orthoptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/5580278_Coleoptera.jpg"      alt="Coleoptera"    title="Coleoptera" width="145" hspace="2"/>
-  <img src="dataset/bioscan_images/BIOUG71614-E03_Diptera.jpg"  alt="Diptera"       title="Diptera" width="145" hspace="2"/>
-</p>
+  <img src="dataset/bioscan_images/3995976_Blattodea.jpg"       alt="Blattodea"     title="Blattodea" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/4049775_Hemiptera.jpg"       alt="Hemiptera"     title="Hemiptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/4079301_Archaeognatha.jpg"   alt="Archaeognatha" title="Archaeognatha" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/4079804_Psocodea.jpg"        alt="Psocodea"      title="Psocodea" width="145" hspace="10"/>
+  <br>
+  <img src="dataset/bioscan_images/4091453_Embioptera.jpg"      alt="Embioptera"    title="Embioptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/4273164_Dermaptera.jpg"      alt="Dermaptera"    title="Dermaptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/4279962_Ephemeroptera.jpg"   alt="Ephemeroptera" title="Ephemeroptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/4284053_Odonata.jpg"         alt="Odonata"       title="Odonata" width="145" hspace="10"/>
+  <br>
+  <img src="dataset/bioscan_images/4285466_Plecoptera.jpg"      alt="Plecoptera"    title="Plecoptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/5071176_Thysanoptera.jpg"    alt="Thysanoptera"  title="Thysanoptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/5131549_Neuroptera.jpg"      alt="Neuroptera"    title="Neuroptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/5154627_Trichoptera.jpg"     alt="Trichoptera"   title="Trichoptera" width="145" hspace="10"/>
+  <br>
+  <img src="dataset/bioscan_images/5189695_Hymenoptera.jpg"     alt="Hymenoptera"   title="Hymenoptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/5321820_Orthoptera.jpg"      alt="Orthoptera"    title="Orthoptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/5580278_Coleoptera.jpg"      alt="Coleoptera"    title="Coleoptera" width="145" hspace="10"/>
+  <img src="dataset/bioscan_images/BIOUG71614-E03_Diptera.jpg"  alt="Diptera"       title="Diptera
+
 
 <p align="middle">  $$ Insect \space Orders $$ </p>
 
