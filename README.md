@@ -20,7 +20,7 @@ Three main sources of information published by the BIOSCAN dataset are:
 * DNA barcode sequence
 * Barcode Index Number (BIN)
 
-![Alt Text](dataset/bioscan_images/BIOSCAN%20Sample%20Record.pdf)
+![Alt Text](dataset/bioscan_images/output-1.png)
 
 ###### <h4> III. RGB Images 
 
