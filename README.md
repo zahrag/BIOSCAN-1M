@@ -49,17 +49,7 @@ each package is structured with 113 chunks of 10,000 images each:
 
 </div>
 
-<style>
-.image {
-  height: auto;
-  max-height: 200px;
-  width: auto;
-  max-width: 200px;
-}
-</style>
-
  
-
 <p align="middle">  $$ Insect \space Orders $$ </p>
 
 $${\color{red}Blattodea \space \space \color{blue}Hemiptera \space \space \color{orange}Archaeognatha \space  \space \color{green}Psocodea \space \space \color{purple}Embioptera}$$
