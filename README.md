@@ -95,7 +95,9 @@ In order to enhance efficiency in terms of time and computational resources for 
 on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step. This involved utilizing 
 a cropping tool to modify the original RGB images. 
 By applying this preprocessing step, we aimed to optimize the subsequent experimental processes.
-To use the cropping tool, first add the module:
+
+
+To use our cropping tool, run the following:
 
 
 ```bash
