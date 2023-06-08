@@ -123,7 +123,7 @@ and licensing restrictions shown in the following:
  - Copyright Year: 2021
 
 ###### <h3> Collaborators
-"Nicholas Pellegrino" <nicholas.pellegrino@uwaterloo.ca> & "Ming Gong" <ming_gong@sfu.ca>  
+"Ming Gong" <ming_gong@sfu.ca>  
 
  
 
