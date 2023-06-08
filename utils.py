@@ -10,7 +10,7 @@ import pandas as pd
 from tqdm import tqdm
 import h5py
 import torch.nn.functional as F
-
+import pickle
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -167,6 +167,18 @@ def get_model(args, n_classes):
 
     return model
 
+def open_pickle(path):
+
+    objects = []
+    with (open(path, "rb")) as openfile:
+        while True:
+            try:
+                objects.append(pickle.load(openfile))
+            except EOFError:
+                break
+    results = objects[0]
+
+    return results
 
 def make_directory(path):
     if not os.path.exists(path):
