@@ -344,7 +344,7 @@ def plot_split_statistics(sample_num, class_idx, n_samples,
     Plot Dataset Statistics
     :param sample_num: Number of samples per class.
     :param class_idx: Class name vs., numeric IDs.
-    :param n_samples: Total number of sample is set.
+    :param n_samples: Total number of set samples.
     :param group_level: Taxonomy group level.
     :param split: Split: all, train, validation, test.
     :param dataset: Dataset name.
