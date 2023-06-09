@@ -61,7 +61,7 @@ def plot_results(class_acc, class_idx, dataset='', metric='', fig_path='', plot=
     plt.title(f'Class-Micro Accuracy: {dataset} dataset', fontweight='bold', fontsize=12)
     plt.tight_layout()
     make_directory(fig_path)
-    plt.savefig(f"{fig_path}/heatmap_class_{dataset}_test_{dataset}.png", dpi=300)
+    plt.savefig(f"{fig_path}/heatmap_class_{dataset}_test.png", dpi=300)
     plt.show()
 
 
