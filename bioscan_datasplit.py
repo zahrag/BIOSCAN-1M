@@ -155,29 +155,29 @@ class BioScanSplit(Dataset):
 
         """
         This function returns a data dictionary by sampling a parent dictionary applying a
-        Stratified class-based sampling strategy.
+        stratified class-based sampling strategy.
         :param data_dict: Parent data dictionary.
-        :param max_num: Maximum number of samples of the child data dictionary.
+        :param max_num: Maximum number of samples of the child set.
         :return:
         """
 
-        data_dic_child = {}
+        data_dict_child = {}
         for key in list(data_dict.keys()):
-            data_dic_child[key] = []
+            data_dict_child[key] = []
 
         num = 0
         while num < max_num:
             for key in list(data_dict.keys())[::-1]:
                 id_list = data_dict[key]
-                next_id = len(data_dic_child[key])
+                next_id = len(data_dict_child[key])
                 if next_id < len(id_list):
                     index = id_list[next_id]
-                    data_dic_child[key].append(index)
+                    data_dict_child[key].append(index)
                     num += 1
                 else:
                     continue
 
-        return data_dic_child
+        return data_dict_child
 
     def get_diptera_family_data_dict(self, dataset, n_family=40):
 
