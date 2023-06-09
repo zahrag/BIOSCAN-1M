@@ -184,7 +184,7 @@ class BioScanSplit(Dataset):
         """
         This function generates data dictionary of the order Diptera most populus families.
         :param dataset: Dataset.
-        :param n_family: Number of most populus families samples.
+        :param n_family: Number of most populus families.
         :return:
         """
 
@@ -349,7 +349,7 @@ def make_split(configs):
     """
     This function samples and splits BIOSCAN-1M Insect Dataset for 6 experiments conducted in paper.
     NOTE-1: First sample BIOSCAN-Diptera dataset!
-    NOTE-1: Split parent sets (large_insect_order, large_diptera_family) before splitting
+    NOTE-2: Split parent sets (large_insect_order, large_diptera_family) before splitting
             their children sets (medium, small)!
     :param configs: Configurations.
     :return:
