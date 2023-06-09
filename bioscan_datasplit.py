@@ -348,8 +348,8 @@ class BioScanSplit(Dataset):
 def make_split(configs):
     """
     This function samples and splits BIOSCAN-1M Insect Dataset for 6 experiments conducted in paper.
-    NOTE-1: First sample BIOSCAN-Diptera dataset!
-    NOTE-2: Split parent sets (large_insect_order, large_diptera_family) before splitting
+    NOTE-1: First sample and split BIOSCAN-Diptera dataset!
+    NOTE-2: Split parent sets (large_insect_order, large_diptera_family) before sampling and splitting
             their children sets (medium, small)!
     :param configs: Configurations.
     :return:
