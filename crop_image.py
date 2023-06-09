@@ -158,7 +158,7 @@ def detect_uncropped_images(args):
     return list_of_uncropped_image_path
 
 
-def run_crop_tool(args, crop_images=False):
+def run_crop_tool(args):
     """
     This function runs as offline preprocessing to detect the images without a cropped version in the dataset, and to
     create a cropped version and save it in the corresponding data format.
@@ -167,7 +167,7 @@ def run_crop_tool(args, crop_images=False):
     :return:
     """
 
-    if not crop_images:
+    if not args['crop_image']:
         return
 
     if args['data_format'] == "":

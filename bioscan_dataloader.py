@@ -15,7 +15,7 @@ class BioScanLoader(Dataset):
         """
         This function created dataloader.
 
-        :param configs:
+        :param configs: Configurations
         :param data_idx_label: Ground-Truth Class Label-IDs
         :param transform: Transformation
         :param split: "train", "validation", "test"
@@ -27,7 +27,6 @@ class BioScanLoader(Dataset):
         self.data_format = configs['data_format']
         self.image_dir = configs['image_path']
         self.hdf5_dir = configs['hdf5_path']
-        self.metadata_dir = configs[f'metadata_path']
 
         self.dataset = BioScan()
         self.dataset.set_statistics(configs, split=split)
@@ -66,8 +65,8 @@ class BioScanLoader(Dataset):
         :return: a sample of data as a dict
         """
 
-        sample_name = self.sample_list[index]
-        label = self.sample_idx_label[sample_name]
+        class_name = self.sample_list[index]
+        label = self.sample_idx_label[class_name]
         image = self.load_image(index)
         show = False
         if show:

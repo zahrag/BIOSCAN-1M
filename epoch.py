@@ -9,14 +9,15 @@ import itertools
 
 
 def train_epoch(model, optimizer, train_loader, criteria, loss_train, acc_train, topk_acc_train, list_k, n_train, use_gpu):
-    """Single train epoch pass. At the end of the epoch, updates the lists loss_train, acc_train and topk_acc_train"""
+    """Single train epoch pass. At the end of the epoch, updates the list loss_train, acc_train and topk_acc_train"""
 
     print("-------------- TRAIN ---------------")
     model.train()
     # Initialize variables
     loss_epoch_train = 0
     n_correct_train = 0
-    # Containers for tracking nb of correctly classified examples (in the top-k sense) and top-k accuracy for each k in list_k
+    # Containers for tracking nb of correctly classified examples
+    # (in the top-k sense) and top-k accuracy for each k in list_k
     n_correct_topk_train = defaultdict(int)
     topk_acc_epoch_train = {}
 
@@ -106,7 +107,6 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
                 n_correct_topk_val[k] += count_correct_topk(scores=batch_output_val, labels=batch_y_val, k=k).item()
                 update_correct_per_class_topk(batch_proba, batch_y_val, class_acc_dict['class_topk_acc'][k], k)
 
-        # ########################
         # Get probas and labels for the entire validation set
         # list_val_proba: tensor of size (n_batch,batch_size,n_class=Nx32x17)
         new_app = True

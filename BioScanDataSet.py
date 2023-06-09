@@ -3,6 +3,10 @@ import pandas as pd
 from torch.utils.data import Dataset
 import math
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from utils import make_directory
 
 
 class BioScan(Dataset):
@@ -11,20 +15,24 @@ class BioScan(Dataset):
             This class handles getting, setting and showing data statistics ...
             """
 
-    def get_statistics(self, experiment_names, metadata_dir, split='', exp='',
-                       make_split=False, show_split_statistics=False):
+    def get_statistics(self, experiment_names, metadata_dir,
+                       split='', exp='', make_split=False):
         """
-           This function sets data attributes read from metadata file of the dataset.
-           This includes biological taxonomy information, DNA barcode indexes and RGB image labels.
-           """
+        This function sets data attributes read from metadata file of the dataset.
+        This includes biological taxonomy information, DNA barcode indexes and RGB image names and chunk numbers.
+        :param experiment_names: Name of 6 experiments conducted in BIOSCAN-1M Insect paper.
+        :param metadata_dir: Path to the Metadata file (.csv)
+        :param split: Set split: All, Train, Validation, Test
+        :param exp: Experiment Name.
+        :param make_split: If splitting dataset?
+        :return:
+        """
 
-        # Get Samples Roles In Experiments
+        # Get experiments name
         self.experiment_names = experiment_names
 
         self.metadata_dir = metadata_dir
-        self.df = self.read_metadata(metadata_dir, split, exp,
-                                     make_split=make_split,
-                                     show_split_statistics=show_split_statistics)
+        self.df = self.read_metadata(metadata_dir, split, exp, make_split=make_split)
         self.index = self.df.index.to_list()
         self.df_categories = self.df.keys().to_list()
         self.n_DatasetAttributes = len(self.df_categories)
@@ -57,45 +65,45 @@ class BioScan(Dataset):
     def __len__(self):
         return len(self.index)
 
-    def read_metadata(self, metadata_dir, split, exp, make_split=False, show_split_statistics=False):
+    def read_metadata(self, metadata_dir, split, exp, make_split=False):
 
         if os.path.isfile(metadata_dir):
             df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
         else:
-            raise RuntimeError(f"Not a metadata to read in:\n{metadata_dir}")
+            print(f"No a metadata file in directory:\n{metadata_dir}")
+            return
 
         if make_split:
             return df
-        else:
-            if not split:
-                if exp == self.experiment_names[3]:  # Large-Insect-Order
-                    return df
-                else:
-                    df_set = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl != 'no_split']
-                    df_set = pd.DataFrame(df_set)
-                    df_set.reset_index(inplace=True, drop=True)
-                    return df_set
 
+        elif exp in df.columns:
+
+            if split == 'all':
+                df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl != 'no_split']
             else:
-                if exp in df.columns:
-                    df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
-                    df_split = pd.DataFrame(df_split)
-                    df_split.reset_index(inplace=True, drop=True)
-                    return df_split
-                else:
-                    print(f"Experiment split is not available:{exp}!")
-                    return
+                df_split = [df.iloc[id] for id, cl in enumerate(df[exp]) if cl == split]
+
+            df_split = pd.DataFrame(df_split)
+            df_split.reset_index(inplace=True, drop=True)
+            return df_split
+
+        else:
+            print(f"Experiment split is not available:{exp}!")
+            return
 
     def set_statistics(self, configs, split=''):
-        """
 
-        :param configs: Arguments
+        """
+        This function sets dataset statistics
+        :param configs: Configurations.
+        :param split: Split: all, train, validation, test.
         :return:
         """
 
-        self.get_statistics(configs['experiment_names'], configs["metadata_path"], exp=configs["exp_name"],
-                            make_split=configs["make_split"], split=split,
-                            show_split_statistics=configs["print_split_statistics"])
+        self.get_statistics(configs['experiment_names'], configs["metadata_path"],
+                            exp=configs["exp_name"],
+                            make_split=configs["make_split"],
+                            split=split)
 
         # Get data list as one of the Biological Taxonomy
         if configs["group_level"] in self.taxonomy_groups_list_dict.keys():
@@ -154,8 +162,10 @@ class BioScan(Dataset):
         return sorted_data_dict
 
     def class_to_ids(self, data_dict):
+
         """
-        This function create index labels (order to numbered labels).
+        This function creates a numeric id for a class.
+        :param data_dict: Data dictionary corresponding each class to its sample ids
         :return:
         """
         data_idx_label = {}
@@ -166,6 +176,11 @@ class BioScan(Dataset):
         return data_idx_label
 
     def get_n_sample_class(self, data_dict):
+        """
+        This function compute number of samples per class.
+        :param data_dict: Data dictionary corresponding each class to its sample ids
+        :return:
+        """
 
         data_samples_list = list(data_dict.values())
         n_sample_per_class = [len(class_samples) for class_samples in data_samples_list]
@@ -174,7 +189,9 @@ class BioScan(Dataset):
 
     def class_list_idx(self, data_list, data_idx_label):
         """
-        This function create data list of numbered labels.
+        This function creates data list of numbered labels.
+        :param data_list: data list of class names.
+        :param data_idx_label: numeric ids of class names
         :return:
         """
 
@@ -186,9 +203,12 @@ class BioScan(Dataset):
 
 
 def show_dataset_statistics(configs):
+
     """
-         This function shows data statistics from metadata file of the dataset.
-         """
+    This function shows data statistics from metadata file of the dataset.
+    :param configs: Configurations.
+    :return:
+    """
     if not configs["print_statistics"]:
         return
 
@@ -204,7 +224,7 @@ def show_dataset_statistics(configs):
     print("Copyright Holder: CBG Photography Group")
     print("Copyright Institution: Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)")
     print("Photographer: CBG Robotic Imager")
-    print("Copyright: Creative Commons-Attribution Non-Commercial Share-Alike")
+    print("Copyright License: Creative Commons-Attribution Non-Commercial Share-Alike")
     print("Copyright Contact: collectionsBIO@gmail.com")
     print("Copyright Year: 2021")
     print("----------------------------------------------------------------------------------------")
@@ -224,7 +244,7 @@ def show_dataset_statistics(configs):
             group_level_dict[f"{taxa}_n_not_grouped_samples"] = len(dataset.data_dict["not_classified"])
             group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict) - 1
     configs["group_level"] = set_group_level
-    # Show statistics
+    # Print statistics
     print(f"\n\n\t\t\tStatistics of the {configs['dataset_name']} with a total of {len(dataset.df.index)} data samples")
     print("----------------------------------------------------------------------------------------")
     print("\t\t\t\t\t\t\tTaxonomy Group Ranking")
@@ -259,19 +279,36 @@ def show_dataset_statistics(configs):
     print("\n----------------------------------------End-----------------------------------------------")
 
 
-def show_statistics(configs, gt_ID='', split=''):
+def show_statistics(configs, gt_ID, split=''):
     """
-         This function shows data statistics from metadata file of the dataset.
-         """
+    This function shows split statistics.
+    :param configs: Configurations.
+    :param gt_ID: Ground-truth IDs.
+    :param split: Split: all, train, validation, test
+    :return:
+    """
     if not configs["print_split_statistics"]:
         return
 
     dataset = BioScan()
     dataset.set_statistics(configs, split=split)
 
-    Set = split
-    if split not in ['train', 'validation', 'test']:
-        Set = 'All'
+    print_split_statistics(configs, dataset, gt_ID, Set=split)
+
+    plot_split_statistics(dataset.n_sample_per_class, dataset.data_idx_label, len(dataset.data_list),
+                          group_level=configs['group_level'], split=split, dataset=configs['exp_name'],
+                          fig_path=f"{configs['results_path']}/figures")
+
+
+def print_split_statistics(configs, dataset, gt_ID, Set=''):
+    """
+    Print Dataset Statistics
+    :param configs: Configurations.
+    :param dataset: Dataset class.
+    :param gt_ID: Ground-truth IDs.
+    :param Set: Split set: all, train, validation, test
+    :return:
+    """
 
     label_IDs = {}
     for class_name in dataset.data_dict.keys():
@@ -298,5 +335,48 @@ def show_statistics(configs, gt_ID='', split=''):
     print('{:25s} {:10d} {:22d} '.format("total", cnt + 1, len(dataset.data_list)))
     print("------------------------------------------------------------------------")
     print("no_ID Class(es) are deducted from experiments!")
-    print("------------------------------------------------------------------------")
+    print("\n----------------------------------------End-----------------------------------------------")
+
+
+def plot_split_statistics(sample_num, class_idx, n_samples,
+                          group_level='', split='', dataset='', fig_path='', normalize=''):
+    """
+    Plot Dataset Statistics
+    :param sample_num: Number of samples per class.
+    :param class_idx: Class name vs., numeric IDs.
+    :param n_samples: Total number of sample is set.
+    :param group_level: Taxonomy group level.
+    :param split: Split: all, train, validation, test.
+    :param dataset: Dataset name.
+    :param fig_path: path to save figure.
+    :return:
+    """
+
+    class_names = list(class_idx.keys())
+    sample_values = sample_num
+    if normalize:
+        sample_values = [format((num/n_samples), ".2f") for num in sample_num]
+
+    values = np.reshape(sample_values, (1, len(sample_num)))
+    if len(class_names) > 20:
+        deg_r = 75
+    else:
+        deg_r = 45
+
+    # Plot the Heatmap with annotations
+    plt.figure(figsize=(8, 3))
+    ax = sns.heatmap(values, annot=True, cmap='Greens', yticklabels=['Sample Number'],
+                     xticklabels=class_names, annot_kws={'fontsize': 14, 'fontweight': 'bold'},
+                     cbar=False, fmt='.0f')
+
+    for t in ax.get_xticklabels():
+        t.set_rotation(deg_r)
+    for t in ax.texts:
+        t.set_rotation(90)
+    plt.title(f'Class Distribution: {dataset} set: {split}', fontweight='bold', fontsize=12)
+    ax.set_xlabel(group_level)
+    plt.tight_layout()
+    make_directory(fig_path)
+    plt.savefig(f"{fig_path}/heatmap_class_{group_level}_{split}_{dataset}.png", dpi=300)
+    plt.show()
 

@@ -6,7 +6,7 @@ from bioscan_dataloader import get_dataloader
 from train import train
 from test import test
 from crop_image import run_crop_tool
-from configurations import set_configurations, make_path_configs, BioScan_Configurations
+from configurations import set_configurations, make_path_configs, BioScan_Configurations, get_group_level
 
 
 def get_exp_configs():
@@ -35,12 +35,11 @@ def get_exp_configs():
         "experiment_names": base_configs.experiment_names,
         "print_statistics": False,
         # ### Train/Test Tool ####
-        "metadata_path_train": "",
-        "metadata_path_val": "",
-        "metadata_path_test": "",
+        "vit_pretrained": "",
         "dataloader": False,
         "train": False,
         "test": False,
+        "best_model": "",
         "model": "resnet50",
         "loss": "CE",
         # ### Split Tool ####
@@ -60,6 +59,8 @@ if __name__ == '__main__':
     exp_configs = get_exp_configs()
     # Get model configurations
     configs = set_configurations(exp_configs)
+    # Get group_level from experiments name
+    configs['group_level'] = get_group_level(exp_name=configs['exp_name'])
     # Save model configurations
     configs = make_path_configs(configs)
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
     download_data_files(f"{configs['download_path']}/bioscan_dataset", download=configs['download'])
 
     # ##################################### RUN PRE-PROCESSING ###################################################
-    run_crop_tool(configs, crop_images=configs['crop_image'])
+    run_crop_tool(configs)
 
     # ################################# PRINT DATASET STATISTICS #################################################
     show_dataset_statistics(configs)
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     data_idx_label = make_split(configs)
 
     # ################################# PRINT GROUP-LEVEL STATISTICS #############################################
-    show_statistics(configs, gt_ID=data_idx_label, split='')
+    show_statistics(configs, gt_ID=data_idx_label, split='all')
 
     # ################################# PRINT DATA SPLIT STATISTICS ##############################################
     show_statistics(configs, gt_ID=data_idx_label, split='train')

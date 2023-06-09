@@ -5,14 +5,15 @@ import torch
 
 
 class BioScan_Configurations():
+
     def __init__(self, exp_ID):
         """
-        This class handles basic configurations of the BioScan Dataset and experiments.
+        This class handles basic configurations of the BIOSCAN-1M Insect Dataset and experiments.
         """
 
-        self.taxonomic_group_levels = {'0': 'domain', '1': 'kingdom', '2': 'phylum', '3': 'class', '4': 'order',
-                                       '5': 'family', '6': 'subfamily', '7': 'tribe', '8': 'genus', '9': 'species',
-                                       '10': 'subspecies', '11': 'name'}
+        self.dataset_names = {'1': 'BioScan_Insect_Dataset',
+                              '2': 'BioScan_Insect_Diptera_Dataset',
+                              }
 
         self.experiment_names = ['large_diptera_family',
                                  'medium_diptera_family',
@@ -21,14 +22,9 @@ class BioScan_Configurations():
                                  'medium_insect_order',
                                  'small_insect_order',
                                  ]
+
         self.exp = self.experiment_names[exp_ID]
-
-        name = ''.join(list(self.exp)[-6:])
-        if name == "family":
-            self.g_level = 'family'
-        elif name == "_order":
-            self.g_level = 'order'
-
+        self.group_level = get_group_level(exp_name=self.exp)
         self.max_num_sample = 0
         if self.exp in self.experiment_names[2:4]:
             self.max_num_sample = 200000
@@ -37,77 +33,89 @@ class BioScan_Configurations():
 
         self.data_formats = ["folder", "hdf5", "tar"]
 
-        self.data_formats = ["folder", "hdf5", "tar"]
+
+def get_group_level(exp_name=''):
+
+    name = ''.join(list(exp_name)[-6:])
+    if name == "family":
+        group_level = 'family'
+    elif name == "_order":
+        group_level = 'order'
+    else:
+        print(f"experiment name is not verified: {exp_name}")
+        return
+
+    return group_level
 
 
-def set_configurations(config=None):
+def set_configurations(configs=None):
 
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
     print("\nSetting Hyper-parameters of the Experiment ...")
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('--date_time', type=str, default=config["date_time"], help='Data & time of the experiment',
+    parser.add_argument('--date_time', type=str, default=configs["date_time"], help='Data & time of the experiment',
                         required=False)
 
+    # #### Base Settings ######
+    parser.add_argument('--exp_name', type=str, default=configs["exp_name"], help='Name of the experiment',
+                        required=False)
+    parser.add_argument('--dataset_name', type=str, default=configs["dataset_name"], help='Name of the dataset.',
+                        required=False)
+    parser.add_argument('--group_level', type=str, default=configs["group_level"], help='Taxonomic group ranking.',
+                        required=False)
+    parser.add_argument('--data_format', type=str, default=configs["data_format"], help='Format of the dataset.',
+                        required=False)
+    parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
+                        default=configs["best_model"], required=False)
+
     # #### Path Settings ######
-    parser.add_argument('--exp_name', type=str, default=config["exp_name"], help='Name of the experiment',
-                        required=False)
-    parser.add_argument('--dataset_name', type=str, default=config["dataset_name"], help='Name of the dataset.',
-                        required=False)
-    parser.add_argument('--group_level', type=str, default=config["group_level"], help='Taxonomic group ranking.',
-                        required=False)
-    parser.add_argument('--data_format', type=str, default=config["data_format"], help='Format of the dataset.',
-                        required=False)
     parser.add_argument('--log', type=str, default="runs", help='Path to the log file.', required=False)
     parser.add_argument('--download_path', type=str, help='Path to the download directory.',
                         default='', required=False)
-    parser.add_argument('--dataset_path', type=str, help='Path to the BioScan Dataset.',
-                        default=config["dataset_path"], required=False)
-    parser.add_argument('--metadata_path', type=str, default=config["metadata_path"],
+    parser.add_argument('--dataset_path', type=str, help='Path to the BIOSCAN Dataset root.',
+                        default=configs["dataset_path"], required=False)
+    parser.add_argument('--metadata_path', type=str, default=configs["metadata_path"],
                         help="Path to the metadata of the dataset.", required=False)
-    parser.add_argument('--metadata_path_train', type=str, default=config["metadata_path_train"],
-                        help="Path to the metadata of the Train set.", required=False)
-    parser.add_argument('--metadata_path_validation', type=str, default=config["metadata_path_val"],
-                        help="Path to the metadata of the Validation set.", required=False)
-    parser.add_argument('--metadata_path_test', type=str, default=config["metadata_path_test"],
-                        help="Path to the metadata of the Test set.", required=False)
-
     parser.add_argument('--image_path', type=str, help='Path to the individual RGB images (if any).',
-                        default=config["image_path"], required=False)
-    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=config["hdf5_path"],
+                        default=configs["image_path"], required=False)
+    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"],
                         required=False)
-    parser.add_argument('--results_path', type=str, help='Path to save results.', default=config["results_path"],
+    parser.add_argument('--cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
+                        default=configs["cropped_hdf5_path"],
                         required=False)
-    parser.add_argument('--no_transform', default=False, action='store_true',
-                        help='Not using transformation in dataloader?', required=False)
-    parser.add_argument('--cropped', default=True, action='store_true',
-                        help='Using cropped images?',
+    parser.add_argument('--results_path', type=str, help='Path to save results.', default=configs["results_path"],
                         required=False)
 
     # #### Condition Settings #####
     parser.add_argument('--download', help='Whether to download from drive?',
                         default=False, action='store_true')
     parser.add_argument('--make_split', help='Whether to split dataset into train, validation and test sets?',
-                        default=config["make_split"], action='store_true')
+                        default=configs["make_split"], action='store_true')
     parser.add_argument('--print_statistics', help='Whether to print dataset statistics?',
-                        default=config["print_statistics"], action='store_true')
+                        default=configs["print_statistics"], action='store_true')
     parser.add_argument('--print_split_statistics', help='Whether to print dataset split statistics?',
-                        default=config["print_split_statistics"], action='store_true')
+                        default=configs["print_split_statistics"], action='store_true')
     parser.add_argument('--loader', help='Whether to create dataloader?',
-                        default=config["dataloader"], action='store_true')
+                        default=configs["dataloader"], action='store_true')
     parser.add_argument('--train', help='Whether to train the model?',
-                        default=config["train"], action='store_true')
+                        default=configs["train"], action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
-                        default=config["test"], action='store_true')
+                        default=configs["test"], action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
-                        default=config["crop_image"], action='store_true')
+                        default=configs["crop_image"], action='store_true')
+    parser.add_argument('--no_transform', default=False, action='store_true',
+                        help='Not using transformation in dataloader?', required=False)
+    parser.add_argument('--cropped', default=True, action='store_true',
+                        help='Using cropped images?',
+                        required=False)
 
     # ####### Data Split and Subset Creation #####
     parser.add_argument('--max_num_sample', type=int, default=50000,
                         help='Number of samples of each subset.',
                         required=False)
-    parser.add_argument('--experiment_names', type=str, default=config["experiment_names"],
-                        help="Name of experiments conducted in BioScan Project.", required=False)
+    parser.add_argument('--experiment_names', type=str, default=configs["experiment_names"],
+                        help="Name of experiments conducted in BIOSCAN Paper.", required=False)
 
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--read_format', type=str, default="hdf5",
@@ -123,7 +131,8 @@ def set_configurations(config=None):
     parser.add_argument('--output_hdf5', type=str, default="", help="path to the image hdf5y")
     parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
-    parser.add_argument('--equal_extend', default=True, help="Extend cropped images in the height and width with the same length.", action="store_true")
+    parser.add_argument('--equal_extend', default=True,
+                        help="Extend cropped images in the height and width with the same length.", action="store_true")
 
     # #### Training Settings ######
     parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility', required=False)
@@ -139,7 +148,9 @@ def set_configurations(config=None):
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=[1, 3, 5, 10], type=int, required=False)
     parser.add_argument('--pretrained', default=True, action='store_true', required=False)
-    parser.add_argument('--loss', type=str, help='decide which loss to use during training', default=config["loss"],
+    parser.add_argument('--vit_pretrained', type=str, default=configs["vit_pretrained"],
+                        help="Path to the checkpoint.", required=False)
+    parser.add_argument('--loss', type=str, help='decide which loss to use during training', default=configs["loss"],
                         required=False, choices=["CE", "Focal"])
 
     # #### Model Settings #####
@@ -151,7 +162,7 @@ def set_configurations(config=None):
                                             'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                                             'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
                                             'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
-                        default=config["model"], help='choose the model you want to train on', required=False)
+                        default=configs["model"], help='choose the model you want to train on', required=False)
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )
     args = parser.parse_args()
@@ -160,28 +171,30 @@ def set_configurations(config=None):
     return dict_args
 
 
-def save_configs(datetime, config, log_dir=None):
+def save_configs(datetime, configs, log_dir=None):
 
     info = f"Configurations of the Experiments Run on {datetime}\n"
-    for item in config.keys():
-        info += f'{item}:{config[item]}\n'
+    for item in configs.keys():
+        info += f'{item}:{configs[item]}\n'
 
-    with open(log_dir + f"{config['exp_name']}_configs.txt", "w") as fp:
+    with open(log_dir + f"{configs['exp_name']}_configs.txt", "w") as fp:
         fp.write(info)
     fp.close()
 
 
-def make_path_configs(config):
+def make_path_configs(configs):
 
-    if config["train"]:
-        save_dir = os.path.join(os.getcwd(), config["results_path"])
-        save_dir += "/{timestamp:s}_{dataset:s}/".format(timestamp=config["date_time"],
-                                                         dataset=config['dataset_name'])
+    if configs["train"]:
+        save_dir = os.path.join(os.getcwd(), configs["results_path"])
+        save_dir += "/{timestamp:s}_{dataset:s}_{loss:s}_{model:s}/".format(timestamp=configs["date_time"],
+                                                                            dataset=configs['exp_name'],
+                                                                            loss=configs['loss'],
+                                                                            model=configs['model'])
         make_directory(save_dir)
-        save_configs(config["date_time"], config, log_dir=save_dir)
-        config["results_path"] = save_dir
-        # config["exp_name"] = config["dataset_name"]
+        save_configs(configs["date_time"], configs, log_dir=save_dir)
+        configs["results_path"] = save_dir
 
-    return config
+    return configs
+
 
 

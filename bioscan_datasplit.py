@@ -1,11 +1,9 @@
 from torch.utils.data import Dataset
 import random
 import itertools
-import os
-import shutil
 import pandas as pd
 from BioScanDataSet import BioScan
-from utils import extract_tar, move_to_dir, make_tar, make_tsv, copy_to_dir, make_hdf5
+from utils import make_tsv
 
 
 class BioScanSplit(Dataset):
@@ -24,23 +22,6 @@ class BioScanSplit(Dataset):
        self.train_ratio = train_ratio
        self.validation_ratio = validation_ratio
        self.test_ratio = test_ratio
-
-    def get_split_ids(self, data_dict):
-        """
-        This function splits data into train, validation and test sets.
-        The split is generated per class to address class imbalances,
-        which is based on ratios preset for train, validation and test sets.
-        """
-
-        print(f"\n\n\t\t\t\t\t\t Data Split \t\t\t\t\t\t")
-        tr_perc = self.train_ratio
-        val_perc = self.validation_ratio
-        ts_perc = self.test_ratio
-
-        data_dict_remained, tr_indexes, val_indexes, ts_indexes = self.make_regular_split(data_dict,
-                                                                                          tr_perc, val_perc, ts_perc)
-
-        return data_dict_remained, tr_indexes, val_indexes, ts_indexes
 
     def make_regular_split(self, data_dict, tr_perc, val_perc, ts_perc):
         """
@@ -91,7 +72,32 @@ class BioScanSplit(Dataset):
         validation_indexes = list(itertools.chain(*val_set))
         test_indexes = list(itertools.chain(*ts_set))
 
+        # Sanity check: Get missed samples.
+        split_all = [train_indexes, validation_indexes, test_indexes]
+        split_all = list(itertools.chain(*split_all))
+        concatenated_list = [item for sublist in data_dict_remained.values() for item in sublist]
+        missed_ids = list(set(concatenated_list) - set(split_all))
+        ts_set = [test_indexes, missed_ids]
+        test_indexes = list(itertools.chain(*ts_set))
+
         return data_dict_remained, train_indexes, validation_indexes, test_indexes
+
+    def get_split_ids(self, data_dict):
+        """
+        This function splits data into train, validation and test sets.
+        The split is generated per class to address class imbalances,
+        which is based on ratios preset for train, validation and test sets.
+        """
+
+        print(f"\n\n\t\t\t\t\t\t Data Split \t\t\t\t\t\t")
+        tr_perc = self.train_ratio
+        val_perc = self.validation_ratio
+        ts_perc = self.test_ratio
+
+        data_dict_remained, tr_indexes, val_indexes, ts_indexes = self.make_regular_split(data_dict,
+                                                                                          tr_perc, val_perc, ts_perc)
+
+        return data_dict_remained, tr_indexes, val_indexes, ts_indexes
 
     def get_split_images(self, image_list, train_indexes, validation_indexes, test_indexes):
         """
@@ -124,10 +130,10 @@ class BioScanSplit(Dataset):
 
         return train_df, validation_df, test_df
 
-    def save_split_metadata(self, df, train_indexes, validation_indexes, test_indexes, group_level='order',
-                            dataset_name='', data_dir=None):
+    def save_split_metadata_separately(self, df, train_indexes, validation_indexes, test_indexes,
+                                       group_level='order', dataset_name='', data_dir=None):
         """
-            This function saves dataframe files (.tsv) for train, validation and test sets.
+            This function saves dataframe files (.tsv) for train, validation and test sets separately.
             """
 
         train_df, validation_df, test_df = self.get_split_metadata(df, train_indexes, validation_indexes, test_indexes)
@@ -145,96 +151,260 @@ class BioScanSplit(Dataset):
                  name=f"{dataset_name}_{group_level}_test_metadata.tsv",
                  path=f"{data_dir}/{dataset_name}")
 
-    def save_images(self, image_list, train_indexes, validation_indexes, test_indexes, group_level='order',
-                    dataset_name="small_dataset", data_dir=None, save_split_images=False):
+    def get_split_dict(self, data_dict, max_num=0):
 
         """
-            This function saves images (.jpg) for train, validation and test sets.
-            """
+        This function returns a data dictionary by sampling a parent dictionary applying a
+        Stratified class-based sampling strategy.
+        :param data_dict: Parent data dictionary.
+        :param max_num: Maximum number of samples of the child data dictionary.
+        :return:
+        """
 
-        if not save_split_images:
+        data_dic_child = {}
+        for key in list(data_dict.keys()):
+            data_dic_child[key] = []
+
+        num = 0
+        while num < max_num:
+            for key in list(data_dict.keys())[::-1]:
+                id_list = data_dict[key]
+                next_id = len(data_dic_child[key])
+                if next_id < len(id_list):
+                    index = id_list[next_id]
+                    data_dic_child[key].append(index)
+                    num += 1
+                else:
+                    continue
+
+        return data_dic_child
+
+    def get_diptera_family_data_dict(self, dataset, n_family=40):
+
+        """
+        This function generates data dictionary of the order Diptera most populus families.
+        :param dataset: Dataset.
+        :param n_family: Number of most populus families samples.
+        :return:
+        """
+
+        data_list_family = dataset.df['family'].to_list()
+        data_list_order = dataset.df['order'].to_list()
+        for id, order in enumerate(data_list_order):
+            if order != 'Diptera':
+                data_list_family[id] = 'not_diptera'
+
+        data_dict = dataset.make_data_dict(data_list_family, dataset.df.index)
+        del data_dict['not_diptera']
+        if 'not_classified' in data_dict.keys():
+            del data_dict['not_classified']
+
+        sorted_families = list(data_dict.keys())
+        selected_families = sorted_families[:n_family]
+        data_dict_updated = {}
+        for family in selected_families:
+            data_dict_updated[family] = data_dict[family]
+
+        return data_dict_updated
+
+    def get_subset_dict(self, dataset, exp='', max_num=200, group_level='', split=''):
+
+        """
+        This function creates data dictionary of subset.
+        :param dataset: Dataset class.
+        :param exp: Experiments name.
+        :param max_num: Maximum number of samples of the subset.
+        :param group_level: Taxonomy Group-Level.
+        :param split: Split: train, validation, test.
+        :return: Data list, class to id.
+        """
+
+        if split == 'train':
+            factor = self.train_ratio
+        elif split == 'validation':
+            factor = self.validation_ratio
+        elif split == 'test':
+            factor = self.test_ratio
+        else:
+            print("Please set a split: train, or validation, or test!")
             return
 
-        train_images, validation_images, test_images = self.get_split_images(image_list,
-                                                                             train_indexes, validation_indexes,
-                                                                             test_indexes)
+        name = ''.join(list(exp)[-6:])
+        if name == "family" and group_level == "family":
+            parent_exp_name = 'large_diptera_family'
+        elif name == "_order" and group_level == "order":
+            parent_exp_name = 'large_insect_order'
+        else:
+            print("Set the experiments name and group-level correctly!")
+            return
 
-        image_path = f"{data_dir}/{dataset_name}/{dataset_name}_images"
+        if parent_exp_name not in dataset.df_categories:
+            print(f"First split parent set:{parent_exp_name}")
+            return
 
-        print("\nSet split directories to save train, validation and test images ...\n")
-        train_dir = f"{data_dir}/{dataset_name}/{dataset_name}_{group_level}_train_images"
-        validation_dir = f"{data_dir}/{dataset_name}/{dataset_name}_{group_level}_validation_images"
-        test_dir = f"{data_dir}/{dataset_name}/{dataset_name}_{group_level}_test_images"
+        # Create data dictionary of the split
+        data_list = dataset.df[group_level].to_list()
+        split_list = dataset.df[parent_exp_name].to_list()
+        for id, sp in enumerate(split_list):
+            if sp != split:
+                data_list[id] = "no_split"
 
-        imgs = [image for image in os.listdir(image_path)]
+        # Get data dictionary of the split set
+        data_dict = dataset.make_data_dict(data_list, dataset.df.index)
+        del data_dict['no_split']
+        data_idx_label = dataset.class_to_ids(data_dict)
 
-        not_sorted = 0
-        for id, img in enumerate(imgs):
-            if img in train_images:
-                print(f"Train ---- {img} found in image path ----")
-                # move_to_dir(source=f"{image_path}{img}", destination=train_dir)
-                copy_to_dir(source=f"{image_path}{img}", destination=train_dir)
+        # Stratify class-based subset sampling
+        data_dict = self.get_split_dict(data_dict, max_num=int(factor*max_num))
+        concatenated_list = [item for sublist in data_dict.values() for item in sublist]
+        if len(concatenated_list) > (factor*max_num):
+            top_key = data_dict[list(data_dict.keys())[0]]
+            data_dict[list(data_dict.keys())[0]] = top_key[:-int(len(concatenated_list)-(factor*max_num))]
+            concatenated_list = [item for sublist in data_dict.values() for item in sublist]
 
-            elif img in validation_images:
-                print(f"Validation ---- {img} found in image path ----")
-                # move_to_dir(source=f"{image_path}{img}", destination=validation_dir)
-                copy_to_dir(source=f"{image_path}{img}", destination=validation_dir)
+        return concatenated_list, data_idx_label
 
-            elif img in test_images:
-                print(f"Test ---- {img} found in image path ----")
-                # move_to_dir(source=f"{image_path}{img}", destination=test_dir)
-                copy_to_dir(source=f"{image_path}{img}", destination=test_dir)
+    def get_order_split_ids(self, dataset, group_level=''):
+        """
+        This function creates train, validation and test ids of large_insect_order dataset using split of
+        large_diptera_family dataset.
+        :param dataset: Dataset class.
+        :param group_level: Taxonomy Group-Level.
+        :return: insect_order train, validation and test split indices.
+        """
 
-            else:
-                not_sorted += 1
-                # print(f"Image {img} is not sorted in any split sets! ")
+        data_list = dataset.df[group_level].to_list()
 
-        print(f"\n Total of {not_sorted} images are not in any split set")
+        # Get Diptera Family-Level Split list
+        split_list = dataset.df[dataset.experiment_names[0]].to_list()
 
-        print("\nCreate tar folder of Train set ...")
-        make_tar(name=f"{dataset_name}_{group_level}_train_images.tar", path=train_dir)
+        tr_ids = [id for id, sp in enumerate(split_list) if sp == 'train']
+        val_ids = [id for id, sp in enumerate(split_list) if sp == 'validation']
+        ts_ids = [id for id, sp in enumerate(split_list) if sp == 'test']
 
-        print("\nCreate tar folder of Validation set ...")
-        make_tar(name=f"{dataset_name}_{group_level}_validation_images.tar", path=validation_dir)
+        data_list_remained = ['no_split' for id in dataset.df.index]
+        for id, sp in enumerate(split_list):
+            if sp == 'no_split':
+                data_list_remained[id] = data_list[id]
 
-        print("\nCreate tar folder of Test set ...")
-        make_tar(name=f"{dataset_name}_{group_level}_test_images.tar", path=test_images)
+        data_dict = dataset.make_data_dict(data_list_remained, dataset.df.index)
+        del data_dict['no_split']
+
+        data_dict_remained, tr_ids_r, val_ids_r, ts_ids_r = self.get_split_ids(data_dict)
+
+        tr_set = [tr_ids, tr_ids_r]
+        train_indexes = list(itertools.chain(*tr_set))
+        val_set = [val_ids, val_ids_r]
+        validation_indexes = list(itertools.chain(*val_set))
+        ts_set = [ts_ids, ts_ids_r]
+        test_indexes = list(itertools.chain(*ts_set))
+
+        return train_indexes, validation_indexes, test_indexes
+
+    def save_split_metadata(self, dataset, tr_indexes, val_indexes, ts_indexes,
+                            exp_name="", metadata_name="", metadata_path=""):
+        """
+        This function saves experiments split list as columns of metadata file.
+        :param dataset: Dataset Class.
+        :param tr_indexes: Train indices.
+        :param val_indexes: Validation Indices.
+        :param ts_indexes: Test Indices.
+        :param exp_name: Experiment name.
+        :param metadata_name: Name of metadata to save.
+        :param metadata_path: Path to the metadata file to save in.
+        :return:
+        """
+
+        df = dataset.df
+        column = ['no_split' for id in df.index]
+        for id in tr_indexes:
+            column[id] = 'train'
+        for id in val_indexes:
+            column[id] = 'validation'
+        for id in ts_indexes:
+            column[id] = 'test'
+
+        if exp_name == 'large_diptera_family':
+            updated_df = df.assign(large_diptera_family=column)
+        elif exp_name == 'medium_diptera_family':
+            updated_df = df.assign(medium_diptera_family=column)
+        elif exp_name == 'small_diptera_family':
+            updated_df = df.assign(small_diptera_family=column)
+        elif exp_name == 'large_insect_order':
+            updated_df = df.assign(large_insect_order=column)
+        elif exp_name == 'medium_insect_order':
+            updated_df = df.assign(medium_insect_order=column)
+        elif exp_name == 'small_insect_order':
+            updated_df = df.assign(small_insect_order=column)
+        else:
+            print(f"Not a valid experiment is set:{exp_name}")
+            return
+
+        updated_df = pd.DataFrame(updated_df)
+        updated_df.reset_index(inplace=True, drop=True)
+        make_tsv(updated_df, name=metadata_name, path=metadata_path)
 
 
 def make_split(configs):
     """
-        :param configs: Configurations
-        :return: Ground-Truth Class Label-IDs
-                 A dict which correspond each class string name to a numeric label ID.
-        """
+    This function samples and splits BIOSCAN-1M Insect Dataset for 6 experiments conducted in paper.
+    NOTE-1: First sample BIOSCAN-Diptera dataset!
+    NOTE-1: Split parent sets (large_insect_order, large_diptera_family) before splitting
+            their children sets (medium, small)!
+    :param configs: Configurations.
+    :return:
+    """
 
     dataset = BioScan()
     data_split = BioScanSplit()
 
     if not configs['make_split']:
-
-        # Get ground-truth labels from Train set
-        dataset.set_statistics(configs)
-
+        dataset.set_statistics(configs, split='train')
         return dataset.data_idx_label
 
     # Get data statistics for the whole dataset
-    dataset.set_statistics(configs)
+    dataset.set_statistics(configs, split='all')
+    exp = configs['exp_name']
+    g_level = configs['group_level']
+    max_num = configs['max_num_sample']
 
-    # Split the whole dataset into Train, Validation and Test sets: Get indexes
-    data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(dataset.data_dict)
+    if exp == 'large_diptera_family' and g_level == 'family':
+        data_dict_family = data_split.get_diptera_family_data_dict(dataset)
+        data_dict_remained, tr_indexes, val_indexes, ts_indexes = data_split.get_split_ids(data_dict_family)
+        data_idx_label = dataset.class_to_ids(data_dict_remained)
 
-    # Get Ground-Truth Class Label-IDs from remaining classes after making split
-    data_idx_label = dataset.class_to_ids(data_dict_remained)
+    elif exp == 'large_insect_order' and g_level == 'order':
+        if 'large_diptera_family' in dataset.df_categories:
+            tr_indexes, val_indexes, ts_indexes = data_split.get_order_split_ids(dataset, group_level=g_level)
+            data_idx_label = dataset.class_to_ids(dataset.data_dict)
+        else:
+            print("First split Diptera Family-Level!")
+            return
 
-    # Split the whole dataset into Train, Validation and Test sets: Save RGB images
-    data_split.save_images(dataset.image_names, tr_indexes, val_indexes, ts_indexes, group_level=configs['group_level'],
-                           dataset_name=configs['dataset_name'], data_dir=configs['dataset_path'],
-                           save_split_images=False)
+    elif exp in ['medium_diptera_family', 'small_diptera_family', 'medium_insect_order', 'small_insect_order']:
 
-    # Split the whole dataset into Train, Validation and Test sets: Save Split Metadata (.tsv)
-    data_split.save_split_metadata(dataset.df, tr_indexes, val_indexes, ts_indexes, group_level=configs['group_level'],
-                                   dataset_name=configs['dataset_name'], data_dir=configs['dataset_path'])
+        tr_indexes, data_idx_label = data_split.get_subset_dict(dataset,
+                                                                exp=exp,
+                                                                max_num=max_num,
+                                                                group_level=g_level, split='train')
+
+        val_indexes, data_idx_label = data_split.get_subset_dict(dataset,
+                                                                 exp=exp,
+                                                                 max_num=max_num,
+                                                                 group_level=g_level, split='validation')
+
+        ts_indexes, data_idx_label = data_split.get_subset_dict(dataset,
+                                                                exp=exp,
+                                                                max_num=max_num,
+                                                                group_level=g_level, split='test')
+    else:
+        print("Set experiments name and group level correctly!")
+        return
+
+    data_split.save_split_metadata(dataset, tr_indexes, val_indexes, ts_indexes,
+                                   exp_name=configs['exp_name'],
+                                   metadata_name=f'BIOSCAN_Insect_Dataset_metadata.tsv',
+                                   metadata_path=f"{configs['dataset_path']}/")
 
     return data_idx_label
 
