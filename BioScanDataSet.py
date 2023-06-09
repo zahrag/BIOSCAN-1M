@@ -19,10 +19,10 @@ class BioScan(Dataset):
                        split='', exp='', make_split=False):
         """
         This function sets data attributes read from metadata file of the dataset.
-        This includes biological taxonomy information, DNA barcode indexes and RGB image names and chunk numbers.
+        This includes biological taxonomy annotations, DNA barcode indexes and RGB image names and chunk numbers.
         :param experiment_names: Name of 6 experiments conducted in BIOSCAN-1M Insect paper.
-        :param metadata_dir: Path to the Metadata file (.csv)
-        :param split: Set split: All, Train, Validation, Test
+        :param metadata_dir: Path to the Metadata file (.tsv)
+        :param split: Set split: all, train, validation, test
         :param exp: Experiment Name.
         :param make_split: If splitting dataset?
         :return:
@@ -70,7 +70,7 @@ class BioScan(Dataset):
         if os.path.isfile(metadata_dir) and os.path.splitext(metadata_dir)[1] == '.tsv':
             df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
         else:
-            print(f"Not a CVS metadata file exits in directory:\n{metadata_dir}")
+            print(f"Not a CVS metadata file exits in the directory:\n{metadata_dir}")
             return
 
         if make_split:
@@ -110,7 +110,8 @@ class BioScan(Dataset):
             self.data_list = self.taxonomy_groups_list_dict[configs["group_level"]]
 
         else:
-            print(f'Dataset Does NOT contain Taxonomy Group Ranking {configs["group_level"]}')
+            print(f'Dataset Does NOT Have Taxonomy Group Ranking {configs["group_level"]}')
+            return
 
         # Get the data dictionary
         self.data_dict = self.make_data_dict(self.data_list, self.index)
@@ -137,6 +138,7 @@ class BioScan(Dataset):
                     data_list[cnt] = "not_classified"
                 else:
                     print("Not a string type data name is detected!")
+                    return
 
         data_names = []
         for data in data_list:
