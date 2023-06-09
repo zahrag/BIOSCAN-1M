@@ -133,7 +133,6 @@ def plot_confusion_matrix(cm, classes,
                  horizontalalignment="center",
                  color="white" if cm[i, j] > thresh else "black")
 
-    plt.tight_layout()
     plt.ylabel('True Class', fontsize=14)
     plt.xlabel('Predicted Class', fontsize=14)
     plt.tight_layout()
