@@ -67,10 +67,10 @@ class BioScan(Dataset):
 
     def read_metadata(self, metadata_dir, split, exp, make_split=False):
 
-        if os.path.isfile(metadata_dir):
+        if os.path.isfile(metadata_dir) and os.path.splitext(metadata_dir)[1] == '.tsv':
             df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
         else:
-            print(f"No a metadata file in directory:\n{metadata_dir}")
+            print(f"Not a CVS metadata file exits in directory:\n{metadata_dir}")
             return
 
         if make_split:
