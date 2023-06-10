@@ -4,6 +4,7 @@ import random
 import timm
 import numpy as np
 import tarfile
+import zipfile
 import os
 import shutil
 import pandas as pd
@@ -190,6 +191,12 @@ def extract_tar(tar_file=None, path=None):
     tar_file = tarfile.open(tar_file)
     tar_file.extractall(path)  # specify which folder to extract to
     tar_file.close()
+
+def extract_zip(zip_file=None, path=None):
+
+    make_directory(path)
+    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+        zip_ref.extractall(path)
 
 
 def move_to_dir(source=None, destination=None):

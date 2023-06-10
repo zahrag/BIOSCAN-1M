@@ -110,6 +110,14 @@ def set_configurations(configs=None):
                         help='Using cropped images?',
                         required=False)
 
+    # ####### Data Download #####
+    parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
+                        help="Path to the directory where file ID mapping is saved.", required=False)
+    parser.add_argument('--download_dir', type=str, default=configs["download_path"],
+                        help="Path to the directory to download.", required=False)
+    parser.add_argument('--file_list', type=str, default="",
+                        help="Files to download.", required=True)
+
     # ####### Data Split and Subset Creation #####
     parser.add_argument('--max_num_sample', type=int, default=50000,
                         help='Number of samples of each subset.',

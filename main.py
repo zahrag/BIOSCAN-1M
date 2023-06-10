@@ -1,6 +1,6 @@
 import datetime
 from BioScanDataSet import show_statistics, show_dataset_statistics
-from bioscan_datadownload import download_data_files
+from bioscan_datadownload import download_dataset_files
 from bioscan_datasplit import make_split
 from bioscan_dataloader import get_dataloader
 from train import train
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     configs = make_path_configs(configs)
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
-    download_data_files(f"{configs['download_path']}/bioscan_dataset", download=configs['download'])
+    download_dataset_files(configs)
 
     # ##################################### RUN PRE-PROCESSING ###################################################
     run_crop_tool(configs)

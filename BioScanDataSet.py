@@ -218,7 +218,7 @@ def show_dataset_statistics(configs):
     print("ATTENTION:This process can take time especially if the dataset is big!")
 
     dataset = BioScan()
-    dataset.get_statistics(configs['experiment_names'], configs["metadata_path"], exp=configs["exp_name"])
+    dataset.get_statistics(configs['experiment_names'], configs["metadata_path"], exp=configs["exp_name"], split='all')
 
     print("\n\n----------------------------------------------------------------------------------------")
     print(f"\t\t\t\t\t\t\t\tCopyright")
@@ -247,7 +247,7 @@ def show_dataset_statistics(configs):
             group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict) - 1
     configs["group_level"] = set_group_level
     # Print statistics
-    print(f"\n\n\t\t\tStatistics of the {configs['dataset_name']} with a total of {len(dataset.df.index)} data samples")
+    print(f"\n\n\tStatistics of the BIOSCAN-1M Insect dataset with a total of {len(dataset.df.index)}/1,128,308 data samples")
     print("----------------------------------------------------------------------------------------")
     print("\t\t\t\t\t\t\tTaxonomy Group Ranking")
     print("-----------------------------------------------------------------------------------------")
