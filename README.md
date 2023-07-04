@@ -78,7 +78,7 @@ The list of files available for download from GoogleDrive are:
  - Cropped images resized to 256 on smaller dimension (ZIP file format): cropped_256.zip
  - Cropped images resized to 256 on smaller dimension (HDF5 file format): cropped_256.hdf5
  - Original full size images (113 ZIP file format): bioscan_images_original_full_part{1:113}.zip
- - Original images resized to 256 on smaller dimension (HDF5 file format): bioscan_images_cropped_full_part{1:113}.zip
+ - Cropped full size images (113 ZIP file format): bioscan_images_cropped_full_part{1:113}.zip
 
 ###### <h3> Dataset Statistics
 To see statistics of the dataset, and run the following:
