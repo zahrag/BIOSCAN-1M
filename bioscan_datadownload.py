@@ -7,7 +7,7 @@ import itertools
 
 def read_id_mapping(id_mapping_path=""):
     file_id_mapping = {}
-    with open(os.path.join(id_mapping_path, f"bioscan_dataset_file_ID_mapping.txt")) as fp:
+    with open(id_mapping_path) as fp:
         for i, line in enumerate(fp):
             a_string = line.strip()
             info = [word for word in a_string]
