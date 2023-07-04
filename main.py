@@ -23,6 +23,7 @@ def get_exp_configs():
 
     config = {
         "date_time": timestamp,
+        "download": False,
         "dataset_path": "",
         "metadata_path": "",
         "dataset_name": "",
