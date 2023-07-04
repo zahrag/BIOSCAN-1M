@@ -18,8 +18,13 @@ def test(configs, test_loader, dataset_attributes):
 
     set_seed(configs, use_gpu=torch.cuda.is_available())
 
-    tr_val_results = open_pickle(f'{configs["results_path"]}/{configs["best_model"]}/{configs["exp_name"]}_train_val.pkl')
-    lmbda_best_acc = tr_val_results['lmbda_best_acc']
+    log_file = f'{configs["results_path"]}/{configs["best_model"]}/{configs["exp_name"]}_train_val.pkl'
+    lmbda_best_acc = []
+    if os.path.exists(log_file):
+        tr_val_results = open_pickle(log_file)
+        lmbda_best_acc = tr_val_results['lmbda_best_acc']
+    else:
+        print("To compute Average-K Accuracy:\nGet lmbda by testing the best trained model on the validation data!")
 
     best_model = f'{configs["results_path"]}/{configs["best_model"]}/{configs["exp_name"]}_weights_best_acc.tar'
     model = get_model(configs, n_classes=dataset_attributes['n_classes'])

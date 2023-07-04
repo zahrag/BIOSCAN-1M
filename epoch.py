@@ -107,8 +107,10 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
                 n_correct_topk_val[k] += count_correct_topk(scores=batch_output_val, labels=batch_y_val, k=k).item()
                 update_correct_per_class_topk(batch_proba, batch_y_val, class_acc_dict['class_topk_acc'][k], k)
 
-        # Get probas and labels for the entire validation set
-        # list_val_proba: tensor of size (n_batch,batch_size,n_class=Nx32x17)
+        """
+        The new_app: if the flag is set to True then the lambda threshold values are calculated using 
+        a new approach for BIOSCAN-1M, which is different from PlantNet-300K implementation.
+        """
         new_app = True
         if new_app:
             val_probas = torch.cat(list_val_proba)  # ((n_batch*batch_size) , n_class)=(n_sample,n_class)
@@ -119,7 +121,6 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
                 a[k] = [sample[k] for sample in sorted_sample_probas]
             sorted_probas = list(itertools.chain(*a))
             sorted_probas = torch.tensor(sorted_probas)
-
         else:
             val_probas = torch.cat(list_val_proba)
             flat_val_probas = torch.flatten(val_probas)
@@ -198,9 +199,10 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
             update_correct_per_class(batch_proba_test, batch_y_test, class_acc_dict['class_acc'])
             for k in list_k:
                 n_correct_topk_test[k] += count_correct_topk(scores=batch_output_test, labels=batch_y_test, k=k).item()
-                n_correct_avgk_test[k] += count_correct_avgk(probas=batch_proba_test, labels=batch_y_test, lmbda=lmbda[k]).item()
                 update_correct_per_class_topk(batch_output_test, batch_y_test, class_acc_dict['class_topk_acc'][k], k)
-                update_correct_per_class_avgk(batch_proba_test, batch_y_test, class_acc_dict['class_avgk_acc'][k], lmbda[k])
+                if lmbda:
+                    n_correct_avgk_test[k] += count_correct_avgk(probas=batch_proba_test, labels=batch_y_test, lmbda=lmbda[k]).item()
+                    update_correct_per_class_avgk(batch_proba_test, batch_y_test, class_acc_dict['class_avgk_acc'][k], lmbda[k])
 
         # After seeing test set update the statistics over batches and store them
         loss_epoch_test /= batch_idx
