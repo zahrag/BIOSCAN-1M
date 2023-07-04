@@ -23,9 +23,6 @@ def get_exp_configs():
 
     config = {
         "date_time": timestamp,
-        "download": False,
-        "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
-        "download_path": "dataset/download_from_derive",
         "dataset_path": "",
         "metadata_path": "",
         "dataset_name": "",

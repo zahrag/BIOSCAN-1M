@@ -89,33 +89,33 @@ def set_configurations(configs=None):
 
     # #### Condition Settings #####
     parser.add_argument('--download', help='Whether to download from drive?',
-                        default=configs["download"], action='store_true', required=False)
+                        default=configs["download"], action='store_true')
     parser.add_argument('--make_split', help='Whether to split dataset into train, validation and test sets?',
-                        default=configs["make_split"], action='store_true', required=False)
+                        default=configs["make_split"], action='store_true')
     parser.add_argument('--print_statistics', help='Whether to print dataset statistics?',
-                        default=configs["print_statistics"], action='store_true', required=False)
+                        default=configs["print_statistics"], action='store_true')
     parser.add_argument('--print_split_statistics', help='Whether to print dataset split statistics?',
-                        default=configs["print_split_statistics"], action='store_true', required=False)
+                        default=configs["print_split_statistics"], action='store_true')
     parser.add_argument('--loader', help='Whether to create dataloader?',
-                        default=configs["dataloader"], action='store_true', required=False)
+                        default=configs["dataloader"], action='store_true')
     parser.add_argument('--train', help='Whether to train the model?',
-                        default=configs["train"], action='store_true', required=False)
+                        default=configs["train"], action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
-                        default=configs["test"], action='store_true', required=False)
+                        default=configs["test"], action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
-                        default=configs["crop_image"], action='store_true', required=False)
+                        default=configs["crop_image"], action='store_true')
     parser.add_argument('--no_transform', default=False, action='store_true',
-                        help='Not using transformation in dataloader?', required=False)
+                        help='Not using transformation in dataloader?')
     parser.add_argument('--cropped', default=True, action='store_true',
-                        help='Using cropped images?', required=False)
+                        help='Using cropped images?')
 
     # ####### Data Download #####
-    parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
-                        help="Path to the directory where file ID mapping is saved.", required=False)
-    parser.add_argument('--download_path', type=str, default=configs["download_path"],
-                        help="Path to the dataset files downloaded from drive.", required=False)
+    parser.add_argument('--ID_mapping_path', type=str, default="dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
+                        help="Path to the directory where file ID mapping is saved.")
+    parser.add_argument('--download_path', type=str, default="dataset/download_from_derive",
+                        help="Path to the dataset files downloaded from drive.")
     parser.add_argument('--file_to_download', type=str, default="",
-                        help="File to download from drive.", required=True)
+                        help="File to download from drive.")
 
     # ####### Data Split and Subset Creation #####
     parser.add_argument('--max_num_sample', type=int, default=50000,
