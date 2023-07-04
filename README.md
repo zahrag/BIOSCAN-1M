@@ -88,9 +88,12 @@ python main.py --print_statistics
  
 To split dataset into Train, Validation and Test sets run the following:
 ```bash
-python main.py --make_split --print_split_statistics
+python main.py --make_split 
 ``` 
- 
+```bash
+python main.py --print_split_statistics
+``` 
+
 ###### <h3> Classification Experiments
 Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
 The first set of experiments involved classifying images of insects into 16 Orders. 
