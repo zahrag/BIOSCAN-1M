@@ -23,6 +23,9 @@ def get_exp_configs():
 
     config = {
         "date_time": timestamp,
+        "download": False,
+        "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
+        "download_path": "dataset/download_from_derive",
         "dataset_path": "",
         "metadata_path": "",
         "dataset_name": "",
@@ -34,7 +37,7 @@ def get_exp_configs():
         "exp_name": "",
         "experiment_names": base_configs.experiment_names,
         "print_statistics": False,
-        # ### Train/Test Tool ####
+        # ### Train/Test Tool ### #
         "vit_pretrained": "",
         "dataloader": False,
         "train": False,
@@ -42,10 +45,10 @@ def get_exp_configs():
         "best_model": "",
         "model": "resnet50",
         "loss": "CE",
-        # ### Split Tool ####
+        # ### Split Tool ### #
         "make_split": False,
         "print_split_statistics": False,
-        # ### Crop Tool ####
+        # ### Crop Tool ### #
         "crop_image": False,
         "checkpoint_path": "",
     }

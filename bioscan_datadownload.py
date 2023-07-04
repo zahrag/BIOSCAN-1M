@@ -1,53 +1,75 @@
+
 import os
 import wget
-import sys
+from utils import make_directory
+import itertools
 
 
-def bar_progress(current, total, width=80):
-    progress_message = "Downloading: %d%% [%d / %d] bytes" % (current / total * 100, current, total)
-    # Don't use print() as it will print in new line every time.
-    sys.stdout.write("\r" + progress_message)
-    sys.stdout.flush()
+def read_id_mapping(id_mapping_path=""):
+    file_id_mapping = {}
+    with open(os.path.join(id_mapping_path, f"bioscan_dataset_file_ID_mapping.txt")) as fp:
+        for i, line in enumerate(fp):
+            a_string = line.strip()
+            info = [word for word in a_string]
+            sep_index = info.index(':')
+            file_id_mapping[''.join(info[:sep_index])] = ''.join(info[sep_index + 1:])
+    return file_id_mapping
 
 
-def download_data_files(download_folder, download=False):
-    """
-        This function downloads all files related to the BioScan-1M dataset, including RGB images, metadata and Barcodes.
-        Due to the large size of the data files, it is recommended to download in tmp directory exe., scratch directory
-        in Compute Canada.
-        ulr links of the data files in Google Drive needs be saved in this function.
-        :param download_folder: Destination folder where the dataset files are stored.
-        :return:
-        """
+def run_process(download_url, file_path):
+    wget.download(download_url, out=file_path)
 
-    if not download:
+
+def download_dataset_files(parent_folder_id, file_id_mapping, file_name, download_path=""):
+
+    make_directory(download_path)
+    download_url = f"https://drive.google.com/uc?export=download&id={file_id_mapping}&parent={parent_folder_id}"
+    print(download_url)
+    run_process(download_url, f"{download_path}/{file_name}")
+
+
+def make_download(configs):
+
+    if not configs['download']:
         return
 
-    if not os.path.exists(download_folder):
-        os.makedirs(download_folder)
+    download_path = configs['ID_mapping_path']
+    id_mapping_path = configs['download_path']
+    file_selected = configs["file_to_download"]
 
-    download_web_link_metadata = ""
-    data_file_1 = ""
-    data_file_2 = ""
-    data_file_3 = ""
-    data_file_4 = ""
-    data_file_5 = ""
-    data_file_6 = ""
-    data_file_7 = ""
-    data_file_8 = ""
-    data_file_9 = ""
-    data_file_10 = ""
+    parent_folder_main = "1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA"
+    parent_folder_original = "15CIT4DIe_--I20h-KwLbFmGefpBMHx5A"
+    parent_folder_cropped = "1CUBZLO5u_uEYptZE-S8B6RVeBNc5jFdx"
 
-    data_file_weblinks = [download_web_link_metadata, data_file_1, data_file_2, data_file_3, data_file_4, data_file_5,
-                          data_file_6, data_file_7, data_file_8, data_file_9, data_file_10, ]
+    dataset_metadata_tsv = ['BIOSCAN_Insect_Dataset_metadata.tsv']
+    dataset_metadata_jsonld = ['BIOSCAN_Insect_Dataset_metadata.jsonld']
+    dataset_original_256_zip = ['original_256.zip']
+    dataset_cropped_256_zip = ['cropped_256.zip']
+    dataset_original_256_hdf5 = ['original_256.hdf5']
+    dataset_cropped_256_hdf5 = ['original_256.hdf5']
+    dataset_original_package = [f"bioscan_images_original_full_part{id + 1}.zip" for id in range(113)]
+    dataset_cropped_package = [f"bioscan_images_cropped_full_part{id + 1}.zip" for id in range(113)]
+    files_list = [dataset_metadata_tsv, dataset_metadata_jsonld, dataset_original_256_zip,
+                  dataset_cropped_256_zip, dataset_original_256_hdf5, dataset_cropped_256_hdf5,
+                  dataset_original_package, dataset_cropped_package]
+    files_list = list(itertools.chain(*files_list))
 
-    for cnt in range(len(data_file_weblinks)):
-        print(f"\nData File {cnt + 1}")
-        wget.download(data_file_weblinks[cnt], out=download_folder, bar=bar_progress)
+    if file_selected not in files_list:
+        raise RuntimeError("File is not available for download!")
+
+    file_id_mapping = read_id_mapping(id_mapping_path=id_mapping_path)
+
+    if file_selected in dataset_original_package:
+        parent_folder_id = parent_folder_original
+
+    elif file_selected in dataset_cropped_package:
+        parent_folder_id = parent_folder_cropped
+
+    else:
+        parent_folder_id = parent_folder_main
+
+    download_dataset_files(parent_folder_id, file_id_mapping[file_selected], file_selected, download_path=download_path)
 
 
-if __name__ == '__main__':
 
-    root = ""
-    download_folder = f"{root}/bioscan_dataset/"
-    download_data_files(download_folder)
+
