@@ -94,17 +94,6 @@ python main.py --make_split
 python main.py --print_split_statistics
 ``` 
 
-###### <h3> Classification Experiments
-Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
-The first set of experiments involved classifying images of insects into 16 Orders. 
-The second set of experiments specifically targeted the Order Diptera and 
-aimed to classify its members into 40 families, which constitute a significant portion of the order.
-
-To train the model on classification task using a baseline model run setting the name of experiments:
-```bash
-python main.py --loader --train --exp_name small_insect_order
-``` 
-
 ###### <h3> Preprocessing
 In order to enhance efficiency in terms of time and computational resources for conducting experiments 
 on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step. This involved utilizing 
@@ -125,6 +114,17 @@ To use our cropping tool, run the following:
 
 ```bash
 python main.py --crop_image
+``` 
+
+###### <h3> Classification Experiments
+Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
+The first set of experiments involved classifying images of insects into 16 Orders. 
+The second set of experiments specifically targeted the Order Diptera and 
+aimed to classify its members into 40 families, which constitute a significant portion of the order.
+
+To train the model on classification task using a baseline model run setting the name of experiments:
+```bash
+python main.py --loader --train --exp_name small_insect_order
 ``` 
 
 
