@@ -21,7 +21,7 @@ def read_id_mapping(id_mapping_path=""):
 
 
 def run_process(download_url, file_path):
-    """ Download files using wget """
+    """ Download from url using wget """
     wget.download(download_url, out=file_path)
 
 
