@@ -222,6 +222,11 @@ def make_tsv(file, name=None, path=None):
     file.to_csv(path + name, sep='\t', index=False)
 
 
+def resize_image(input_file, output_file, resize_dimension=256):
+    command = f'convert "{input_file}" -resize x{resize_dimension} "{output_file}"'
+    os.system(command)
+
+
 def make_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Size', author='Zahra Gharaee'):
 
     with h5py.File(path, 'w') as hdf5:

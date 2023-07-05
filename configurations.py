@@ -140,6 +140,8 @@ def set_configurations(configs=None):
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
     parser.add_argument('--equal_extend', default=True,
                         help="Extend cropped images in the height and width with the same length.", action="store_true")
+    parser.add_argument('--resize_image',
+                        help='Whether to resize images?', default=True, action='store_true')
 
     # #### Training Settings ######
     parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility', required=False)
