@@ -6,6 +6,11 @@ import itertools
 
 
 def read_id_mapping(id_mapping_path=""):
+    """ Read ID-Mapping-File """
+
+    if not os.path.isfile(id_mapping_path):
+        print(f"ID Mapping File is not available to read in:\n{id_mapping_path}")
+        return
     file_id_mapping = {}
     with open(id_mapping_path) as fp:
         for i, line in enumerate(fp):
@@ -17,10 +22,13 @@ def read_id_mapping(id_mapping_path=""):
 
 
 def run_process(download_url, file_path):
+    """ Download files using wget """
+
     wget.download(download_url, out=file_path)
 
 
 def download_dataset_files(parent_folder_id, file_id_mapping, file_name, download_path=""):
+    """ Set download url of the files on the drive """
 
     make_directory(download_path)
     download_url = f"https://drive.google.com/uc?export=download&id={file_id_mapping}&parent={parent_folder_id}"
@@ -29,6 +37,11 @@ def download_dataset_files(parent_folder_id, file_id_mapping, file_name, downloa
 
 
 def make_download(configs):
+    """
+    This function downloads the files of the BIOSCAN_1M_Insect dataset from GoogleDrive.
+    :param configs: Configurations.
+    :return:
+    """
 
     if not configs['download']:
         return
