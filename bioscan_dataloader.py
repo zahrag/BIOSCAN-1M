@@ -13,8 +13,7 @@ class BioScanLoader(Dataset):
 
     def __init__(self, configs, data_idx_label, transform=None, split=''):
         """
-        This function created dataloader.
-
+        This function creates dataloader.
         :param configs: Configurations
         :param data_idx_label: Ground-Truth Class Label-IDs
         :param transform: Transformation
