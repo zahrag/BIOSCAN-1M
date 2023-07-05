@@ -67,7 +67,7 @@ class BioScan(Dataset):
     def read_metadata(self, metadata_dir, split, exp, make_split=False):
         """
         This function reads .tsv type metadata file.
-        :param metadata_dir: Path the metadata file.
+        :param metadata_dir: Path to the metadata file.
         :param split: Set split including all, train, validation and test.
         :param exp: Experiment name.
         :param make_split: If making split?
