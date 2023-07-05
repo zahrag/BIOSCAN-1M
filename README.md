@@ -26,7 +26,7 @@ Three main sources of information published by the BIOSCAN dataset are:
 
 ###### <h4> III. RGB Images 
 
-We publish four packages of the BIOSCAN-1M Insect images.
+We publish six packages of the BIOSCAN-1M Insect images.
 These packages are structured as following:
 - (1) Original JPEG images (113 zip files).
 - (2) Cropped JPEG images (113 zip files).
