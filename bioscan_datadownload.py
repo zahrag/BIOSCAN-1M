@@ -55,7 +55,7 @@ def make_download(configs):
     files_list = list(itertools.chain(*files_list))
 
     if file_selected not in files_list:
-        raise RuntimeError("File is not available for download!")
+        raise RuntimeError(f"File:{file_selected} is not available for download!")
 
     file_id_mapping = read_id_mapping(id_mapping_path=id_mapping_path)
 
