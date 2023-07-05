@@ -15,8 +15,7 @@ class BioScan(Dataset):
             This class handles getting, setting and showing data statistics ...
             """
 
-    def get_statistics(self, experiment_names, metadata_dir,
-                       split='', exp='', make_split=False):
+    def get_statistics(self, experiment_names, metadata_dir, split='', exp='', make_split=False):
         """
         This function sets data attributes read from metadata file of the dataset.
         This includes biological taxonomy annotations, DNA barcode indexes and RGB image names and chunk numbers.
@@ -66,6 +65,14 @@ class BioScan(Dataset):
         return len(self.index)
 
     def read_metadata(self, metadata_dir, split, exp, make_split=False):
+        """
+        This function reads .tsv type metadata file.
+        :param metadata_dir: Path the metadata file.
+        :param split: Set split including all, train, validation and test.
+        :param exp: Experiment name.
+        :param make_split: If making split?
+        :return: Dataframe metadata.
+        """
 
         if os.path.isfile(metadata_dir) and os.path.splitext(metadata_dir)[1] == '.tsv':
             df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
@@ -92,9 +99,8 @@ class BioScan(Dataset):
             return
 
     def set_statistics(self, configs, split=''):
-
         """
-        This function sets dataset statistics
+        This function sets dataset statistics.
         :param configs: Configurations.
         :param split: Split: all, train, validation, test.
         :return:
@@ -127,7 +133,7 @@ class BioScan(Dataset):
 
     def make_data_dict(self, data_list, index):
         """
-        This function create data dict key:label(exe., order name), value:indexes in data list
+        This function creates data dictionary key:label(exe., order name), value:indexes in data list.
         :return:
         """
 
@@ -179,7 +185,7 @@ class BioScan(Dataset):
 
     def get_n_sample_class(self, data_dict):
         """
-        This function compute number of samples per class.
+        This function computes total number of samples per class.
         :param data_dict: Data dictionary corresponding each class to its sample ids
         :return:
         """
@@ -205,7 +211,6 @@ class BioScan(Dataset):
 
 
 def show_dataset_statistics(configs):
-
     """
     This function shows data statistics from metadata file of the dataset.
     :param configs: Configurations.
@@ -304,7 +309,7 @@ def show_statistics(configs, gt_ID, split=''):
 
 def print_split_statistics(configs, dataset, gt_ID, Set=''):
     """
-    Print Dataset Statistics
+    This function prints Dataset Statistics.
     :param configs: Configurations.
     :param dataset: Dataset class.
     :param gt_ID: Ground-truth IDs.
@@ -343,14 +348,14 @@ def print_split_statistics(configs, dataset, gt_ID, Set=''):
 def plot_split_statistics(sample_num, class_idx, n_samples,
                           group_level='', split='', dataset='', fig_path='', normalize=''):
     """
-    Plot Dataset Statistics
+    This function plots Dataset Statistics.
     :param sample_num: Number of samples per class.
     :param class_idx: Class name vs., numeric IDs.
     :param n_samples: Total number of set samples.
     :param group_level: Taxonomy group level.
     :param split: Split: all, train, validation, test.
     :param dataset: Dataset name.
-    :param fig_path: path to save figure.
+    :param fig_path: path to save the figures.
     :return:
     """
 
