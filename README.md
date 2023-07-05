@@ -8,7 +8,9 @@ dataset statistics analysis, as well as image-based classification experiments c
 the taxonomy classification of insects. 
 Anyone interested in using BIOSCAN_1M Dataset and/or the corresponding code repository, please cite the [Paper](link_to_add):
 
-- Gharaee, Zahra, Gong, ZeMing, Pellegrino, Nicholas, Zarubiieva, Iuliia, Bruslund Haurum, Joakim, Lowe, Scott C., McKeown, Jaclyn T.A., Ho, Chris C.Y., McLeod, Joschka, Wei, Yi-Yun C., Agda, Jireh, Ratnasingham, Sujeevan, Steinke, Dirk, Chang, Angel X., W.~Taylor, Graham, and Fieguth, Paul. (2023). A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset. *Proceedings of the Conference Name*, 2023, X-Y. [DOI](https://doi.org/10.xxxx/xxxxxx)
+## References
+
+- Gharaee, Zahra and Gong, ZeMing and Pellegrino, Nicholas and Zarubiieva, Iuliia and Bruslund Haurum, Joakim and C. Lowe, Scott and  T.A. McKeown, Jaclyn and C.Y. Ho, Chris and McLeod, Joschka and C. Wei, Yi-Yun and Agda, Jireh and Ratnasingham, Sujeevan and Steinke, Dirk and X. Chang, Angel and W.~Taylor, Graham and Fieguth, Paul. (2023). A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset. *Proceedings of the Conference Name*, 2023, X-Y. [DOI](https://doi.org/10.xxxx/xxxxxx)
 
 
 ###### <h3> Dataset
