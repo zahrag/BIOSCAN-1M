@@ -53,7 +53,7 @@ def crop_image(configs, original_images):
 
     feature_extractor = DetrFeatureExtractor.from_pretrained("facebook/detr-resnet-50")
 
-    # Get non-dictionary type of the configurations used in the cropped tool.
+    # Get non-dictionary type of the configurations used in the cropping tool.
     args = CustomArg(configs)
 
     model = load_model_from_ckpt(args)
