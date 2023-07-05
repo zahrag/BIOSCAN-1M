@@ -8,7 +8,6 @@ def make_resize(configs):
         return
 
     root = ""
-    make_directory(f"{root}/resize_images/")
     full_size_img_path = f"{root}/full_size_images/img.jpg"
     resize_img_path = f"{root}/resize_images/img.jpg"
     for img in os.listdir(full_size_img_path):

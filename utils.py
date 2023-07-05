@@ -223,6 +223,8 @@ def make_tsv(file, name=None, path=None):
 
 
 def resize_image(input_file, output_file, resize_dimension=256):
+
+    make_directory(os.path.dirname(output_file))
     command = f'convert "{input_file}" -resize x{resize_dimension} "{output_file}"'
     os.system(command)
 
