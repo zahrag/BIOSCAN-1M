@@ -6,6 +6,7 @@ Within this project, we introduce the BIOSCAN-1M Insect dataset, which can be ac
 for download via the provided link. The repository encompasses code for data sampling and splitting, 
 dataset statistics analysis, as well as image-based classification experiments centered around 
 the taxonomy classification of insects. 
+Anyone interested in using BIOSCAN_1M Dataset and/or the corresponding code repository, please cite the [Paper](link_to_add):
  
 ###### <h3> Dataset
 BIOSCAN dataset provides researchers with information about insects. 
