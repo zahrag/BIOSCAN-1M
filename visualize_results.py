@@ -108,7 +108,7 @@ def plot_confusion_matrix(cm, classes,
                           title='Confusion matrix',
                           cmap=plt.cm.Blues):
     """
-    This function prints and plots the confusion matrix.
+    This function plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
     """
     if normalize:

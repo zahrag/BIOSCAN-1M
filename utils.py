@@ -7,8 +7,6 @@ import tarfile
 import zipfile
 import os
 import shutil
-import pandas as pd
-from tqdm import tqdm
 import h5py
 import torch.nn.functional as F
 import pickle
@@ -168,6 +166,7 @@ def get_model(args, n_classes):
 
     return model
 
+
 def open_pickle(path):
 
     objects = []
@@ -181,6 +180,7 @@ def open_pickle(path):
 
     return results
 
+
 def make_directory(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -189,8 +189,9 @@ def make_directory(path):
 def extract_tar(tar_file=None, path=None):
     make_directory(path)
     tar_file = tarfile.open(tar_file)
-    tar_file.extractall(path)  # specify which folder to extract to
+    tar_file.extractall(path)
     tar_file.close()
+
 
 def extract_zip(zip_file=None, path=None):
 
@@ -229,6 +230,9 @@ def make_hdf5(date_time, dataset_name='', path='', data_typ='Original', author='
         dataset.attrs['Copyright Holder'] = 'CBG Photography Group'
         dataset.attrs['Copyright Institution'] = 'Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)'
         dataset.attrs['Photographer'] = 'CBG Robotic Imager'
+        dataset.attrs['Copyright License'] = 'Creative Commons-Attribution Non-Commercial Share-Alike'
+        dataset.attrs['Copyright Contact'] = 'collectionsBIO@gmail.com'
+        dataset.attrs['Copyright Year'] = '2021'
         dataset.attrs['Author'] = author
         dataset.attrs['Date'] = date_time
 
