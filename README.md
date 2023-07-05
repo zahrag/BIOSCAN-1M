@@ -9,15 +9,15 @@ the taxonomy classification of insects.
 Anyone interested in using BIOSCAN_1M Dataset and/or the corresponding code repository, please cite the [Paper](link_to_add):
  
 
-@proceedings{gharaee_et_al_2023,
-  author = {Gharaee, Zahra and Gong, ZeMing and Pellegrino, Nicholas and Zarubiieva, Iuliia and Bruslund Haurum, Joakim and Lowe, Scott C. and McKeown, Jaclyn T.A. and Ho, Chris C.Y. and McLeod, Joschka and Wei, Yi-Yun C and Agda, Jireh and Ratnasingham, Sujeevan and Steinke, Dirk and Chang, Angel X. and W.~Taylor, Graham and Fieguth, Paul},
-  title = {A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset},
-  booktitle = {Proceedings of the Conference Name},
-  year = {2023},
-  page = {X-Y},
-  volume = {Z},
-  DOI = {https://doi.org/10.xxxx/xxxxxx}
-}
+> @proceedings{gharaee_et_al_2023,
+>   author = {Gharaee, Zahra and Gong, ZeMing and Pellegrino, Nicholas and Zarubiieva, Iuliia and Bruslund Haurum, Joakim and Lowe, Scott C. and McKeown, Jaclyn T.A. and Ho, Chris C.Y. and McLeod, Joschka and Wei, Yi-Yun C and Agda, Jireh and Ratnasingham, Sujeevan and Steinke, Dirk and Chang, Angel X. and W.~Taylor, Graham and Fieguth, Paul},
+>   title = {A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset},
+>   booktitle = {Proceedings of the Conference Name},
+>   year = {2023},
+>   page = {X-Y},
+>   volume = {Z},
+>   DOI = {https://doi.org/10.xxxx/xxxxxx}
+> }
 
 
 ###### <h3> Dataset
