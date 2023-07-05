@@ -222,11 +222,11 @@ def make_tsv(file, name=None, path=None):
     file.to_csv(path + name, sep='\t', index=False)
 
 
-def make_hdf5(date_time, dataset_name='', path='', data_typ='Original', author='Zahra Gharaee'):
+def make_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Size', author='Zahra Gharaee'):
 
     with h5py.File(path, 'w') as hdf5:
         dataset = hdf5.create_group(dataset_name)
-        dataset.attrs['Description'] = f'BioScan {dataset_name}: {data_typ} Images'
+        dataset.attrs['Description'] = f'BIOSCAN_1M Insect Dataset: {data_typ} Images'
         dataset.attrs['Copyright Holder'] = 'CBG Photography Group'
         dataset.attrs['Copyright Institution'] = 'Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)'
         dataset.attrs['Photographer'] = 'CBG Robotic Imager'
