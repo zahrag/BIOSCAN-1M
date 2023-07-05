@@ -43,8 +43,8 @@ def make_download(configs):
     if not configs['download']:
         return
 
-    download_path = configs['ID_mapping_path']
-    id_mapping_path = configs['download_path']
+    id_mapping_path = configs['ID_mapping_path']
+    download_path = configs['download_path']
     file_selected = configs["file_to_download"]
 
     parent_folder_main = "1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA"
