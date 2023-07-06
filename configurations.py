@@ -31,7 +31,7 @@ class BioScan_Configurations():
         elif self.exp in self.experiment_names[4:6]:
             self.max_num_sample = 50000
 
-        self.data_formats = ["folder", "hdf5", "tar"]
+        self.data_formats = ["folder", "hdf5"]
 
 
 def get_group_level(exp_name=''):
