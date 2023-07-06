@@ -11,8 +11,8 @@ class BioScan_Configurations():
         This class handles basic configurations of the BIOSCAN-1M Insect Dataset and experiments.
         """
 
-        self.dataset_names = {'1': 'BioScan_Insect_Dataset',
-                              '2': 'BioScan_Insect_Diptera_Dataset',
+        self.dataset_names = {'1': 'BIOSCAN_Insect_Dataset',
+                              '2': 'BIOSCAN_Insect_Diptera_Dataset',
                               }
 
         self.experiment_names = ['large_diptera_family',
