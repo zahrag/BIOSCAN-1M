@@ -24,6 +24,7 @@ class BioScanLoader(Dataset):
         self.transform = transform
         self.cropped = configs['cropped']
         self.data_format = configs['data_format']
+        self.data_structure = configs['data_structure']
         self.image_dir = configs['image_path']
         self.hdf5_dir = configs['hdf5_path']
 
@@ -51,11 +52,10 @@ class BioScanLoader(Dataset):
                 image = Image.open(data)
 
         elif self.data_format == "folder":
-
-            # If using BIOSCAN_1M_Insect dataset structure with images in 113 folders (part1:part113)
-            img_dir = os.path.join(self.image_dir, f"part{self.chunk_idx[index]}")
-            # If all images in one folder
-            # img_dir = self.image_dir
+            if self.data_structure == "bioscan_1M_insect":
+                img_dir = os.path.join(self.image_dir, f"part{self.chunk_idx[index]}")
+            else:  # If all images in one folder
+                img_dir = self.image_dir
             image = Image.open(img_dir + self.img_names[index]).convert('RGB')
         else:
             sys.exit("Wrong data_format: " + self.data_format + " does not exist.")
