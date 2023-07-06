@@ -100,8 +100,11 @@ python main.py --print_split_statistics
 
 ###### <h3> Preprocessing
 In order to enhance efficiency in terms of time and computational resources for conducting experiments 
-on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step. This involved utilizing 
-a cropping tool to modify the original RGB images. 
+on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step composed of two main module:
+- Resize tool
+- Crop tool
+
+The resizing tool together with our cropping tool are utilized to modify the original RGB images. 
 By applying this preprocessing step, we aimed to optimize the subsequent experimental processes.
 
 | <img src="dataset/bioscan_images/cropped_images/BIOUG68001-C12.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/BIOUG68020-A01.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/BIOUG68134-F03.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/cropped_images/BIOUG68104-C02.jpg" width="200px" class="image"> |
@@ -112,13 +115,20 @@ By applying this preprocessing step, we aimed to optimize the subsequent experim
 |:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
 |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |
 
+To resize and original full size images, run the following:
 
-To use our cropping tool, run the following, which creates and saves cropped images and their resized versions:
+```bash
+python main.py --resized_image_path path_to_resized_images --resized_hdf5_path path_to_resized_hdf5
+``` 
 
+To use our cropping tool, run the following, 
+which creates and saves cropped images and their resized versions:
 
 ```bash
 python main.py --crop_image --cropped_image_path path_to_cropped_images --resized_cropped_image_path path_to_resized_cropped_images
 ``` 
+
+
 
 By setting --cropped_hdf5_path and --resized_cropped_hdf5_path, cropped images and resized cropped images will be saved in HDF5 file format as well.
 

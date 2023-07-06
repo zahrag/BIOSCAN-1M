@@ -20,7 +20,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
     :return:
     """
 
-    if full_size_img_path is None:
+    if resized_img_path is None:
         print("No path is set to save resized images!")
         return
 
