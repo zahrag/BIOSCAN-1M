@@ -31,8 +31,8 @@ These packages follow a consistent data structure, where the images are divided 
 Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313 images.
 - (1) Original JPEG images (113 zip files).
 - (2) Cropped JPEG images (113 zip files).
-- (3) Original JPEG images resized to 256 on the smaller dimension (.zip and .hdf5).
-- (4) Cropped JPEG images resized to 256 on their smaller dimension (.zip and .hdf5).
+- (3) Original JPEG images resized to 256 on the smaller dimension (ZIP and HDF5).
+- (4) Cropped JPEG images resized to 256 on their smaller dimension (ZIP and HDF5).
 
 <div align="center">
 
