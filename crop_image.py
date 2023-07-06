@@ -232,12 +232,13 @@ def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path,
         print("No path is set to save the resized cropped images!")
         return
 
-    for img in os.listdir(full_size_img_path):
+    pbar = tqdm(os.listdir(full_size_img_path))
+    for img in pbar:
         resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
 
     with h5py.File(resized_cropped_hdf5_path, 'w') as hdf5:
-        for img in os.listdir(resized_img_path):
-
+        pbar = tqdm(os.listdir(resized_img_path))
+        for img in pbar:
             image_dir = f"{resized_img_path}/{img}"
             try:
                 image = Image.open(image_dir)
