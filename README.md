@@ -26,11 +26,12 @@ Three main sources of information published by the BIOSCAN dataset are:
 
 ###### <h4> III. RGB Images 
 
-We publish six packages where each contains 1,128,313 BIOSCAN-1M Insect images.
-These packages are structured as following:
+We have published six packages, each containing 1,128,313 BIOSCAN-1M Insect images. 
+These packages follow a consistent data structure, where the images are divided into 113 data chunks. 
+Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313 images.
 - (1) Original JPEG images (113 zip files).
 - (2) Cropped JPEG images (113 zip files).
-- (3) Original JPEG images resized to 256 on the smaller dimensions (.zip and .hdf5).
+- (3) Original JPEG images resized to 256 on the smaller dimension (.zip and .hdf5).
 - (4) Cropped JPEG images resized to 256 on their smaller dimension (.zip and .hdf5).
 
 <div align="center">
