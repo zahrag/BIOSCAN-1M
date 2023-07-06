@@ -40,7 +40,7 @@ def make_download(configs):
     :return:
     """
 
-    if not configs['file_to_download'] is None:
+    if configs['file_to_download'] is None:
         print("No file is selected to download!")
         return
 
