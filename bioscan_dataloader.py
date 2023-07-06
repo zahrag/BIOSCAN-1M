@@ -56,7 +56,7 @@ class BioScanLoader(Dataset):
                 img_dir = os.path.join(self.image_dir, f"part{self.chunk_idx[index]}")
             else:  # If all images in one folder
                 img_dir = self.image_dir
-            image = Image.open(img_dir + self.img_names[index]).convert('RGB')
+            image = Image.open(os.path.join(img_dir, self.img_names[index])).convert('RGB')
         else:
             sys.exit("Wrong data_format: " + self.data_format + " does not exist.")
 
