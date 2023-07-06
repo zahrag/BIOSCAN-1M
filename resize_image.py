@@ -48,7 +48,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
                 image = Image.open(image_dir)
                 image.verify()
             except UnidentifiedImageError:
-                print(f"{os.path.basename(image_dir)} Corrupted.")
+                print(f"{img} Corrupted.")
                 continue
 
             if saved_as_binary_data:
