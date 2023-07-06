@@ -87,11 +87,12 @@ def set_configurations(configs=None):
                         required=False)
     # The following needs to be set
     parser.add_argument('--resized_image_path', type=str, default=None, help="Path to the resized images.")
+    parser.add_argument('--resized_hdf5_path', type=str, default=None, help="Path to the resized HDF5.")
     parser.add_argument('--cropped_image_path', type=str, default=None, help="Path to the cropped images.")
-    parser.add_argument('--resized_cropped_image_path', type=str, default=None,
-                        help="Path to the cropped resized images.")
     parser.add_argument('--cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
                         default=None)
+    parser.add_argument('--resized_cropped_image_path', type=str, default=None,
+                        help="Path to the cropped resized images.")
     parser.add_argument('--resized_cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
                         default=None)
 
