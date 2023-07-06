@@ -32,7 +32,11 @@ class BioScan_Configurations():
         elif self.exp in self.experiment_names[4:6]:
             self.max_num_sample = 50000
 
-        self.data_formats = ["folder", "hdf5", "tar", "zip"]
+        self.data_formats = ["hdf5",    # hdf5_path
+                             "folder",  # image_path
+                             "tar",     # image_path
+                             "zip",     # image_path
+                             ]
 
 
 def get_group_level(exp_name=''):
@@ -49,9 +53,9 @@ def get_group_level(exp_name=''):
     return group_level
 
 
-def extract_package(image_path):
+def extract_package(image_path, data_format="folder"):
 
-    if os.path.exists(image_path):
+    if data_format == "hdf5" or os.path.exists(image_path):
         return image_path
 
     data_format = os.path.splitext(os.path.basename(image_path))[1]

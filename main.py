@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # Get model configurations
     configs = set_configurations(exp_configs)
     # Extract input package if compressed
-    configs['image_path'] = extract_package(configs['image_path'])
+    configs['image_path'] = extract_package(configs['image_path'], data_format=configs['data_format'])
     # Get group_level from experiments name
     configs['group_level'] = get_group_level(exp_name=configs['exp_name'])
     # Save model configurations
