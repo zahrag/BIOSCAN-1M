@@ -18,6 +18,10 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
     :return:
     """
 
+    if full_size_img_path is None:
+        print("No path is set to save resized images!")
+        return
+
     pbar = tqdm(os.listdir(full_size_img_path))
     for img in pbar:
         resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
