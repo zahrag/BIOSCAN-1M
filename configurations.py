@@ -53,7 +53,7 @@ def get_group_level(exp_name=''):
 
 def extract_package(image_path, data_format="folder"):
 
-    if data_format == "hdf5" or os.path.exists(image_path):
+    if data_format != "folder" or os.path.exists(image_path):
         return image_path
 
     data_format = os.path.splitext(os.path.basename(image_path))[1]
