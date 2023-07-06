@@ -4,7 +4,8 @@ from utils import resize_image, make_directory
 
 def make_resize(configs):
 
-    if not configs["resize_image"]:
+    if configs["resized_image_path"] is None:
+        print("No path is set to the directory where the resized images will be saved!")
         return
 
     full_size_img_path = configs["image_path"]

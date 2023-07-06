@@ -108,8 +108,6 @@ def set_configurations(configs=None):
                         default=False, action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
                         default=False, action='store_true')
-    parser.add_argument('--resize_image', help='Whether to resize images?',
-                        default=False, action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
                         default=False, action='store_true')
     parser.add_argument('--no_transform', default=False, action='store_true',
