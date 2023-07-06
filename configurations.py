@@ -52,6 +52,12 @@ def get_group_level(exp_name=''):
 
 
 def extract_package(image_path, data_format="folder"):
+    """
+    This function extracts and set path to the dataset image packages: original_256.zip, cropped_256.zip.
+    :param image_path: Path to the dataset package file or directory of images.
+    :param data_format: Format of the data set for experiments.
+    :return: Path to the images.
+    """
 
     if data_format != "folder" or os.path.isdir(image_path):
         return image_path
