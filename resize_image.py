@@ -14,8 +14,8 @@ def make_resize(configs, saved_as_binary_data=True):
             resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=256)
 
         if configs['resized_hdf5_path'] is not None:
-            with h5py.File(configs['resized_hdf5_path'], 'w') as hdf5:
 
+            with h5py.File(configs['resized_hdf5_path'], 'w') as hdf5:
                 for img in os.listdir(resized_img_path):
                     image_dir = f"{resized_img_path}/{img}"
 

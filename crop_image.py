@@ -4,7 +4,7 @@ import pandas as pd
 import h5py
 import numpy as np
 from tqdm import tqdm
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 import io
 
 from transformers import DetrFeatureExtractor
@@ -215,13 +215,14 @@ def detect_uncropped_images(configs):
     return uncropped_image_path
 
 
-def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path):
+def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path, saved_as_binary_data=True):
     """
     This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
     the path to these are preset.
     :param full_size_img_path: Path to the full sized images.
     :param resized_img_path: Path to the directory to save resized images.
     :param resized_cropped_hdf5_path: Path to the hdf5 file to save resized images.
+    :param saved_as_binary_data: if True, less space required.
     :return:
     """
 
@@ -229,13 +230,22 @@ def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path)
         for img in os.listdir(full_size_img_path):
             resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=256)
 
-        if resized_cropped_hdf5_path is not None:
-            with h5py.File(resized_cropped_hdf5_path, 'w') as hdf5:
-                for img in os.listdir(resized_img_path):
-                    with open(f"{resized_img_path}/{img}", 'rb') as img_f:
+        with h5py.File(resized_cropped_hdf5_path, 'w') as hdf5:
+            for img in os.listdir(resized_img_path):
+                image_dir = f"{resized_img_path}/{img}"
+                if saved_as_binary_data:
+                    with open(image_dir, 'rb') as img_f:
                         binary_data = img_f.read()
                     binary_data_np = np.asarray(binary_data)
                     hdf5.create_dataset(f'{img}', data=binary_data_np)
+                else:
+                    try:
+                        image = Image.open(image_dir)
+                        image_array = np.array(image)
+                        hdf5.create_dataset(f'{img}', data=image_array)
+                    except UnidentifiedImageError:
+                        print(f"{img} Corrupted.")
+                        continue
 
 
 def run_crop_tool(configs):
