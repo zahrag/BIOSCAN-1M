@@ -24,7 +24,8 @@ def get_exp_configs():
 
     config = {
         "date_time": timestamp,
-        "download": False,
+        "experiment_names": base_configs.experiment_names,
+        "download_path": "",
         "dataset_path": "",
         "metadata_path": "",
         "dataset_name": "",
@@ -34,21 +35,10 @@ def get_exp_configs():
         "group_level": "",
         "data_format": "",
         "exp_name": "",
-        "experiment_names": base_configs.experiment_names,
-        "print_statistics": False,
         # ### Train/Test Tool ### #
         "vit_pretrained": "",
-        "dataloader": False,
-        "train": False,
-        "test": False,
         "best_model": "",
-        "model": "resnet50",
-        "loss": "CE",
-        # ### Split Tool ### #
-        "make_split": False,
-        "print_split_statistics": False,
         # ### Crop Tool ### #
-        "crop_image": False,
         "checkpoint_path": "",
     }
     return config

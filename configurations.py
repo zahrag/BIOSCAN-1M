@@ -68,6 +68,9 @@ def set_configurations(configs=None):
                         required=False)
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
                         default=configs["best_model"], required=False)
+    parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.',
+                        required=False)
+    parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.', required=False)
 
     # #### Path Settings ######
     parser.add_argument('--log', type=str, default="runs", help='Path to the log file.', required=False)
@@ -77,42 +80,39 @@ def set_configurations(configs=None):
                         default=configs["dataset_path"], required=False)
     parser.add_argument('--metadata_path', type=str, default=configs["metadata_path"],
                         help="Path to the metadata of the dataset.", required=False)
-    parser.add_argument('--image_path', type=str, help='Path to the individual RGB images (if any).',
-                        default=configs["image_path"], required=False)
-    parser.add_argument('--resized_image_path', type=str, default="",
-                        help="Path to the resized images.", required=False)
-    parser.add_argument('--cropped_image_path', type=str, default=configs["cropped_image_path"],
-                        help="Path to the cropped images.", required=False)
-    parser.add_argument('--resized_cropped_image_path', type=str, default="",
-                        help="Path to the cropped resized images.", required=False)
-    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"],
-                        required=False)
-    parser.add_argument('--cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
-                        default="", required=False)
-    parser.add_argument('--resized_cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
-                        default="", required=False)
     parser.add_argument('--results_path', type=str, help='Path to save results.', default=configs["results_path"],
                         required=False)
+    parser.add_argument('--image_path', type=str, help='Path to the individual RGB images (if any).',
+                        default=configs["image_path"], required=False)
+    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"],
+                        required=False)
+    # The following needs to be set
+    parser.add_argument('--resized_image_path', type=str, default=None, help="Path to the resized images.")
+    parser.add_argument('--cropped_image_path', type=str, default=None, help="Path to the cropped images.")
+    parser.add_argument('--resized_cropped_image_path', type=str, default=None,
+                        help="Path to the cropped resized images.")
+    parser.add_argument('--cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
+                        default=None)
+    parser.add_argument('--resized_cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
+                        default=None)
 
     # #### Condition Settings #####
-    parser.add_argument('--download', help='Whether to download from drive?',
-                        default=configs["download"], action='store_true')
     parser.add_argument('--make_split', help='Whether to split dataset into train, validation and test sets?',
-                        default=configs["make_split"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--print_statistics', help='Whether to print dataset statistics?',
-                        default=configs["print_statistics"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--print_split_statistics', help='Whether to print dataset split statistics?',
-                        default=configs["print_split_statistics"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--loader', help='Whether to create dataloader?',
-                        default=configs["dataloader"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--train', help='Whether to train the model?',
-                        default=configs["train"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
-                        default=configs["test"], action='store_true')
-    parser.add_argument('--resize_image',
-                        help='Whether to resize images?', default=True, action='store_true')
+                        default=False, action='store_true')
+    parser.add_argument('--resize_image', help='Whether to resize images?',
+                        default=False, action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
-                        default=configs["crop_image"], action='store_true')
+                        default=False, action='store_true')
     parser.add_argument('--no_transform', default=False, action='store_true',
                         help='Not using transformation in dataloader?')
     parser.add_argument('--cropped', default=True, action='store_true',
@@ -121,9 +121,9 @@ def set_configurations(configs=None):
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default="dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
                         help="Path to the directory where file ID mapping is saved.")
-    parser.add_argument('--download_path', type=str, default="dataset/download_from_derive",
+    parser.add_argument('--download_path', type=str, default=configs["download_path"],
                         help="Path to the dataset files downloaded from drive.")
-    parser.add_argument('--file_to_download', type=str, default="",
+    parser.add_argument('--file_to_download', type=str, default=None,
                         help="File to download from drive.")
 
     # ####### Data Split and Subset Creation #####
@@ -132,16 +132,13 @@ def set_configurations(configs=None):
                         required=False)
     parser.add_argument('--experiment_names', type=str, default=configs["experiment_names"],
                         help="Name of experiments conducted in BIOSCAN Paper.", required=False)
-
     # #### Preprocessing: Cropping Settings ######
-    parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
+    parser.add_argument('--checkpoint_path', type=str, default=configs["checkpoint_path"],
+                        help="Path to the checkpoint.", required=False)
     parser.add_argument('--read_format', type=str, default="hdf5",
-                        help='Format of the dataset files, we want to read from.', required=False)
-    parser.add_argument('--use_metadata', type=str, default=True,
-                        help='If using metadata for cropping?', required=False)
-    parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.',
-                        required=False)
-    parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.', required=False)
+                        help='Format of the dataset files, we want to read from.')
+    parser.add_argument('--use_metadata', type=str, default=False,
+                        help='If using metadata for cropping?')
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
     parser.add_argument('--equal_extend', default=True,
                         help="Extend cropped images in the height and width with the same length.", action="store_true")
@@ -162,8 +159,8 @@ def set_configurations(configs=None):
     parser.add_argument('--pretrained', default=True, action='store_true', required=False)
     parser.add_argument('--vit_pretrained', type=str, default=configs["vit_pretrained"],
                         help="Path to the checkpoint.", required=False)
-    parser.add_argument('--loss', type=str, help='decide which loss to use during training', default=configs["loss"],
-                        required=False, choices=["CE", "Focal"])
+    parser.add_argument('--loss', type=str, help='decide which loss to use during training', default='CE',
+                        choices=["CE", "Focal"])
 
     # #### Model Settings #####
     parser.add_argument('--model', choices=['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',
@@ -174,7 +171,7 @@ def set_configurations(configs=None):
                                             'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                                             'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
                                             'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
-                        default=configs["model"], help='choose the model you want to train on', required=False)
+                        default='resnet50', help='choose the model you want to train on', required=False)
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )
     args = parser.parse_args()

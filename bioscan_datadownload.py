@@ -40,7 +40,8 @@ def make_download(configs):
     :return:
     """
 
-    if not configs['download']:
+    if not configs['file_to_download'] is None:
+        print("No file is selected to download!")
         return
 
     id_mapping_path = configs['ID_mapping_path']
