@@ -47,16 +47,18 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
             try:
                 image = Image.open(image_dir)
                 image.verify()
+                if saved_as_binary_data:
+                    with open(image_dir, 'rb') as img_f:
+                        binary_data = img_f.read()
+                    binary_data_np = np.asarray(binary_data)
+                    hdf5.create_dataset(f'{img}', data=binary_data_np)
+                else:
+                    image_array = np.array(image)
+                    hdf5.create_dataset(f'{img}', data=image_array)
+
             except UnidentifiedImageError:
                 print(f"{img} Corrupted.")
                 continue
 
-            if saved_as_binary_data:
-                with open(image_dir, 'rb') as img_f:
-                    binary_data = img_f.read()
-                binary_data_np = np.asarray(binary_data)
-                hdf5.create_dataset(f'{img}', data=binary_data_np)
-            else:
-                image_array = np.array(image)
-                hdf5.create_dataset(f'{img}', data=image_array)
+
 
