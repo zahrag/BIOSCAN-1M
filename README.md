@@ -113,12 +113,14 @@ By applying this preprocessing step, we aimed to optimize the subsequent experim
 |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |
 
 
-To use our cropping tool, run the following:
+To use our cropping tool, run the following, which creates and saves cropped images and their resized versions:
 
 
 ```bash
-python main.py --crop_image
+python main.py --crop_image --cropped_image_path path_to_cropped_images --resized_cropped_image_path path_to_resized_cropped_images
 ``` 
+
+Setting --cropped_hdf5_path and --resized_cropped_hdf5_path results in saving cropped images and resized cropped images in HDF5 file format.
 
 ###### <h3> Classification Experiments
 Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 

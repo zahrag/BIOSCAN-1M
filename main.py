@@ -32,7 +32,6 @@ def get_exp_configs():
         "hdf5_path": "",
         "image_path": "",
         "results_path": "",
-        "group_level": "",
         "data_format": "",
         "exp_name": "",
         # ### Train/Test Tool ### #

@@ -62,8 +62,7 @@ def set_configurations(configs=None):
                         required=False)
     parser.add_argument('--dataset_name', type=str, default=configs["dataset_name"], help='Name of the dataset.',
                         required=False)
-    parser.add_argument('--group_level', type=str, default=configs["group_level"], help='Taxonomic group ranking.',
-                        required=False)
+    parser.add_argument('--group_level', type=str, default="order", help='Taxonomic group ranking.')
     parser.add_argument('--data_format', type=str, default=configs["data_format"], help='Format of the dataset.',
                         required=False)
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
@@ -171,7 +170,7 @@ def set_configurations(configs=None):
                                             'inception_resnet_v2', 'inception_v4', 'efficientnet_b0',
                                             'efficientnet_b1', 'efficientnet_b2', 'efficientnet_b3',
                                             'efficientnet_b4', 'vit_base_patch16_224', 'vit_small_patch16_224'],
-                        default='resnet50', help='choose the model you want to train on', required=False)
+                        default='resnet50', help='choose the model you want to train on')
 
     parser.add_argument('--use_gpu', type=int, choices=[0, 1], default=torch.cuda.is_available(), )
     args = parser.parse_args()
