@@ -24,12 +24,14 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
 
     pbar = tqdm(os.listdir(full_size_img_path))
     for img in pbar:
+        pbar.set_description(f"Resize images to {resize_dimension} on their smaller dimension.")
         resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
 
     if resized_hdf5_path is not None:
         with h5py.File(resized_hdf5_path, 'w') as hdf5:
             pbar = tqdm(os.listdir(resized_img_path))
             for img in pbar:
+                pbar.set_description(f"Archive resized images on a HDF5 file in:\n{resized_hdf5_path}.")
                 image_dir = f"{resized_img_path}/{img}"
                 try:
                     image = Image.open(image_dir)
