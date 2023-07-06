@@ -33,7 +33,7 @@ def get_exp_configs():
         "hdf5_path": "path to the HDF5 file containing the original full-size images",
         "image_path": "path to the original full-size images",
         "results_path": "path to save the results",
-        "vit_pretrained": "path to the directory where the vit backbone is saved",
+        "vit_pretrained_path": "path to the directory where the vit backbone is saved",
         "checkpoint_path": "path to the directory where the crop tool checkpoint is saved",
 
     }

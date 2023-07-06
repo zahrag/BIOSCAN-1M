@@ -179,7 +179,7 @@ def set_configurations(configs=None):
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=[1, 3, 5, 10], type=int, required=False)
     parser.add_argument('--pretrained', default=True, action='store_true', required=False)
-    parser.add_argument('--vit_pretrained', type=str, default=configs["vit_pretrained"],
+    parser.add_argument('--vit_pretrained', type=str, default=configs["vit_pretrained_path"],
                         help="Path to the checkpoint.", required=False)
     parser.add_argument('--loss', type=str, help='decide which loss to use during training', default='CE',
                         choices=["CE", "Focal"])
