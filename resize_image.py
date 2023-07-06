@@ -27,7 +27,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
         if os.path.isfile(f"{resized_img_path}/{img}"):
             print(f"{img} Exists: Skip!")
             continue
-        pbar.set_description(f"Resize image to {resize_dimension} on their smaller dimension.")
+        pbar.set_description(f"Resize image to {resize_dimension} on the smaller dimension.")
         resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
 
     if resized_hdf5_path is not None:
