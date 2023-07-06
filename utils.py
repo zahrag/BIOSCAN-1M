@@ -193,6 +193,15 @@ def extract_tar(tar_file=None, path=None):
     tar_file.close()
 
 
+def create_zip(source_folder=None, output_zip=None):
+
+    with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, _, files in os.walk(source_folder):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zipf.write(file_path, arcname=os.path.relpath(file_path, source_folder))
+
+
 def extract_zip(zip_file=None, path=None):
 
     make_directory(path)
