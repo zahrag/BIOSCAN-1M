@@ -44,6 +44,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
                 continue
             pbar.set_description(f"Archive resized image on a HDF5 file in:\n{resized_hdf5_path}.")
             image_dir = f"{resized_img_path}/{img}"
+
             try:
                 image = Image.open(image_dir)
                 image.verify()
