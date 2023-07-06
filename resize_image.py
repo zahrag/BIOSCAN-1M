@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
                 saved_as_binary_data=True, resize_dimension=256, zip_name=None):
-    """
+    f"""
     This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
     the path to these are preset.
     :param full_size_img_path: Path to the full sized images.
@@ -16,6 +16,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
     :param resized_hdf5_path: Path to the hdf5 file to save resized images.
     :param saved_as_binary_data: if True, less space required.
     :param resize_dimension: Dimension to resize images.
+    :param zip_name: If not None, the resized image folder is compressed to <zip_name>.zip
     :return:
     """
 
