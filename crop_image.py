@@ -11,7 +11,7 @@ from transformers import DetrFeatureExtractor
 from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, scale_bbox
 from crop_tool_sup.scripts.crop_images import expand_image
 from crop_tool_sup.model.detr import load_model_from_ckpt
-from utils import resize_image
+from resize_image import make_resize
 
 
 class CustomArg:
@@ -213,48 +213,6 @@ def detect_uncropped_images(configs):
                                                 not_get_list=configs['use_metadata'])
 
     return uncropped_image_path
-
-
-def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path,
-                saved_as_binary_data=True, resize_dimension=256):
-    """
-    This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
-    the path to these are preset.
-    :param full_size_img_path: Path to the full sized images.
-    :param resized_img_path: Path to the directory to save resized images.
-    :param resized_cropped_hdf5_path: Path to the hdf5 file to save resized images.
-    :param saved_as_binary_data: if True, less space required.
-    :param resize_dimension: Dimension to resize images.
-    :return:
-    """
-
-    if resized_img_path is None:
-        print("No path is set to save the resized cropped images!")
-        return
-
-    pbar = tqdm(os.listdir(full_size_img_path))
-    for img in pbar:
-        resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
-
-    with h5py.File(resized_cropped_hdf5_path, 'w') as hdf5:
-        pbar = tqdm(os.listdir(resized_img_path))
-        for img in pbar:
-            image_dir = f"{resized_img_path}/{img}"
-            try:
-                image = Image.open(image_dir)
-                image.verify()
-            except UnidentifiedImageError:
-                print(f"{image} Corrupted.")
-                continue
-
-            if saved_as_binary_data:
-                with open(image_dir, 'rb') as img_f:
-                    binary_data = img_f.read()
-                binary_data_np = np.asarray(binary_data)
-                hdf5.create_dataset(f'{img}', data=binary_data_np)
-            else:
-                image_array = np.array(image)
-                hdf5.create_dataset(f'{img}', data=image_array)
 
 
 def run_crop_tool(configs):
