@@ -6,8 +6,8 @@ import torchvision.transforms as transforms
 from BioScanDataSet import BioScan
 import io
 import h5py
+import sys
 import os
-
 
 class BioScanLoader(Dataset):
 
@@ -50,10 +50,15 @@ class BioScanLoader(Dataset):
                 data = io.BytesIO(np.asarray(dataset[self.img_names[index]]))
                 image = Image.open(data)
 
-        elif self.cropped:
-            image = Image.open(os.path.join(self.image_dir, "CROPPED_" + self.img_names[index])).convert('RGB')
+        elif self.data_format == "folder":
+
+            # If using BIOSCAN_1M_Insect dataset structure with images in 113 folders (part1:part113)
+            img_dir = os.path.join(self.image_dir, f"part{self.chunk_idx[index]}")
+            # If all images in one folder
+            # img_dir = self.image_dir
+            image = Image.open(img_dir + self.img_names[index]).convert('RGB')
         else:
-            image = Image.open(self.image_dir + self.img_names[index]).convert('RGB')
+            sys.exit("Wrong data_format: " + self.data_format + " does not exist.")
 
         return image
 

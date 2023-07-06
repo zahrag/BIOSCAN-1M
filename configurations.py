@@ -63,7 +63,9 @@ def extract_package(image_path):
     else:
         sys.exit("Wrong data_format: " + data_format + " does not exist.")
 
-    return path_to_extract
+    path_to_images = os.path.join(path_to_extract,
+                                  f"bioscan/images/{os.path.splitext(os.path.basename(image_path))[0]}")
+    return path_to_images
 
 
 def set_configurations(configs=None):
