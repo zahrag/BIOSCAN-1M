@@ -100,7 +100,7 @@ python main.py --print_split_statistics
 
 ###### <h3> Preprocessing
 In order to enhance efficiency in terms of time and computational resources for conducting experiments 
-on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step composed of two main module:
+on the BIOSCAN dataset's RGB images, we implemented an offline preprocessing step composed of two main modules:
 - Resize tool
 - Crop tool
 
