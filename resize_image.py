@@ -33,7 +33,8 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
             pbar.set_description(f"Resize image to {resize_dimension} on the smaller dimension.")
             resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
         except UnidentifiedImageError:
-            print(f"{img} Corrupted.")
+            os.remove(f"{full_size_img_path}/{img}")
+            print(f"{img} Corrupted: Removed.")
             continue
 
     if resized_hdf5_path is not None:
@@ -64,7 +65,8 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
                     hdf5.create_dataset(f'{img}', data=image_array)
 
             except UnidentifiedImageError:
-                print(f"{img} Corrupted.")
+                os.remove(image_dir)
+                print(f"{img} Corrupted: Removed.")
                 continue
 
 
