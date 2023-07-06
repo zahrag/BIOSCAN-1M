@@ -115,7 +115,7 @@ By applying this preprocessing step, we aimed to optimize the subsequent experim
 |:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
 |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |                                                   **Cropped**                                                    |
 
-To resize and original full size images, run the following:
+To resize and save original full size images, run the following:
 
 ```bash
 python main.py --resized_image_path path_to_resized_images --resized_hdf5_path path_to_resized_hdf5
