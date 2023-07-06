@@ -25,7 +25,6 @@ def get_exp_configs():
     config = {
         "date_time": timestamp,
         "experiment_names": base_configs.experiment_names,
-        "dataset_name": "BioScan_Insect_Dataset",
 
         # ### Set the following configurations for experiments ### #
         "download_path": "path to download the dataset files",
@@ -36,9 +35,6 @@ def get_exp_configs():
         "results_path": "path to save the results",
         "vit_pretrained": "path to the directory where the vit backbone is saved",
         "checkpoint_path": "path to the directory where the crop tool checkpoint is saved",
-        "data_format": "data format used for experiments",
-        "exp_name": "experiment name",
-        "best_model": "best model selected from validation results",
 
     }
     return config

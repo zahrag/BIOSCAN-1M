@@ -128,8 +128,6 @@ which creates and saves cropped images and their resized versions:
 python main.py --crop_image --cropped_image_path path_to_cropped_images --resized_cropped_image_path path_to_resized_cropped_images
 ``` 
 
-
-
 By setting --cropped_hdf5_path and --resized_cropped_hdf5_path, cropped images and resized cropped images will be saved in HDF5 file format as well.
 
 ###### <h3> Classification Experiments
@@ -140,7 +138,7 @@ aimed to classify its members into 40 families, which constitute a significant p
 
 To train the model on classification task using a baseline model run setting the name of experiments:
 ```bash
-python main.py --loader --train --exp_name small_insect_order
+python main.py --loader --train --data_format hdf5 --exp_name small_insect_order
 ``` 
 
 

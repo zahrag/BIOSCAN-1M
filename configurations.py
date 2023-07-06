@@ -86,20 +86,16 @@ def set_configurations(configs=None):
                         required=False)
 
     # #### Base Settings ######
-    parser.add_argument('--exp_name', type=str, default=configs["exp_name"], help='Name of the experiment',
-                        required=False)
-    parser.add_argument('--dataset_name', type=str, default=configs["dataset_name"], help='Name of the dataset.',
-                        required=False)
+    parser.add_argument('--exp_name', type=str, default="small_insect_order", help='Name of the experiment')
+    parser.add_argument('--dataset_name', type=str, default="BioScan_Insect_Dataset", help='Name of the dataset.')
     parser.add_argument('--group_level', type=str, default="order", help='Taxonomic group ranking.')
-    parser.add_argument('--data_format', type=str, default=configs["data_format"], help='Format of the dataset.',
-                        required=False)
+    parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset.', required=False)
     parser.add_argument('--data_structure', type=str, default="bioscan_1M_insect",
                         help='If using BIOSCAN_1M_Insect dataset structure, 113 chunks of data (part1:part113)?')
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
-                        default=configs["best_model"], required=False)
-    parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.',
-                        required=False)
-    parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.', required=False)
+                        default="")
+    parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.')
+    parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.')
 
     # #### Path Settings ######
     parser.add_argument('--log', type=str, default="runs", help='Path to the log file.', required=False)
