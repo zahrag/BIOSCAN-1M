@@ -236,6 +236,6 @@ def run_crop_tool(configs):
     # Resize cropped images to 256 on their smaller dimension
     make_resize(configs['cropped_image_path'],
                 configs['resized_cropped_image_path'], configs['resized_cropped_hdf5_path'],
-                saved_as_binary_data=True, resize_dimension=256)
+                saved_as_binary_data=True, resize_dimension=256, zip_name="cropped_256")
 
 

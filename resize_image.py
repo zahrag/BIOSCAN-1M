@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
-                saved_as_binary_data=True, resize_dimension=256, zip_name=""):
+                saved_as_binary_data=True, resize_dimension=256, zip_name=None):
     """
     This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
     the path to these are preset.
@@ -38,8 +38,8 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
             print(f"{img} Corrupted.")
             continue
 
-    create_zip(source_folder=resized_img_path,
-               output_zip=f"{os.path.dirname(resized_img_path)}/{zip_name}")
+    if zip_name is not None:
+        create_zip(source_folder=resized_img_path, output_zip=f"{os.path.dirname(resized_img_path)}/{zip_name}")
 
     if resized_hdf5_path is not None:
         if os.path.isfile(resized_hdf5_path):
