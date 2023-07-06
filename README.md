@@ -120,7 +120,7 @@ To use our cropping tool, run the following, which creates and saves cropped ima
 python main.py --crop_image --cropped_image_path path_to_cropped_images --resized_cropped_image_path path_to_resized_cropped_images
 ``` 
 
-Setting --cropped_hdf5_path and --resized_cropped_hdf5_path results in saving cropped images and resized cropped images in HDF5 file format.
+By setting --cropped_hdf5_path and --resized_cropped_hdf5_path, cropped images and resized cropped images will be saved in HDF5 file format as well.
 
 ###### <h3> Classification Experiments
 Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
