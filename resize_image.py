@@ -1,5 +1,5 @@
 import os
-from utils import resize_image, make_directory
+from utils import resize_image
 import h5py
 import numpy as np
 from PIL import Image, UnidentifiedImageError
