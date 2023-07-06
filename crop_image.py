@@ -10,6 +10,7 @@ from transformers import DetrFeatureExtractor
 from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, scale_bbox
 from crop_tool_sup.scripts.crop_images import expand_image
 from crop_tool_sup.model.detr import load_model_from_ckpt
+from utils import resize_image
 
 
 class CustomArg:
@@ -19,26 +20,29 @@ class CustomArg:
                 setattr(self, key, value)
 
 
-def save_cropped_image(configs, img, cropped_img, output_hdf5, file):
+def save_cropped_image(configs, img, cropped_img, file):
     """
     This function saves the cropped image in the corresponding file format of the dataset.
     :param configs: Configurations.
     :param img: Original image file.
     :param cropped_img: cropped image.
-    :param output_hdf5: HDF5 output file if already exits.
-    :param file: HDF5 file if just created.
+    :param file: HDF5 file of original images.
     :return:
     """
 
-    if configs['data_format'] == "":
-        if configs['output_dir'] is not None:
-            cropped_img.save(os.path.join(configs['output_dir'], "CROPPED_" + os.path.basename(img)))
+    if configs['write_format'] == "folder":
+        if configs['cropped_image_path'] is not None:
+            cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
         else:
             cropped_img.save(os.path.join(os.path.dirname(img), "CROPPED_" + os.path.basename(img)))
 
-    if configs['data_format'] == "hdf5":
-        if configs['output_dir'] is not None:
-            output_hdf5.create_dataset("CROPPED_" + img, data=cropped_img)
+    if configs['write_format'] == "hdf5":
+        if configs['cropped_hdf5_path'] is not None:
+            if not os.path.isfile(configs['cropped_hdf5_path']):
+                output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'w')
+            else:
+                output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'a')
+            output_hdf5.create_dataset(img, data=cropped_img)
         else:
             file[configs['dataset_name']].create_dataset("CROPPED_" + img, data=cropped_img)
 
@@ -47,7 +51,7 @@ def crop_image(configs, original_images):
     """
     This function does the cropping.
     :param configs: Configurations.
-    :param original_images: path to the list of uncropped images.
+    :param original_images: path list of uncropped images.
     :return:
     """
 
@@ -57,17 +61,11 @@ def crop_image(configs, original_images):
     args = CustomArg(configs)
 
     model = load_model_from_ckpt(args)
-    output_hdf5 = None
     if configs['data_format'] == "hdf5":
-        file = h5py.File(configs['image_hdf5'], 'a')
-        if configs['output_hdf5'] is not None:
-            if not os.path.isfile(configs['output_hdf5']):
-                output_hdf5 = h5py.File(configs['output_hdf5'], 'w')
-            else:
-                output_hdf5 = h5py.File(configs['output_hdf5'], 'a')
+        file = h5py.File(configs['hdf5_path'], 'a')
 
     for orig_img in tqdm(original_images):
-        if configs['data_format'] == "":
+        if configs['read_format'] == "folder":
             file = None
             if os.path.isfile(orig_img):
                 try:
@@ -76,9 +74,11 @@ def crop_image(configs, original_images):
                     print("Image not found in: " + orig_img)
                     exit(1)
 
-        elif configs['data_format'] == "hdf5":
-            data = np.asarray(file[configs['dataset_name']][orig_img])
+        elif configs['read_format'] == "hdf5":
+            data = np.asarray(file[configs['dataset_name']][os.path.basename(orig_img)])
             image = Image.fromarray(data)
+        else:
+            sys.exit("Wrong data_format: " + configs['read_format'] + " does not exist.")
 
         encoding = feature_extractor(images=image, return_tensors="pt")
         pixel_values = encoding["pixel_values"].squeeze().unsqueeze(0)
@@ -109,7 +109,96 @@ def crop_image(configs, original_images):
         cropped_img = image.crop((left, top, right, bottom))
 
         # Save the cropped image
-        save_cropped_image(configs, orig_img, cropped_img, output_hdf5, file)
+        save_cropped_image(configs, orig_img, cropped_img, file)
+
+
+def get_uncropped_images_metadata(metadata, dataset_name,
+                                  image_path, cropped_image_path, hdf5_path, cropped_hdf5_path, read_format,
+                                  get_list=False):
+    """
+    Using metadata file, this function outputs a list of path to images, we want to crop.
+    :param metadata: Path to the metadata file.
+    :param dataset_name: Name of the dataset.
+    :param image_path: Path to the directory where images uncropped images are saved.
+    :param cropped_image_path: Path to the directory where cropped images will be saved.
+    :param hdf5_path: Path to the hdf5 file contains uncropped images.
+    :param cropped_hdf5_path: Path to the hdf5 file where cropped images will be saved.
+    :param read_format: File format to read data from.
+    :param get_list: If get image path list?
+    :return:
+    """
+
+    if not get_list:
+        return
+
+    list_of_uncropped_image_path = []
+    df = pd.read_csv(metadata, sep='\t', low_memory=False)
+    image_names = df['image_file'].to_list()
+
+    if read_format == "folder":
+        pbar = tqdm(image_names)
+        for img in pbar:
+            pbar.set_description("Detect uncropped images")
+            curr_image_dir = os.path.join(image_path, img)
+            if not os.path.isfile(curr_image_dir):
+                sys.exit(curr_image_dir + " does not exit in original image path.")
+
+            curr_cropped_image_dir = os.path.join(cropped_image_path, img)
+            curr_cropped_image_dir_ = os.path.join(image_path, "CROPPED_" + img)
+            if not os.path.isfile(curr_cropped_image_dir) and not os.path.isfile(curr_cropped_image_dir_):
+                list_of_uncropped_image_path.append(curr_image_dir)
+
+    elif read_format == "hdf5":
+
+        file = h5py.File(hdf5_path, 'a')
+        output_file = h5py.File(cropped_hdf5_path, 'a')
+        keys = file[dataset_name].keys()
+        if dataset_name in output_file.keys():
+            output_keys = output_file[dataset_name].keys()
+        else:
+            output_keys = output_file.keys()
+
+        pbar = tqdm(image_names)
+        for i in pbar:
+
+            pbar.set_description("Detect uncropped images")
+            if i not in keys:
+                sys.exit(i + "does not exit in original hdf5 file.")
+
+            if i not in output_keys and "CROPPED_" + i not in keys:
+                list_of_uncropped_image_path.append(i)
+    else:
+        sys.exit("Wrong data_format: " + read_format + " does not exist.")
+
+    return list_of_uncropped_image_path
+
+
+def get_uncropped_images(read_format, dataset_name, dir_path, hdf5_path, not_get_list=False):
+
+    """
+    This function outputs a list of uncropped images saved in a directory or a hdf5 file.
+    :param read_format: Data format to read from: folder/hdf5
+    :param dataset_name: Name of the dataset.
+    :param dir_path: Path to the directory of uncropped images.
+    :param hdf5_path: Path to the hdf5 file of uncropped images.
+    :param not_get_list: if not getting the list?
+    :return:
+    """
+    if not_get_list:
+        return
+
+    if read_format == "folder":
+        list_of_uncropped_image_path = [f"{dir_path}/{img}" for img in os.listdir(dir_path)]
+
+    elif read_format == "hdf5":
+        file = h5py.File(hdf5_path, 'a')
+        keys = file[dataset_name].keys()
+        list_of_uncropped_image_path = [img for img in keys]
+
+    else:
+        sys.exit("Wrong data_format: " + read_format + " does not exist.")
+
+    return list_of_uncropped_image_path
 
 
 def detect_uncropped_images(configs):
@@ -120,39 +209,25 @@ def detect_uncropped_images(configs):
     :return: Path to the list of the uncropped images of the dataset
     """
 
-    list_of_uncropped_image_path = []
-    df = pd.read_csv(configs['meta_path'], sep='\t', low_memory=False)
-    image_names = df['image_file'].to_list()
+    uncropped_image_path = get_uncropped_images_metadata(configs['metadata_path'], configs['dataset_name'],
+                                                         configs['image_path'], configs['cropped_image_path'],
+                                                         configs['hdf5_path'], configs['cropped_hdf5_path'],
+                                                         configs['read_format'], get_list=configs['use_metadata'])
 
-    if configs['data_format'] == "":
-        pbar = tqdm(image_names)
-        for img in pbar:
-            pbar.set_description("Detect uncropped images")
-            curr_image_dir = os.path.join(configs['image_path'], img)
-            curr_cropped_image_dir = os.path.join(configs['output_dir'], "CROPPED_" + img)
-            if not os.path.isfile(curr_image_dir):
-                sys.exit(curr_image_dir + " does not exit")
-            if not os.path.isfile(curr_cropped_image_dir):
-                list_of_uncropped_image_path.append(curr_image_dir)
-    elif configs['data_format'] == "hdf5":
-        file = h5py.File(configs['image_hdf5'], 'a')
-        output_file = h5py.File(configs['output_hdf5'], 'a')
-        keys = file[configs['dataset_name']].keys()
-        if configs['dataset_name'] in output_file.keys():
-            output_keys = output_file[configs['dataset_name']].keys()
-        else:
-            output_keys = output_file.keys()
-        pbar = tqdm(image_names)
-        for i in pbar:
-            pbar.set_description("Detect uncropped images")
-            if i not in keys:
-                sys.exit(i + "does not exit")
-            if 'CROPPED_' + i not in output_keys:
-                list_of_uncropped_image_path.append(i)
-    else:
-        sys.exit("Wrong data_format: " + configs['data_format'] + " does not exist.")
+    uncropped_image_path = get_uncropped_images(configs['read_format'], configs['dataset_name'],
+                                                configs['image_path'], configs['hdf5_path'],
+                                                not_get_list=configs['use_metadata'])
 
-    return list_of_uncropped_image_path
+    return uncropped_image_path
+
+
+def make_resize(full_size_img_path, resize_img_path, resize_images=False):
+
+    if not resize_images:
+        return
+
+    for img in os.listdir(full_size_img_path):
+        resize_image(f"{full_size_img_path}/{img}", f"{resize_img_path}/{img}", resize_dimension=256)
 
 
 def run_crop_tool(configs):
@@ -167,21 +242,14 @@ def run_crop_tool(configs):
     if not configs['crop_image']:
         return
 
-    if configs['data_format'] == "":
-        if configs['output_dir'] is not None and len(configs['output_dir']) != 0:
-            os.makedirs(configs['output_dir'], exist_ok=True)
-        else:
-            configs['output_dir'] = configs['image_dir']
-    if configs['data_format'] == "hdf5":
-        if configs['output_hdf5'] is not None and len(configs['output_hdf5']) != 0:
-            with h5py.File(configs['output_hdf5'], 'a') as f:
-                pass
-                # f.close()
-        else:
-            configs['output_hdf5'] = configs['image_hdf5']
-
     # Detect uncropped images
     path_to_uncropped_images = detect_uncropped_images(configs)
 
     # Crop original images without a cropped version and save in dataset file.
     crop_image(configs, path_to_uncropped_images)
+
+    # Resize cropped images to 256 on their smaller dimension
+    make_resize(configs['cropped_image_path'],
+                configs['resized_cropped_image_path'], resize_images=configs['resize_cropped_image'])
+
+

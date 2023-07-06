@@ -1,11 +1,12 @@
 import datetime
 from BioScanDataSet import show_statistics, show_dataset_statistics
-from bioscan_datadownload import download_dataset_files
+from bioscan_datadownload import make_download
 from bioscan_datasplit import make_split
 from bioscan_dataloader import get_dataloader
 from train import train
 from test import test
 from crop_image import run_crop_tool
+from resize_image import make_resize
 from configurations import set_configurations, make_path_configs, BioScan_Configurations, get_group_level
 
 
@@ -66,7 +67,10 @@ if __name__ == '__main__':
     configs = make_path_configs(configs)
 
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
-    download_dataset_files(configs)
+    make_download(configs)
+
+    # ################################# RESIZE IMAGES ##############################################
+    make_resize(configs)
 
     # ##################################### RUN PRE-PROCESSING ###################################################
     run_crop_tool(configs)
