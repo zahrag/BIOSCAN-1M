@@ -94,7 +94,7 @@ def set_configurations(configs=None):
     parser.add_argument('--data_format', type=str, default=configs["data_format"], help='Format of the dataset.',
                         required=False)
     parser.add_argument('--data_structure', type=str, default="bioscan_1M_insect",
-                        help='If using BIOSCAN_1M_Insect dataset structure, 113 chunk of data (part1:part113)?')
+                        help='If using BIOSCAN_1M_Insect dataset structure, 113 chunks of data (part1:part113)?')
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
                         default=configs["best_model"], required=False)
     parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.',
