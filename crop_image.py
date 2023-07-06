@@ -215,7 +215,8 @@ def detect_uncropped_images(configs):
     return uncropped_image_path
 
 
-def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path, saved_as_binary_data=True):
+def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path,
+                saved_as_binary_data=True, resize_dimension=256):
     """
     This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
     the path to these are preset.
@@ -223,12 +224,13 @@ def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path,
     :param resized_img_path: Path to the directory to save resized images.
     :param resized_cropped_hdf5_path: Path to the hdf5 file to save resized images.
     :param saved_as_binary_data: if True, less space required.
+    :param resize_dimension: Dimension to resize images.
     :return:
     """
 
     if resized_img_path is not None:
         for img in os.listdir(full_size_img_path):
-            resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=256)
+            resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
 
         with h5py.File(resized_cropped_hdf5_path, 'w') as hdf5:
             for img in os.listdir(resized_img_path):
@@ -268,6 +270,7 @@ def run_crop_tool(configs):
 
     # Resize cropped images to 256 on their smaller dimension
     make_resize(configs['cropped_image_path'],
-                configs['resized_cropped_image_path'], configs['resized_cropped_hdf5_path'])
+                configs['resized_cropped_image_path'], configs['resized_cropped_hdf5_path'],
+                saved_as_binary_data=True, resize_dimension=256)
 
 

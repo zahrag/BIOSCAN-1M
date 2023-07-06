@@ -5,13 +5,13 @@ import numpy as np
 from PIL import Image, UnidentifiedImageError
 
 
-def make_resize(configs, saved_as_binary_data=True):
+def make_resize(configs, saved_as_binary_data=True, resize_dimension=256):
 
     if configs["resized_image_path"] is not None:
         full_size_img_path = configs["image_path"]
         resized_img_path = configs["resized_image_path"]
         for img in os.listdir(full_size_img_path):
-            resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=256)
+            resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
 
         if configs['resized_hdf5_path'] is not None:
 
