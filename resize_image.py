@@ -20,7 +20,14 @@ def make_resize(configs, saved_as_binary_data=True, resize_dimension=256):
 
         with h5py.File(configs['resized_hdf5_path'], 'w') as hdf5:
             for img in os.listdir(resized_img_path):
+
                 image_dir = f"{resized_img_path}/{img}"
+                try:
+                    image = Image.open(image_dir)
+                    image.verify()
+                except UnidentifiedImageError:
+                    print(f"{image} Corrupted.")
+                    continue
 
                 if saved_as_binary_data:
                     with open(image_dir, 'rb') as img_f:
@@ -28,12 +35,6 @@ def make_resize(configs, saved_as_binary_data=True, resize_dimension=256):
                     binary_data_np = np.asarray(binary_data)
                     hdf5.create_dataset(f'{img}', data=binary_data_np)
                 else:
+                    image_array = np.array(image)
+                    hdf5.create_dataset(f'{img}', data=image_array)
 
-                    try:
-                        image = Image.open(image_dir)
-                        image_array = np.array(image)
-                        hdf5.create_dataset(f'{img}', data=image_array)
-
-                    except UnidentifiedImageError:
-                        print(f"{img} Corrupted.")
-                        continue
