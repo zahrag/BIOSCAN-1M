@@ -1,7 +1,8 @@
 import argparse
 import os
-from utils import make_directory
+from utils import make_directory, extract_zip, extract_tar
 import torch
+import sys
 
 
 class BioScan_Configurations():
@@ -31,7 +32,7 @@ class BioScan_Configurations():
         elif self.exp in self.experiment_names[4:6]:
             self.max_num_sample = 50000
 
-        self.data_formats = ["folder", "hdf5"]
+        self.data_formats = ["folder", "hdf5", "tar", "zip"]
 
 
 def get_group_level(exp_name=''):
@@ -46,6 +47,23 @@ def get_group_level(exp_name=''):
         return
 
     return group_level
+
+
+def extract_package(image_path):
+
+    if os.path.exists(image_path):
+        return image_path
+
+    data_format = os.path.splitext(os.path.basename(image_path))[1]
+    path_to_extract = os.path.join(os.path.dirname(image_path), os.path.splitext(os.path.basename(image_path))[0])
+    if data_format == "zip":
+        extract_zip(zip_file=image_path, path=path_to_extract)
+    elif data_format == "tar":
+        extract_tar(tar_file=image_path, path=path_to_extract)
+    else:
+        sys.exit("Wrong data_format: " + data_format + " does not exist.")
+
+    return path_to_extract
 
 
 def set_configurations(configs=None):
@@ -133,8 +151,6 @@ def set_configurations(configs=None):
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--checkpoint_path', type=str, default=configs["checkpoint_path"],
                         help="Path to the checkpoint.", required=False)
-    parser.add_argument('--read_format', type=str, default="hdf5",
-                        help='Format of the dataset files, we want to read from.')
     parser.add_argument('--use_metadata', type=str, default=False,
                         help='If using metadata for cropping?')
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")

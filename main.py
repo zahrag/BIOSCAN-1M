@@ -7,7 +7,7 @@ from train import train
 from test import test
 from crop_image import run_crop_tool
 from resize_image import make_resize
-from configurations import set_configurations, make_path_configs, BioScan_Configurations, get_group_level
+from configurations import set_configurations, make_path_configs, BioScan_Configurations, get_group_level, extract_package
 
 
 def get_exp_configs():
@@ -51,6 +51,8 @@ if __name__ == '__main__':
     exp_configs = get_exp_configs()
     # Get model configurations
     configs = set_configurations(exp_configs)
+    # Extract input package if compressed
+    configs['image_path'] = extract_package(configs['image_path'])
     # Get group_level from experiments name
     configs['group_level'] = get_group_level(exp_name=configs['exp_name'])
     # Save model configurations

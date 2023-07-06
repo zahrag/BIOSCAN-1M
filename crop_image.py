@@ -57,7 +57,7 @@ def crop_image(configs, original_images):
     model = load_model_from_ckpt(args)
 
     for orig_img in tqdm(original_images):
-        if configs['read_format'] == "folder":
+        if configs['data_format'] == "folder":
             if os.path.isfile(orig_img):
                 try:
                     image = Image.open(orig_img)
@@ -65,7 +65,7 @@ def crop_image(configs, original_images):
                     print("Image not found in: " + orig_img)
                     exit(1)
 
-        elif configs['read_format'] == "hdf5":
+        elif configs['data_format'] == "hdf5":
             file = h5py.File(configs['hdf5_path'], 'r')
             saved_as_binary_array = True
             if saved_as_binary_array:
@@ -75,7 +75,7 @@ def crop_image(configs, original_images):
                 data = np.asarray(file[configs['dataset_name']][os.path.basename(orig_img)])
                 image = Image.fromarray(data)
         else:
-            sys.exit("Wrong data_format: " + configs['read_format'] + " does not exist.")
+            sys.exit("Wrong data_format: " + configs['data_format'] + " does not exist.")
 
         encoding = feature_extractor(images=image, return_tensors="pt")
         pixel_values = encoding["pixel_values"].squeeze().unsqueeze(0)
@@ -206,9 +206,9 @@ def detect_uncropped_images(configs):
     uncropped_image_path = get_uncropped_images_metadata(configs['metadata_path'], configs['dataset_name'],
                                                          configs['image_path'], configs['cropped_image_path'],
                                                          configs['hdf5_path'], configs['cropped_hdf5_path'],
-                                                         configs['read_format'], get_list=configs['use_metadata'])
+                                                         configs['data_format'], get_list=configs['use_metadata'])
 
-    uncropped_image_path = get_uncropped_images(configs['read_format'], configs['dataset_name'],
+    uncropped_image_path = get_uncropped_images(configs['data_format'], configs['dataset_name'],
                                                 configs['image_path'], configs['hdf5_path'],
                                                 not_get_list=configs['use_metadata'])
 
