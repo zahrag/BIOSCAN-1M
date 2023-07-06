@@ -33,9 +33,7 @@ class BioScan_Configurations():
             self.max_num_sample = 50000
 
         self.data_formats = ["hdf5",    # hdf5_path
-                             "folder",  # image_path
-                             "tar",     # image_path
-                             "zip",     # image_path
+                             "folder",  # image_path (tar and zip)
                              ]
 
 
