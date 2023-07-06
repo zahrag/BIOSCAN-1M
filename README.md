@@ -136,11 +136,13 @@ The first set of experiments involved classifying images of insects into 16 Orde
 The second set of experiments specifically targeted the Order Diptera and 
 aimed to classify its members into 40 families, which constitute a significant portion of the order.
 
-To train the model on classification task using a baseline model run setting the name of experiments:
+To train the model on a classification task using a baseline model, 
+you can run the following command, setting the name of the experiment:
 ```bash
 python main.py --loader --train --data_format hdf5 --exp_name small_insect_order
 ``` 
-
+Both the folder and HDF5 data formats are supported, 
+making it convenient to conduct experiments using dataset packages.
 
 ###### <h3> Requirement 
 The requirements file used to run experiments is available in the requirement.txt.
