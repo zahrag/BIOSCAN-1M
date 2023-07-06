@@ -3,6 +3,7 @@ import os
 import wget
 from utils import make_directory
 import itertools
+import gdown
 
 
 def read_id_mapping(id_mapping_path=""):
@@ -20,17 +21,18 @@ def read_id_mapping(id_mapping_path=""):
     return file_id_mapping
 
 
-def run_process(download_url, file_path):
-    """ Download from url using wget """
-    wget.download(download_url, out=file_path)
-
-
-def download_dataset_files(parent_folder_id, file_id_mapping, file_name, download_path=""):
+def wget_download(parent_folder_id, file_id, file_name, download_path=""):
     """ Set download url of the files on the drive """
     make_directory(download_path)
-    download_url = f"https://drive.google.com/uc?export=download&id={file_id_mapping}&parent={parent_folder_id}"
-    print(download_url)
-    run_process(download_url, f"{download_path}/{file_name}")
+    url = f"https://drive.google.com/uc?export=download&id={file_id}&parent={parent_folder_id}"
+    wget.download(url, out=f"{download_path}/{file_name}")
+
+
+def gdown_download(file_id, file_name, download_path=""):
+    """ Download file from drive using gdown """
+    make_directory(download_path)
+    url = f'https://drive.google.com/uc?id={file_id}'
+    gdown.download(url, f"{download_path}/{file_name}")
 
 
 def make_download(configs):
@@ -79,7 +81,8 @@ def make_download(configs):
     else:
         parent_folder_id = parent_folder_main
 
-    download_dataset_files(parent_folder_id, file_id_mapping[file_selected], file_selected, download_path=download_path)
+    wget_download(parent_folder_id, file_id_mapping[file_selected], file_selected, download_path=download_path)
+    gdown_download(file_id_mapping[file_selected], file_selected, download_path=download_path)
 
 
 
