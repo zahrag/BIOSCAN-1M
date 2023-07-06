@@ -83,13 +83,14 @@ def set_configurations(configs=None):
                         help="Path to the resized images.", required=False)
     parser.add_argument('--cropped_image_path', type=str, default=configs["cropped_image_path"],
                         help="Path to the cropped images.", required=False)
+    parser.add_argument('--resized_cropped_image_path', type=str, default="",
+                        help="Path to the cropped resized images.", required=False)
     parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"],
                         required=False)
     parser.add_argument('--cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
-                        default=configs["cropped_hdf5_path"],
-                        required=False)
-    parser.add_argument('--resized_cropped_image_path', type=str, default="",
-                        help="Path to the cropped resized images.", required=False)
+                        default="", required=False)
+    parser.add_argument('--resized_cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
+                        default="", required=False)
     parser.add_argument('--results_path', type=str, help='Path to save results.', default=configs["results_path"],
                         required=False)
 
@@ -112,8 +113,6 @@ def set_configurations(configs=None):
                         help='Whether to resize images?', default=True, action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
                         default=configs["crop_image"], action='store_true')
-    parser.add_argument('--resize_cropped_image',
-                        help='Whether to resize cropped images?', default=True, action='store_true')
     parser.add_argument('--no_transform', default=False, action='store_true',
                         help='Not using transformation in dataloader?')
     parser.add_argument('--cropped', default=True, action='store_true',
@@ -138,8 +137,6 @@ def set_configurations(configs=None):
     parser.add_argument('--checkpoint_path', type=str, default="", help="Path to the checkpoint.")
     parser.add_argument('--read_format', type=str, default="hdf5",
                         help='Format of the dataset files, we want to read from.', required=False)
-    parser.add_argument('--write_format', type=str, default="hdf5",
-                        help='Format of the dataset files, we write into.', required=False)
     parser.add_argument('--use_metadata', type=str, default=True,
                         help='If using metadata for cropping?', required=False)
     parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.',

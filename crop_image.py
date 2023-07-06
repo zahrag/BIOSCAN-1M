@@ -20,31 +20,24 @@ class CustomArg:
                 setattr(self, key, value)
 
 
-def save_cropped_image(configs, img, cropped_img, file):
+def save_cropped_image(configs, img, cropped_img):
     """
-    This function saves the cropped image in the corresponding file format of the dataset.
+    This function saves the cropped image in the corresponding file format of the dataset if the path is preset.
     :param configs: Configurations.
     :param img: Original image file.
     :param cropped_img: cropped image.
-    :param file: HDF5 file of original images.
     :return:
     """
 
-    if configs['write_format'] == "folder":
-        if configs['cropped_image_path'] is not None:
-            cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
-        else:
-            cropped_img.save(os.path.join(os.path.dirname(img), "CROPPED_" + os.path.basename(img)))
+    if configs['cropped_image_path'] is not None:
+        cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
 
-    if configs['write_format'] == "hdf5":
-        if configs['cropped_hdf5_path'] is not None:
-            if not os.path.isfile(configs['cropped_hdf5_path']):
-                output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'w')
-            else:
-                output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'a')
-            output_hdf5.create_dataset(img, data=cropped_img)
+    if configs['cropped_hdf5_path'] is not None:
+        if not os.path.isfile(configs['cropped_hdf5_path']):
+            output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'w')
         else:
-            file[configs['dataset_name']].create_dataset("CROPPED_" + img, data=cropped_img)
+            output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'a')
+        output_hdf5.create_dataset(img, data=cropped_img)
 
 
 def crop_image(configs, original_images):
@@ -109,7 +102,7 @@ def crop_image(configs, original_images):
         cropped_img = image.crop((left, top, right, bottom))
 
         # Save the cropped image
-        save_cropped_image(configs, orig_img, cropped_img, file)
+        save_cropped_image(configs, orig_img, cropped_img)
 
 
 def get_uncropped_images_metadata(metadata, dataset_name,
@@ -221,13 +214,27 @@ def detect_uncropped_images(configs):
     return uncropped_image_path
 
 
-def make_resize(full_size_img_path, resize_img_path, resize_images=False):
+def make_resize(full_size_img_path, resized_img_path, resized_cropped_hdf5_path):
+    """
+    This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
+    the path to these are preset.
+    :param full_size_img_path: Path to the full sized images.
+    :param resized_img_path: Path to the directory to save resized images.
+    :param resized_cropped_hdf5_path: Path to the hdf5 file to save resized images.
+    :return:
+    """
 
-    if not resize_images:
-        return
+    if resized_img_path is not None:
+        for img in os.listdir(full_size_img_path):
+            resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=256)
 
-    for img in os.listdir(full_size_img_path):
-        resize_image(f"{full_size_img_path}/{img}", f"{resize_img_path}/{img}", resize_dimension=256)
+    if resized_cropped_hdf5_path is not None:
+        with h5py.File(resized_cropped_hdf5_path, 'w') as hdf5:
+            for img in os.listdir(resized_img_path):
+                with open(f"{resized_img_path}/{img}", 'rb') as img_f:
+                    binary_data = img_f.read()
+                binary_data_np = np.asarray(binary_data)
+                hdf5.create_dataset(f'{img}', data=binary_data_np)
 
 
 def run_crop_tool(configs):
@@ -250,6 +257,6 @@ def run_crop_tool(configs):
 
     # Resize cropped images to 256 on their smaller dimension
     make_resize(configs['cropped_image_path'],
-                configs['resized_cropped_image_path'], resize_images=configs['resize_cropped_image'])
+                configs['resized_cropped_image_path'], configs['resized_cropped_hdf5_path'])
 
 
