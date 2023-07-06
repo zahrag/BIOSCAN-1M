@@ -24,28 +24,39 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path, saved_a
 
     pbar = tqdm(os.listdir(full_size_img_path))
     for img in pbar:
+        if os.path.isfile(f"{resized_img_path}/{img}"):
+            print(f"{img} Exists: Skip!")
+            continue
         pbar.set_description(f"Resize images to {resize_dimension} on their smaller dimension.")
         resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
 
     if resized_hdf5_path is not None:
-        with h5py.File(resized_hdf5_path, 'w') as hdf5:
-            pbar = tqdm(os.listdir(resized_img_path))
-            for img in pbar:
-                pbar.set_description(f"Archive resized images on a HDF5 file in:\n{resized_hdf5_path}.")
-                image_dir = f"{resized_img_path}/{img}"
-                try:
-                    image = Image.open(image_dir)
-                    image.verify()
-                except UnidentifiedImageError:
-                    print(f"{image} Corrupted.")
-                    continue
+        if os.path.isfile(resized_hdf5_path):
+            hdf5 = h5py.File(resized_hdf5_path, 'a')
+        else:
+            hdf5 = h5py.File(resized_hdf5_path, 'w')
 
-                if saved_as_binary_data:
-                    with open(image_dir, 'rb') as img_f:
-                        binary_data = img_f.read()
-                    binary_data_np = np.asarray(binary_data)
-                    hdf5.create_dataset(f'{img}', data=binary_data_np)
-                else:
-                    image_array = np.array(image)
-                    hdf5.create_dataset(f'{img}', data=image_array)
+        keys = hdf5.keys()
+        pbar = tqdm(os.listdir(resized_img_path))
+        for img in pbar:
+            if img in keys:
+                print(f"{img} Exists: Skip!")
+                continue
+            pbar.set_description(f"Archive resized images on a HDF5 file in:\n{resized_hdf5_path}.")
+            image_dir = f"{resized_img_path}/{img}"
+            try:
+                image = Image.open(image_dir)
+                image.verify()
+            except UnidentifiedImageError:
+                print(f"{image} Corrupted.")
+                continue
+
+            if saved_as_binary_data:
+                with open(image_dir, 'rb') as img_f:
+                    binary_data = img_f.read()
+                binary_data_np = np.asarray(binary_data)
+                hdf5.create_dataset(f'{img}', data=binary_data_np)
+            else:
+                image_array = np.array(image)
+                hdf5.create_dataset(f'{img}', data=image_array)
 
