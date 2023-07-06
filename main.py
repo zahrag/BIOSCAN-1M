@@ -25,20 +25,21 @@ def get_exp_configs():
     config = {
         "date_time": timestamp,
         "experiment_names": base_configs.experiment_names,
-        "download_path": "",
-        "dataset_path": "",
-        "metadata_path": "",
-        "dataset_name": "",
-        "hdf5_path": "",
-        "image_path": "",
-        "results_path": "",
-        "data_format": "",
-        "exp_name": "",
-        # ### Train/Test Tool ### #
-        "vit_pretrained": "",
-        "best_model": "",
-        # ### Crop Tool ### #
-        "checkpoint_path": "",
+        "dataset_name": "BioScan_Insect_Dataset",
+
+        # ### Set the following configurations before experiments ### #
+        "download_path": "path to download the dataset files",
+        "dataset_path": "root directory to dataset files",
+        "metadata_path": "path to the metadata file (.tsv)",
+        "hdf5_path": "path to the HDF5 file containing the original full-size images",
+        "image_path": "path to the original full-size images",
+        "results_path": "path to save the results",
+        "vit_pretrained": "path to directory where the vit backbone is saved",
+        "checkpoint_path": "path to the directory where the crop tool checkpoint is saved",
+        "data_format": "data format used for experiments",
+        "exp_name": "experiment name",
+        "best_model": "best model selected from validation results",
+
     }
     return config
 
