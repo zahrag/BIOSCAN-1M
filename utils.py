@@ -199,7 +199,7 @@ def create_zip(source_folder=None, output_zip=None):
         for root, _, files in os.walk(source_folder):
             for file in files:
                 file_path = os.path.join(root, file)
-                arcname = os.path.join("bioscan/images", file)
+                arcname = os.path.join(f"bioscan/images/{os.path.splitext(os.path.basename(output_zip))[0]}", file)
                 zipf.write(file_path, arcname=arcname)
 
 
