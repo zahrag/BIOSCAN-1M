@@ -199,7 +199,8 @@ def create_zip(source_folder=None, output_zip=None):
         for root, _, files in os.walk(source_folder):
             for file in files:
                 file_path = os.path.join(root, file)
-                zipf.write(file_path, arcname=os.path.relpath(file_path, source_folder))
+                arcname = os.path.join("bioscan/images", file)
+                zipf.write(file_path, arcname=arcname)
 
 
 def extract_zip(zip_file=None, path=None):

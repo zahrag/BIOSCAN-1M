@@ -4,7 +4,7 @@ import pandas as pd
 import h5py
 import numpy as np
 from tqdm import tqdm
-from PIL import Image, UnidentifiedImageError
+from PIL import Image
 import io
 
 from transformers import DetrFeatureExtractor
@@ -204,7 +204,6 @@ def get_uncropped_images(read_format, dataset_name, dir_path, hdf5_path, not_get
 
 
 def detect_uncropped_images(configs):
-
     """
     This function detects the images in the dataset file, which do not have a cropped version.
     :param configs: Configurations.
@@ -221,6 +220,12 @@ def detect_uncropped_images(configs):
                                                 not_get_list=configs['use_metadata'])
 
     return uncropped_image_path
+
+
+def create_zip_file(data_structure, ):
+
+    if data_structure == "bioscan_1M_insect":
+        create_zip(source_folder=resized_img_path, output_zip=f"{os.path.dirname(resized_img_path)}/{zip_name}")
 
 
 def run_crop_tool(configs):
