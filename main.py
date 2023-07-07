@@ -29,7 +29,7 @@ def get_exp_configs():
         # ### Set the following configurations for experiments ### #
         "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
         "download_path": None,               # path to download the dataset files
-        "dataset_path": None,                # root directory to the dataset files
+        "dataset_path": None,                # root directory of the dataset files
         "metadata_path": None,               # path to the metadata file (.tsv)
         "hdf5_path": None,                   # path to the HDF5 file containing the original full-size images
         "image_path": None,                  # path to the original full-size images
