@@ -222,12 +222,6 @@ def detect_uncropped_images(configs):
     return uncropped_image_path
 
 
-def create_zip_file(data_structure, ):
-
-    if data_structure == "bioscan_1M_insect":
-        create_zip(source_folder=resized_img_path, output_zip=f"{os.path.dirname(resized_img_path)}/{zip_name}")
-
-
 def run_crop_tool(configs):
 
     """
