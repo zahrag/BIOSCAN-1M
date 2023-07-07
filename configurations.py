@@ -143,8 +143,6 @@ def set_configurations(configs=None):
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default="dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
                         help="Path to the directory where file ID mapping is saved.")
-    parser.add_argument('--download_path', type=str, default=configs["download_path"],
-                        help="Path to the dataset files downloaded from drive.")
     parser.add_argument('--file_to_download', type=str, default=None,
                         help="File to download from drive.")
 
