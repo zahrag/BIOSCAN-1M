@@ -112,15 +112,18 @@ def set_configurations(configs=None):
     parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"],
                         required=False)
     # The following needs to be set
-    parser.add_argument('--resized_image_path', type=str, default=None, help="Path to the resized images.")
-    parser.add_argument('--resized_hdf5_path', type=str, default=None, help="Path to the resized HDF5.")
-    parser.add_argument('--cropped_image_path', type=str, default=None, help="Path to the cropped images.")
-    parser.add_argument('--cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
-                        default=None)
-    parser.add_argument('--resized_cropped_image_path', type=str, default=None,
-                        help="Path to the cropped resized images.")
-    parser.add_argument('--resized_cropped_hdf5_path', type=str, help='Path to the HDF5 files of the CROPPED images.',
-                        default=None)
+    parser.add_argument('--resized_image_path', type=str, default=configs["resized_image_path"],
+                        help="Path to the resized images.")
+    parser.add_argument('--resized_hdf5_path', type=str, default=configs["resized_hdf5_path"],
+                        help="Path to the resized HDF5.")
+    parser.add_argument('--cropped_image_path', type=str, default=configs["cropped_image_path"],
+                        help="Path to the cropped images.")
+    parser.add_argument('--cropped_hdf5_path', type=str, default=configs["cropped_hdf5_path"],
+                        help='Path to the HDF5 files of the cropped images.',)
+    parser.add_argument('--resized_cropped_image_path', type=str, default=configs["resized_cropped_image_path"],
+                        help="Path to the resized cropped images.")
+    parser.add_argument('--resized_cropped_hdf5_path', type=str, default=configs["resized_cropped_hdf5_path"],
+                        help='Path to the HDF5 files of the resized cropped images.')
 
     # #### Condition Settings #####
     parser.add_argument('--make_split', help='Whether to split dataset into train, validation and test sets?',

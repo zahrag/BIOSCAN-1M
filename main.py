@@ -27,14 +27,14 @@ def get_exp_configs():
         "experiment_names": base_configs.experiment_names,
 
         # ### Set the following configurations for experiments ### #
-        "download_path": "path to download the dataset files",
-        "dataset_path": "root directory to the dataset files",
-        "metadata_path": "path to the metadata file (.tsv)",
-        "hdf5_path": "path to the HDF5 file containing the original full-size images",
-        "image_path": "path to the original full-size images",
-        "results_path": "path to save the results",
-        "vit_pretrained_path": "path to the directory where the vit backbone is saved",
-        "checkpoint_path": "path to the directory where the crop tool checkpoint is saved",
+        "download_path": None,        # path to download the dataset files
+        "dataset_path": None,         # root directory to the dataset files
+        "metadata_path": None,        # path to the metadata file (.tsv)
+        "hdf5_path": None,            # path to the HDF5 file containing the original full-size images
+        "image_path": None,           # path to the original full-size images
+        "results_path": None,         # path to save the results
+        "vit_pretrained_path": None,  # path to the directory where the vit backbone is saved
+        "checkpoint_path": None,      # path to the directory where the crop tool checkpoint is saved
 
     }
     return config
