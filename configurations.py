@@ -139,8 +139,6 @@ def set_configurations(configs=None):
                         default=False, action='store_true')
     parser.add_argument('--no_transform', default=False, action='store_true',
                         help='Not using transformation in dataloader?')
-    parser.add_argument('--cropped', default=True, action='store_true',
-                        help='Using cropped images?')
 
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default="dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
