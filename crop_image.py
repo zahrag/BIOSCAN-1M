@@ -31,15 +31,14 @@ def save_cropped_image(configs, metadata, img, cropped_img):
     :return:
     """
 
-    if configs['data_structure'] == 'bioscan_1M_insect':
-        df = pd.read_csv(metadata, sep='\t', low_memory=False)
-        image_names = df['image_file'].to_list()
-        chunk_ids = df['chunk_number'].to_list()
-        chunk_id = chunk_ids[image_names.index(img)]
-        if configs['cropped_image_path'] is not None:
+    if configs['cropped_image_path'] is not None:
+        if configs['data_structure'] == 'bioscan_1M_insect':
+            df = pd.read_csv(metadata, sep='\t', low_memory=False)
+            image_names = df['image_file'].to_list()
+            chunk_ids = df['chunk_number'].to_list()
+            chunk_id = chunk_ids[image_names.index(img)]
             cropped_img.save(os.path.join(configs['cropped_image_path'], f"part{chunk_id}/{os.path.basename(img)}"))
-    else:
-        if configs['cropped_image_path'] is not None:
+        else:
             cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
 
     if configs['cropped_hdf5_path'] is not None:
