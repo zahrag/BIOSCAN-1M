@@ -27,14 +27,21 @@ def get_exp_configs():
         "experiment_names": base_configs.experiment_names,
 
         # ### Set the following configurations for experiments ### #
-        "download_path": None,        # path to download the dataset files
-        "dataset_path": None,         # root directory to the dataset files
-        "metadata_path": None,        # path to the metadata file (.tsv)
-        "hdf5_path": None,            # path to the HDF5 file containing the original full-size images
-        "image_path": None,           # path to the original full-size images
-        "results_path": None,         # path to save the results
-        "vit_pretrained_path": None,  # path to the directory where the vit backbone is saved
-        "checkpoint_path": None,      # path to the directory where the crop tool checkpoint is saved
+        "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
+        "download_path": None,               # path to download the dataset files
+        "dataset_path": None,                # root directory to the dataset files
+        "metadata_path": None,               # path to the metadata file (.tsv)
+        "hdf5_path": None,                   # path to the HDF5 file containing the original full-size images
+        "image_path": None,                  # path to the original full-size images
+        "resized_image_path": None,          # path to the resized images
+        "resized_hdf5_path": None,           # path to the hdf5 of the resized images
+        "cropped_image_path": None,          # path to the cropped images
+        "cropped_hdf5_path": None,           # path to the hdf5 file of the cropped images
+        "resized_cropped_image_path": None,  # path to the resized cropped images
+        "resized_cropped_hdf5_path": None,   # path to the hdf5 file of the resized cropped images
+        "results_path": None,                # path to save the results
+        "vit_pretrained_path": None,         # path to the directory where the vit backbone is saved
+        "checkpoint_path": None,             # path to the directory where the crop tool checkpoint is saved
 
     }
     return config

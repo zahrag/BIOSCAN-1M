@@ -100,17 +100,16 @@ def set_configurations(configs=None):
     # #### Path Settings ######
     parser.add_argument('--log', type=str, default="runs", help='Path to the log file.', required=False)
     parser.add_argument('--download_path', type=str, help='Path to the download directory.',
-                        default='', required=False)
+                        default=configs["download_path"])
     parser.add_argument('--dataset_path', type=str, help='Path to the BIOSCAN Dataset root.',
-                        default=configs["dataset_path"], required=False)
+                        default=configs["dataset_path"])
     parser.add_argument('--metadata_path', type=str, default=configs["metadata_path"],
-                        help="Path to the metadata of the dataset.", required=False)
-    parser.add_argument('--results_path', type=str, help='Path to save results.', default=configs["results_path"],
-                        required=False)
+                        help="Path to the metadata of the dataset.")
+    parser.add_argument('--results_path', type=str, help='Path to save results.', default=configs["results_path"])
     parser.add_argument('--image_path', type=str, help='Path to the individual RGB images (if any).',
-                        default=configs["image_path"], required=False)
-    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"],
-                        required=False)
+                        default=configs["image_path"])
+    parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"])
+
     # The following needs to be set
     parser.add_argument('--resized_image_path', type=str, default=configs["resized_image_path"],
                         help="Path to the resized images.")
@@ -144,14 +143,12 @@ def set_configurations(configs=None):
                         help='Not using transformation in dataloader?')
 
     # ####### Data Download #####
-    parser.add_argument('--ID_mapping_path', type=str, default="dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
+    parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
                         help="Path to the directory where file ID mapping is saved.")
-    parser.add_argument('--file_to_download', type=str, default=None,
-                        help="File to download from drive.")
+    parser.add_argument('--file_to_download', type=str, default=None, help="File to download from drive.")
 
     # ####### Data Split and Subset Creation #####
-    parser.add_argument('--max_num_sample', type=int, default=50000,
-                        help='Number of samples of each subset.',
+    parser.add_argument('--max_num_sample', type=int, default=50000, help='Number of samples of each subset.',
                         required=False)
     parser.add_argument('--experiment_names', type=str, default=configs["experiment_names"],
                         help="Name of experiments conducted in BIOSCAN Paper.", required=False)
