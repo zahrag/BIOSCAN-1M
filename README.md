@@ -1,7 +1,8 @@
 # BIOSCAN-1M
 
 ###### <h3> Overview
-This repository houses the codes and data pertaining to the BIOSCAN-1M project. 
+This repository houses the codes and data pertaining to the BIOSCAN-1M project 
+[webpage](https://biodiversitygenomics.net/1M_insects/). 
 Within this project, we introduce the BIOSCAN-1M Insect dataset, which can be accessed 
 for download via the provided link. The repository encompasses code for data sampling and splitting, 
 dataset statistics analysis, as well as image-based classification experiments centered around 
