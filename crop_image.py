@@ -21,11 +21,10 @@ class CustomArg:
                 setattr(self, key, value)
 
 
-def save_cropped_image(configs, metadata, img, cropped_img):
+def save_cropped_image(configs, img, cropped_img):
     """
     This function saves the cropped image in the corresponding file format of the dataset if the path is preset.
     :param configs: Configurations.
-    :param metadata: Path to the Metadata file of the dataset.
     :param img: Original image file.
     :param cropped_img: cropped image.
     :return:
@@ -33,7 +32,7 @@ def save_cropped_image(configs, metadata, img, cropped_img):
 
     if configs['cropped_image_path'] is not None:
         if configs['data_structure'] == 'bioscan_1M_insect':
-            df = pd.read_csv(metadata, sep='\t', low_memory=False)
+            df = pd.read_csv(configs["metadata_path"], sep='\t', low_memory=False)
             image_names = df['image_file'].to_list()
             chunk_ids = df['chunk_number'].to_list()
             chunk_id = chunk_ids[image_names.index(img)]
@@ -46,7 +45,7 @@ def save_cropped_image(configs, metadata, img, cropped_img):
             output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'w')
         else:
             output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'a')
-        output_hdf5.create_dataset(img, data=cropped_img)
+        output_hdf5.create_dataset(f'{img}', data=cropped_img)
 
 
 def crop_image(configs, original_images):
