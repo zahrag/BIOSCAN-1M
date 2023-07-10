@@ -26,7 +26,7 @@ def save_cropped_image(configs, img, cropped_img):
     This function saves the cropped image in the corresponding file format of the dataset if the path is preset.
     :param configs: Configurations.
     :param img: Original image file.
-    :param cropped_img: cropped image.
+    :param cropped_img: cropped image data array.
     :return:
     """
 
