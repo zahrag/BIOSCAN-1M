@@ -10,6 +10,7 @@ import shutil
 import h5py
 import torch.nn.functional as F
 import pickle
+import io
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -256,16 +257,31 @@ def create_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Siz
     return dataset
 
 
-def save_in_hdf5(hdf5, image, image_dir, save_binary=False):
+def save_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
+    """
+    :param hdf5: HDF5 file to save image in.
+    :param image: Image as data array.
+    :param image_name: Name which image is archived with.
+    :param image_dir: Directory where the image is saved.
+    :param save_binary: If save as binary (compressed) data to save space.
+    :return:
+    """
 
     if save_binary:
-        with open(image_dir, 'rb') as img_f:
-            binary_data = img_f.read()
-        binary_data_np = np.asarray(binary_data)
-        hdf5.create_dataset(f'{os.path.basename(image_dir)}', data=binary_data_np)
+        if image_dir is not None:
+            with open(image_dir, 'rb') as img_f:
+                binary_data = img_f.read()
+            binary_data_np = np.asarray(binary_data)
+            hdf5.create_dataset(f'{image_name}', data=binary_data_np)
+        else:
+            binary_data_io = io.BytesIO()
+            image.save(binary_data_io, format='JPEG')
+            binary_data = binary_data_io.getvalue()
+            binary_data_np = np.frombuffer(binary_data, dtype=np.uint8)
+            hdf5.create_dataset(f'{image_name}', data=binary_data_np)
     else:
         image_array = np.array(image)
-        hdf5.create_dataset(f'{os.path.basename(image_dir)}', data=image_array)
+        hdf5.create_dataset(f'{image_name}', data=image_array)
 
 
 class MulticlassFocalLoss(torch.nn.Module):

@@ -50,21 +50,21 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
 
         keys = hdf5.keys()
         pbar = tqdm(os.listdir(resized_img_path))
-        for img in pbar:
-            if img in keys:
-                print(f"{img} Exists: Skip!")
+        for image_file in pbar:
+            if image_file in keys:
+                print(f"{image_file} Exists: Skip!")
                 continue
             pbar.set_description(f"Archive resized image on a HDF5 file in:\n{resized_hdf5_path}.")
-            image_dir = f"{resized_img_path}/{img}"
+            image_dir = f"{resized_img_path}/{image_file}"
 
             try:
                 image = Image.open(image_dir)
                 image.verify()
-                save_in_hdf5(hdf5, image, image_dir, save_binary=saved_as_binary_data)
+                save_in_hdf5(hdf5, image, image_file, image_dir=image_dir, save_binary=saved_as_binary_data)
 
             except UnidentifiedImageError:
                 # os.remove(image_dir)
-                print(f"{img} Corrupted.")
+                print(f"{image_file} Corrupted.")
                 continue
 
 

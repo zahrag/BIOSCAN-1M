@@ -12,6 +12,7 @@ from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, 
 from crop_tool_sup.scripts.crop_images import expand_image
 from crop_tool_sup.model.detr import load_model_from_ckpt
 from resize_image import make_resize
+from utils import save_in_hdf5
 
 
 class CustomArg:
@@ -45,7 +46,8 @@ def save_cropped_image(configs, img, cropped_img):
             output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'w')
         else:
             output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'a')
-        output_hdf5.create_dataset(f'{os.path.basename(img)}', data=cropped_img)
+
+        save_in_hdf5(output_hdf5, cropped_img, f'{os.path.basename(img)}', image_dir=None, save_binary=False)
 
 
 def crop_image(configs, original_images):
