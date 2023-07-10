@@ -33,7 +33,7 @@ def save_cropped_image(configs, img, cropped_img, chunk_number):
     """
 
     if configs['cropped_image_path'] is not None:
-        if configs['data_structure'] == 'bioscan_1M_insect' or chunk_number is not None:
+        if configs['data_structure'] == 'bioscan_1M_insect' and chunk_number is not None:
             cropped_img.save(os.path.join(configs['cropped_image_path'], f"part{chunk_number}/{os.path.basename(img)}"))
         else:
             cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
