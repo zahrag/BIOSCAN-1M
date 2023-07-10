@@ -11,13 +11,7 @@ from configurations import set_configurations, make_path_configs, BioScan_Config
 
 
 def get_exp_configs():
-    """
-        This function delivers model configurations ...
-        If you want to set an argument from terminal then set required=True for it.
-
-        :return: By the start of a training experiment, a folder named by the data and time <YrMoDa_HrMiSe> is created
-        in the result directory which contains configuration .txt file and saved logs of the experiment.
-        """
+    """ This function delivers model configurations ..."""
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
     base_configs = BioScan_Configurations(exp_ID=5)
