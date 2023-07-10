@@ -11,6 +11,8 @@ import h5py
 import torch.nn.functional as F
 import pickle
 import io
+from PIL import Image
+
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -281,6 +283,26 @@ def save_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
         image_data = np.array(image)
 
     hdf5.create_dataset(f'{image_name}', data=image_data)
+
+
+def read_from_hdf5(hdf5, image_file, group_name, saved_as_binary_array=False):
+    """
+    This function reads an image from HDF5 file.
+    :param hdf5: The Hdf5 file to read from.
+    :param image: The image to read.
+    :param group_name: Group name data is saved in HDF5 file (if any)
+    :param saved_as_binary_array: If data is saved as binary?
+    :return:
+    """
+
+    if saved_as_binary_array:
+        data = np.array(hdf5[group_name][os.path.basename(image_file)])
+        image = Image.open(io.BytesIO(data))
+    else:
+        data = np.asarray(hdf5[group_name][os.path.basename(image_file)])
+        image = Image.fromarray(data)
+
+    return image
 
 
 class MulticlassFocalLoss(torch.nn.Module):

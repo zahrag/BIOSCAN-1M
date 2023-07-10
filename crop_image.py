@@ -12,7 +12,7 @@ from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, 
 from crop_tool_sup.scripts.crop_images import expand_image
 from crop_tool_sup.model.detr import load_model_from_ckpt
 from resize_image import make_resize
-from utils import save_in_hdf5
+from utils import save_in_hdf5, read_from_hdf5
 
 
 class CustomArg:
@@ -77,14 +77,8 @@ def crop_image(configs, original_images):
                     exit(1)
 
         elif configs['data_format'] == "hdf5":
-            file = h5py.File(configs['hdf5_path'], 'r')
-            saved_as_binary_array = True
-            if saved_as_binary_array:
-                data = np.array(file[configs['dataset_name']][os.path.basename(orig_img)])
-                image = Image.open(io.BytesIO(data))
-            else:
-                data = np.asarray(file[configs['dataset_name']][os.path.basename(orig_img)])
-                image = Image.fromarray(data)
+            hdf5 = h5py.File(configs['hdf5_path'], 'r')
+            image = read_from_hdf5(hdf5, orig_img, configs['dataset_name'], saved_as_binary_array=True)
         else:
             sys.exit("Wrong data_format: " + configs['data_format'] + " does not exist.")
 
