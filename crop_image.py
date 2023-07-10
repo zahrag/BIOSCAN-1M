@@ -28,11 +28,12 @@ def save_cropped_image(configs, img, cropped_img, chunk_number):
     :param configs: Configurations.
     :param img: Original image file.
     :param cropped_img: cropped image data array.
+    :param chunk_number: chunk number to locate the image if using metadata file.
     :return:
     """
 
     if configs['cropped_image_path'] is not None:
-        if configs['data_structure'] == 'bioscan_1M_insect':
+        if configs['data_structure'] == 'bioscan_1M_insect' or chunk_number is not None:
             cropped_img.save(os.path.join(configs['cropped_image_path'], f"part{chunk_number}/{os.path.basename(img)}"))
         else:
             cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
