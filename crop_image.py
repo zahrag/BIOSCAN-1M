@@ -28,7 +28,7 @@ def save_cropped_image(configs, img, cropped_img, chunk_number):
     :param configs: Configurations.
     :param img: Original image file.
     :param cropped_img: cropped image data array.
-    :param chunk_number: chunk number to locate the image if using metadata file.
+    :param chunk_number: chunk number to locate the image if using metadata file bioscan_1M_insect dataset structure.
     :return:
     """
 
