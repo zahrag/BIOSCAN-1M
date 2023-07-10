@@ -22,7 +22,7 @@ class CustomArg:
                 setattr(self, key, value)
 
 
-def save_cropped_image(configs, img, cropped_img):
+def save_cropped_image(configs, img, cropped_img, chunk_number):
     """
     This function saves the cropped image in the corresponding file format of the dataset if the path is preset.
     :param configs: Configurations.
@@ -33,11 +33,7 @@ def save_cropped_image(configs, img, cropped_img):
 
     if configs['cropped_image_path'] is not None:
         if configs['data_structure'] == 'bioscan_1M_insect':
-            df = pd.read_csv(configs["metadata_path"], sep='\t', low_memory=False)
-            image_names = df['image_file'].to_list()
-            chunk_ids = df['chunk_number'].to_list()
-            chunk_id = chunk_ids[image_names.index(img)]
-            cropped_img.save(os.path.join(configs['cropped_image_path'], f"part{chunk_id}/{os.path.basename(img)}"))
+            cropped_img.save(os.path.join(configs['cropped_image_path'], f"part{chunk_number}/{os.path.basename(img)}"))
         else:
             cropped_img.save(os.path.join(configs['cropped_image_path'], os.path.basename(img)))
 
@@ -57,6 +53,11 @@ def crop_image(configs, original_images):
     :param original_images: path list of uncropped images.
     :return:
     """
+
+    if os.path.isfile(configs["metadata_path"]):
+        df = pd.read_csv(configs["metadata_path"], sep='\t', low_memory=False)
+        image_names = df['image_file'].to_list()
+        chunk_ids = df['chunk_number'].to_list()
 
     feature_extractor = DetrFeatureExtractor.from_pretrained("facebook/detr-resnet-50")
 
@@ -115,7 +116,10 @@ def crop_image(configs, original_images):
         cropped_img = image.crop((left, top, right, bottom))
 
         # Save the cropped image
-        save_cropped_image(configs, orig_img, cropped_img)
+        chunk_number = None
+        if os.path.isfile(configs["metadata_path"]):
+            chunk_number = chunk_ids[image_names.index(os.path.basename(orig_img))]
+        save_cropped_image(configs, orig_img, cropped_img, chunk_number)
 
 
 def get_uncropped_images_metadata(metadata, dataset_name,
