@@ -285,7 +285,7 @@ def save_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
     hdf5.create_dataset(f'{image_name}', data=image_data)
 
 
-def read_from_hdf5(hdf5, image_file, group_name, saved_as_binary_array=False):
+def read_from_hdf5(hdf5_path, image_file, group_name, saved_as_binary_array=False):
     """
     This function reads an image from HDF5 file.
     :param hdf5: The Hdf5 file to read from.
@@ -295,6 +295,7 @@ def read_from_hdf5(hdf5, image_file, group_name, saved_as_binary_array=False):
     :return:
     """
 
+    hdf5 = h5py.File(hdf5_path, 'r')
     if saved_as_binary_array:
         data = np.array(hdf5[group_name][os.path.basename(image_file)])
         image = Image.open(io.BytesIO(data))
