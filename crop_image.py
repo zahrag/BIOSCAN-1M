@@ -54,7 +54,7 @@ def crop_image(configs, original_images):
     :param original_images: path list of uncropped images.
     :return:
     """
-
+    image_names, chunk_ids, chunk_number = None, None, None
     if os.path.isfile(configs["metadata_path"]):
         df = pd.read_csv(configs["metadata_path"], sep='\t', low_memory=False)
         image_names = df['image_file'].to_list()
@@ -117,8 +117,7 @@ def crop_image(configs, original_images):
         cropped_img = image.crop((left, top, right, bottom))
 
         # Save the cropped image
-        chunk_number = None
-        if os.path.isfile(configs["metadata_path"]):
+        if chunk_ids is not None and image_names is not None:
             chunk_number = chunk_ids[image_names.index(os.path.basename(orig_img))]
         save_cropped_image(configs, orig_img, cropped_img, chunk_number)
 
