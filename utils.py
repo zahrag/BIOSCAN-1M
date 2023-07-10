@@ -239,7 +239,7 @@ def resize_image(input_file, output_file, resize_dimension=256):
     os.system(command)
 
 
-def make_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Size', author='Zahra Gharaee'):
+def create_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Size', author='Zahra Gharaee'):
 
     with h5py.File(path, 'w') as hdf5:
         dataset = hdf5.create_group(dataset_name)
@@ -254,6 +254,18 @@ def make_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Size'
         dataset.attrs['Date'] = date_time
 
     return dataset
+
+
+def save_in_hdf5(hdf5, image, image_dir, image_name, save_binary=False):
+
+    if save_binary:
+        with open(image_dir, 'rb') as img_f:
+            binary_data = img_f.read()
+        binary_data_np = np.asarray(binary_data)
+        hdf5.create_dataset(f'{image_name}', data=binary_data_np)
+    else:
+        image_array = np.array(image)
+        hdf5.create_dataset(f'{image_name}', data=image_array)
 
 
 class MulticlassFocalLoss(torch.nn.Module):
