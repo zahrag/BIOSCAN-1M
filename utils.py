@@ -263,7 +263,7 @@ def save_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
     :param image: Image as data array.
     :param image_name: Name which image is archived with.
     :param image_dir: Directory where the image is saved.
-    :param save_binary: If save as binary (compressed) data to save space.
+    :param save_binary: If save as binary (compressed) data to save space?
     :return:
     """
 
