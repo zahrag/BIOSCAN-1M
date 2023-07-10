@@ -256,16 +256,16 @@ def create_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Siz
     return dataset
 
 
-def save_in_hdf5(hdf5, image, image_dir, image_name, save_binary=False):
+def save_in_hdf5(hdf5, image, image_dir, save_binary=False):
 
     if save_binary:
         with open(image_dir, 'rb') as img_f:
             binary_data = img_f.read()
         binary_data_np = np.asarray(binary_data)
-        hdf5.create_dataset(f'{image_name}', data=binary_data_np)
+        hdf5.create_dataset(f'{os.path.basename(image_dir)}', data=binary_data_np)
     else:
         image_array = np.array(image)
-        hdf5.create_dataset(f'{image_name}', data=image_array)
+        hdf5.create_dataset(f'{os.path.basename(image_dir)}', data=image_array)
 
 
 class MulticlassFocalLoss(torch.nn.Module):

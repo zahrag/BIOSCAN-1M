@@ -60,7 +60,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
             try:
                 image = Image.open(image_dir)
                 image.verify()
-                save_in_hdf5(hdf5, image, image_dir, img, save_binary=saved_as_binary_data)
+                save_in_hdf5(hdf5, image, image_dir, save_binary=saved_as_binary_data)
 
             except UnidentifiedImageError:
                 # os.remove(image_dir)
