@@ -271,17 +271,16 @@ def save_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
         if image_dir is not None:
             with open(image_dir, 'rb') as img_f:
                 binary_data = img_f.read()
-            binary_data_np = np.asarray(binary_data)
-            hdf5.create_dataset(f'{image_name}', data=binary_data_np)
+            image_data = np.asarray(binary_data)
         else:
             binary_data_io = io.BytesIO()
             image.save(binary_data_io, format='JPEG')
             binary_data = binary_data_io.getvalue()
-            binary_data_np = np.frombuffer(binary_data, dtype=np.uint8)
-            hdf5.create_dataset(f'{image_name}', data=binary_data_np)
+            image_data = np.frombuffer(binary_data, dtype=np.uint8)
     else:
-        image_array = np.array(image)
-        hdf5.create_dataset(f'{image_name}', data=image_array)
+        image_data = np.array(image)
+
+    hdf5.create_dataset(f'{image_name}', data=image_data)
 
 
 class MulticlassFocalLoss(torch.nn.Module):
