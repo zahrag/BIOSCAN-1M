@@ -82,7 +82,7 @@ def crop_image(configs, original_images):
                 hdf5 = hdf5[configs['dataset_name']]
             keys = hdf5.keys()
             if os.path.basename(orig_img) not in keys:
-                print("Image not found in HDF5 file")
+                print("Image not found in: " + configs['hdf5_path'])
                 exit(1)
             image = read_from_hdf5(hdf5, orig_img, saved_as_binary_array=True)
 
