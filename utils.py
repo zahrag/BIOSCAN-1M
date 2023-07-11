@@ -261,7 +261,8 @@ def create_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Siz
 
 def write_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
     """
-    :param hdf5: HDF5 file to save image in.
+    This function writes an image in a HDF5 file.
+    :param hdf5: HDF5 file to write image in.
     :param image: Image as data array.
     :param image_name: Name which image is archived with.
     :param image_dir: Directory where the image is saved.
