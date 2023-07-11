@@ -79,7 +79,6 @@ def crop_image(configs, original_images):
             input_hdf5 = h5py.File(configs['hdf5_path'], 'r')
             if configs['dataset_name'] in input_hdf5.keys():
                 input_hdf5 = input_hdf5[configs['dataset_name']]
-
             if os.path.basename(orig_img) not in input_hdf5.keys():
                 print("Image not found in: " + configs['hdf5_path'])
                 exit(1)
