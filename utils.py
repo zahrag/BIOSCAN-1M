@@ -233,7 +233,7 @@ def make_tar(name=None, path=None):
 
 def make_tsv(file, name=None, path=None):
     make_directory(path)
-    file.to_csv(path + name, sep='\t', index=False)
+    file.to_csv(os.path.join(path, name), sep='\t', index=False)
 
 
 def read_tsv(tsv_file):
