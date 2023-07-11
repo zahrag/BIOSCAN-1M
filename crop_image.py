@@ -44,7 +44,7 @@ def save_cropped_image(configs, img, cropped_img, chunk_number):
         else:
             output_hdf5 = h5py.File(configs['cropped_hdf5_path'], 'a')
 
-        write_in_hdf5(output_hdf5, cropped_img, f'{os.path.basename(img)}', image_dir=None, save_binary=False)
+        write_in_hdf5(output_hdf5, cropped_img, os.path.basename(img), image_dir=None, save_binary=False)
 
 
 def crop_image(configs, original_images):
