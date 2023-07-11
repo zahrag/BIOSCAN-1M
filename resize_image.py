@@ -1,7 +1,6 @@
 import os
-from utils import resize_image, create_zip, save_in_hdf5
+from utils import resize_image, create_zip, write_in_hdf5
 import h5py
-import numpy as np
 from PIL import Image, UnidentifiedImageError
 from tqdm import tqdm
 
@@ -60,7 +59,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
             try:
                 image = Image.open(image_dir)
                 image.verify()
-                save_in_hdf5(hdf5, image, image_file, image_dir=image_dir, save_binary=saved_as_binary_data)
+                write_in_hdf5(hdf5, image, image_file, image_dir=image_dir, save_binary=saved_as_binary_data)
 
             except UnidentifiedImageError:
                 # os.remove(image_dir)
