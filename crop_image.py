@@ -84,7 +84,7 @@ def crop_image(configs, original_images):
             if os.path.basename(orig_img) not in keys:
                 print("Image not found in: " + configs['hdf5_path'])
                 exit(1)
-            image = read_from_hdf5(input_hdf5, orig_img, saved_as_binary_array=True)
+            image = read_from_hdf5(input_hdf5, os.path.basename(orig_img), saved_as_binary_array=True)
 
         else:
             sys.exit("Wrong data_format: " + configs['data_format'] + " does not exist.")
