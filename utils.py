@@ -298,6 +298,7 @@ def read_from_hdf5(hdf5_path, image_file, group_name, saved_as_binary_array=Fals
     hdf5 = h5py.File(hdf5_path, 'r')
     if group_name in hdf5.keys():
         hdf5 = hdf5[group_name]
+
     if saved_as_binary_array:
         data = np.array(hdf5[group_name][os.path.basename(image_file)])
         image = Image.open(io.BytesIO(data))
