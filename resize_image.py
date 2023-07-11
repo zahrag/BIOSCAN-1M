@@ -47,10 +47,9 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
         else:
             hdf5 = h5py.File(resized_hdf5_path, 'w')
 
-        keys = hdf5.keys()
         pbar = tqdm(os.listdir(resized_img_path))
         for image_file in pbar:
-            if image_file in keys:
+            if image_file in hdf5.keys():
                 print(f"{image_file} Exists: Skip!")
                 continue
             pbar.set_description(f"Archive resized image on a HDF5 file in:\n{resized_hdf5_path}.")
