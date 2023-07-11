@@ -5,7 +5,6 @@ import h5py
 import numpy as np
 from tqdm import tqdm
 from PIL import Image
-import io
 
 from transformers import DetrFeatureExtractor
 from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, scale_bbox
