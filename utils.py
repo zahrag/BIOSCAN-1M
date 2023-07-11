@@ -290,7 +290,7 @@ def read_from_hdf5(hdf5, image_file, group_name, saved_as_binary_array=False):
     This function reads an image from HDF5 file.
     :param hdf5: The Hdf5 file to read from.
     :param image_file: The image to read.
-    :param group_name: Group name data is saved in HDF5 file (if any)
+    :param group_name: Group name of the data is saved in HDF5 file (if any)
     :param saved_as_binary_array: If data is saved as binary?
     :return:
     """
