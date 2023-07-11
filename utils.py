@@ -13,6 +13,7 @@ import pickle
 import io
 from PIL import Image
 import pandas as pd
+import json
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -235,9 +236,15 @@ def make_tsv(file, name=None, path=None):
     file.to_csv(path + name, sep='\t', index=False)
 
 
-def read_tsv(file_path):
-    df = pd.read_csv(file_path, sep='\t', low_memory=False)
+def read_tsv(tsv_file):
+    df = pd.read_csv(tsv_file, sep='\t', low_memory=False)
     return df
+
+
+def read_jsonld(jsonld_file):
+    with open(jsonld_file, 'r') as file:
+        data = json.load(file)
+    return data
 
 
 def resize_image(input_file, output_file, resize_dimension=256):
