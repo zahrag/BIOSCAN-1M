@@ -78,6 +78,7 @@ def crop_image(configs, original_images):
 
         elif configs['data_format'] == "hdf5":
             image = read_from_hdf5(configs['hdf5_path'], orig_img, configs['dataset_name'], saved_as_binary_array=True)
+
         else:
             sys.exit("Wrong data_format: " + configs['data_format'] + " does not exist.")
 
