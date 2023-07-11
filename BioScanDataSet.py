@@ -6,7 +6,7 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from utils import make_directory
+from utils import make_directory, read_tsv
 
 
 class BioScan(Dataset):
@@ -75,7 +75,7 @@ class BioScan(Dataset):
         """
 
         if os.path.isfile(metadata_dir) and os.path.splitext(metadata_dir)[1] == '.tsv':
-            df = pd.read_csv(metadata_dir, sep='\t', low_memory=False)
+            df = read_tsv(metadata_dir)
         else:
             print(f"Not a CVS metadata file exits in the directory:\n{metadata_dir}")
             return

@@ -12,7 +12,7 @@ import torch.nn.functional as F
 import pickle
 import io
 from PIL import Image
-
+import pandas as pd
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -233,6 +233,11 @@ def make_tar(name=None, path=None):
 def make_tsv(file, name=None, path=None):
     make_directory(path)
     file.to_csv(path + name, sep='\t', index=False)
+
+
+def read_tsv(file_path):
+    df = pd.read_csv(file_path, sep='\t', low_memory=False)
+    return df
 
 
 def resize_image(input_file, output_file, resize_dimension=256):

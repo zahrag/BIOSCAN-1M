@@ -11,7 +11,7 @@ from crop_tool_sup.util.visualize_and_process_bbox import get_bbox_from_output, 
 from crop_tool_sup.scripts.crop_images import expand_image
 from crop_tool_sup.model.detr import load_model_from_ckpt
 from resize_image import make_resize
-from utils import write_in_hdf5, read_from_hdf5
+from utils import write_in_hdf5, read_from_hdf5, read_tsv
 
 
 class CustomArg:
@@ -55,7 +55,7 @@ def crop_image(configs, original_images):
     """
     image_names, chunk_ids, chunk_number = None, None, None
     if os.path.isfile(configs["metadata_path"]):
-        df = pd.read_csv(configs["metadata_path"], sep='\t', low_memory=False)
+        df = read_tsv(configs["metadata_path"])
         image_names = df['image_file'].to_list()
         chunk_ids = df['chunk_number'].to_list()
 
@@ -141,7 +141,7 @@ def get_uncropped_images_metadata(metadata, dataset_name,
         return
 
     list_of_uncropped_image_path = []
-    df = pd.read_csv(metadata, sep='\t', low_memory=False)
+    df = read_tsv(metadata)
     image_names = df['image_file'].to_list()
 
     if read_format == "folder":
