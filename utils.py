@@ -297,7 +297,6 @@ def read_from_hdf5(hdf5, image_name, saved_as_binary_array=False):
 
     if saved_as_binary_array:
         data = np.array(hdf5[image_name])
-        # data = np.asarray(hdf5[image_name])
         image = Image.open(io.BytesIO(data))
     else:
         data = np.asarray(hdf5[image_name])
