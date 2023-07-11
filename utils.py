@@ -287,7 +287,7 @@ def write_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
 
 def read_from_hdf5(hdf5, image_file, saved_as_binary_array=False):
     """
-    This function reads an image from HDF5 file.
+    This function reads an image from a HDF5 file.
     :param hdf5: The Hdf5 file to read from.
     :param image_file: The image to read.
     :param saved_as_binary_array: If data is saved as binary?
