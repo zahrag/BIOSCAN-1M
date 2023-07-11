@@ -283,7 +283,7 @@ def write_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
     else:
         image_data = np.array(image)
 
-    hdf5.create_dataset(f'{image_name}', data=image_data)
+    hdf5.create_dataset(image_name, data=image_data)
 
 
 def read_from_hdf5(hdf5, image_name, saved_as_binary_array=False):
