@@ -297,7 +297,7 @@ def write_in_hdf5(hdf5, image, image_name, image_dir=None, save_binary=False):
     hdf5.create_dataset(image_name, data=image_data)
 
 
-def read_from_hdf5(hdf5, image_name, saved_as_binary_array=False):
+def read_from_hdf5(hdf5, image_name, saved_as_binary=False):
     """
     This function reads an image from a HDF5 file.
     :param hdf5: The Hdf5 file to read from.
@@ -306,7 +306,7 @@ def read_from_hdf5(hdf5, image_name, saved_as_binary_array=False):
     :return:
     """
 
-    if saved_as_binary_array:
+    if saved_as_binary:
         data = np.array(hdf5[image_name])
         image = Image.open(io.BytesIO(data))
     else:

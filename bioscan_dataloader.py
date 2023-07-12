@@ -5,10 +5,10 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from BioScanDataSet import BioScan
 from utils import read_from_hdf5
-import io
 import h5py
 import sys
 import os
+
 
 class BioScanLoader(Dataset):
 
@@ -51,7 +51,7 @@ class BioScanLoader(Dataset):
             group_name = "bioscan_1M_insect_dataset"
             if group_name in hdf5.keys():
                 hdf5 = hdf5[group_name]
-            image = read_from_hdf5(hdf5, self.img_names[index], saved_as_binary_array=True)
+            image = read_from_hdf5(hdf5, self.img_names[index], saved_as_binary=True)
 
         elif self.data_format == "folder":
             if self.data_structure == "bioscan_1M_insect":

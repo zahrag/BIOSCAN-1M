@@ -6,14 +6,14 @@ from tqdm import tqdm
 
 
 def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
-                saved_as_binary_data=True, resize_dimension=256, zip_name=None):
+                save_binary=True, resize_dimension=256, zip_name=None):
     """
     This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
     the path to these are preset.
     :param full_size_img_path: Path to the full sized images.
     :param resized_img_path: Path to the directory to save resized images.
     :param resized_hdf5_path: Path to the hdf5 file to save resized images.
-    :param saved_as_binary_data: if True, less space required.
+    :param save_binary: if True, less space required.
     :param resize_dimension: Dimension to resize images.
     :param zip_name: If not None, the resized image folder is compressed to <zip_name>.zip
     :return:
@@ -58,7 +58,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
             try:
                 image = Image.open(image_dir)
                 image.verify()
-                write_in_hdf5(hdf5, image, image_file, image_dir=image_dir, save_binary=saved_as_binary_data)
+                write_in_hdf5(hdf5, image, image_file, image_dir=image_dir, save_binary=save_binary)
 
             except UnidentifiedImageError:
                 # os.remove(image_dir)
