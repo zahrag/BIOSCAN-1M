@@ -89,7 +89,7 @@ def set_configurations(configs=None):
     parser.add_argument('--exp_name', type=str, default="small_insect_order", help='Name of the experiment')
     parser.add_argument('--dataset_name', type=str, default="bioscan_1M_insect_dataset", help='Name of the dataset.')
     parser.add_argument('--group_level', type=str, default="order", help='Taxonomic group ranking.')
-    parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset.', required=False)
+    parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset.')
     parser.add_argument('--data_structure', type=str, default="bioscan_1M_insect",
                         help='If using BIOSCAN_1M_Insect dataset structure, 113 chunks of data (part1:part113)?')
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
@@ -98,7 +98,7 @@ def set_configurations(configs=None):
     parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.')
 
     # #### Path Settings ######
-    parser.add_argument('--log', type=str, default="runs", help='Path to the log file.', required=False)
+    parser.add_argument('--log', type=str, default="runs", help='Path to the log file.')
     parser.add_argument('--download_path', type=str, help='Path to the download directory.',
                         default=configs["download_path"])
     parser.add_argument('--dataset_path', type=str, help='Path to the BIOSCAN Dataset root.',
@@ -149,15 +149,13 @@ def set_configurations(configs=None):
     parser.add_argument('--file_to_download', type=str, default=None, help="File to download from drive.")
 
     # ####### Data Split and Subset Creation #####
-    parser.add_argument('--max_num_sample', type=int, default=50000, help='Number of samples of each subset.',
-                        required=False)
+    parser.add_argument('--max_num_sample', type=int, default=50000, help='Number of samples of each subset.')
     parser.add_argument('--experiment_names', type=str, default=configs["experiment_names"],
-                        help="Name of experiments conducted in BIOSCAN Paper.", required=False)
+                        help="Name of experiments conducted in BIOSCAN Paper.")
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--checkpoint_path', type=str, default=configs["checkpoint_path"],
-                        help="Path to the checkpoint.", required=False)
-    parser.add_argument('--use_metadata', type=str, default=False,
-                        help='If using metadata for cropping?')
+                        help="Path to the checkpoint.")
+    parser.add_argument('--use_metadata', type=str, help='If using metadata for cropping?')
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
     parser.add_argument('--equal_extend', default=True,
                         help="Extend cropped images in the height and width with the same length.", action="store_true")
