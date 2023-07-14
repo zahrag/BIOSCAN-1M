@@ -21,13 +21,6 @@ def read_id_mapping(id_mapping_path=""):
     return file_id_mapping
 
 
-def wget_download(parent_folder_id, file_id, file_name, download_path=""):
-    """ Set download url of the files on the drive """
-    make_directory(download_path)
-    url = f"https://drive.google.com/uc?export=download&id={file_id}&parent={parent_folder_id}"
-    wget.download(url, out=f"{download_path}/{file_name}")
-
-
 def gdown_download(file_id, file_name, download_path=""):
     """ Download file from drive using gdown """
     make_directory(download_path)
@@ -81,7 +74,6 @@ def make_download(configs):
     else:
         parent_folder_id = parent_folder_main
 
-    wget_download(parent_folder_id, file_id_mapping[file_selected], file_selected, download_path=download_path)
     gdown_download(file_id_mapping[file_selected], file_selected, download_path=download_path)
 
 
