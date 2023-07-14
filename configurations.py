@@ -161,21 +161,21 @@ def set_configurations(configs=None):
                         help="Extend cropped images in the height and width with the same length.", action="store_true")
 
     # #### Training Settings ######
-    parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility', required=False)
-    parser.add_argument('--n_epochs', type=int, default=100, required=False)
-    parser.add_argument('--epoch_decay', nargs='+', type=int, default=[20, 25], required=False)
-    parser.add_argument('--mu', type=float, default=0.0001, help='weight decay parameter', required=False)
-    parser.add_argument('--momentum', type=float, default=0.9, help='momentum', required=False)
-    parser.add_argument('--lr', type=float, default=0.001, help='learning rate to use', required=False)
-    parser.add_argument('--batch_size', type=int, default=32, help='default is 32', required=False)
-    parser.add_argument('--image_size', type=int, default=256, required=False)
-    parser.add_argument('--crop_size', type=int, default=224, required=False)
-    parser.add_argument('--num_workers', type=int, default=4, required=False)
+    parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility')
+    parser.add_argument('--n_epochs', type=int, default=100)
+    parser.add_argument('--epoch_decay', nargs='+', type=int, default=[20, 25])
+    parser.add_argument('--mu', type=float, default=0.0001, help='weight decay parameter')
+    parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
+    parser.add_argument('--lr', type=float, default=0.001, help='learning rate to use')
+    parser.add_argument('--batch_size', type=int, default=32, help='default is 32')
+    parser.add_argument('--image_size', type=int, default=256)
+    parser.add_argument('--crop_size', type=int, default=224)
+    parser.add_argument('--num_workers', type=int, default=4)
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
-                        default=[1, 3, 5, 10], type=int, required=False)
-    parser.add_argument('--pretrained', default=True, action='store_true', required=False)
+                        default=[1, 3, 5, 10], type=int)
+    parser.add_argument('--pretrained', default=True, action='store_true')
     parser.add_argument('--vit_pretrained', type=str, default=configs["vit_pretrained_path"],
-                        help="Path to the checkpoint.", required=False)
+                        help="Path to the checkpoint.")
     parser.add_argument('--loss', type=str, help='decide which loss to use during training', default='CE',
                         choices=["CE", "Focal"])
 
