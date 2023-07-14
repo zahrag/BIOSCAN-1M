@@ -143,7 +143,8 @@ def set_configurations(configs=None):
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
                         help="Path to the directory where file ID mapping is saved.")
-    parser.add_argument('--file_to_download', type=str, default=None, help="File to download from drive.")
+    parser.add_argument('--file_to_download', type=str, default=configs["file_to_download"],
+                        help="File to download from drive.")
 
     # ####### Data Split and Subset Creation #####
     parser.add_argument('--max_num_sample', type=int, default=50000, help='Number of samples of each subset.')
