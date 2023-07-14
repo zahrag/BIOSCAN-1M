@@ -131,16 +131,17 @@ def set_configurations(configs=None):
                         default=False, action='store_true')
     parser.add_argument('--print_split_statistics', help='Whether to print dataset split statistics?',
                         default=False, action='store_true')
-    parser.add_argument('--loader', help='Whether to create dataloader?',
+    parser.add_argument('--loader', help='Whether to build dataloader?',
                         default=False, action='store_true')
+    parser.add_argument('--no_transform', default=False, action='store_true',
+                        help='Not using transformation in dataloader?')
     parser.add_argument('--train', help='Whether to train the model?',
                         default=False, action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
                         default=False, action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
                         default=False, action='store_true')
-    parser.add_argument('--no_transform', default=False, action='store_true',
-                        help='Not using transformation in dataloader?')
+
 
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
