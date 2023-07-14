@@ -82,9 +82,7 @@ def set_configurations(configs=None):
     print("\nSetting Hyper-parameters of the Experiment ...")
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('--date_time', type=str, default=configs["date_time"], help='Data & time of the experiment',
-                        required=False)
-
+    parser.add_argument('--date_time', type=str, default=configs["date_time"], help='Data & time of the experiment')
     # #### Base Settings ######
     parser.add_argument('--exp_name', type=str, default="small_insect_order", help='Name of the experiment')
     parser.add_argument('--dataset_name', type=str, default="bioscan_1M_insect_dataset", help='Name of the dataset.')
@@ -141,7 +139,6 @@ def set_configurations(configs=None):
                         default=False, action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
                         default=False, action='store_true')
-
 
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
