@@ -302,7 +302,7 @@ def read_from_hdf5(hdf5, image_name, saved_as_binary=False):
     This function reads an image from a HDF5 file.
     :param hdf5: The Hdf5 file to read from.
     :param image_name: The image to read.
-    :param saved_as_binary_array: If data is saved as binary?
+    :param saved_as_binary: If data is saved as binary?
     :return:
     """
 
