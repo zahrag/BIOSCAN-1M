@@ -86,15 +86,17 @@ The list of files available for download from GoogleDrive are:
  - Cropped images (113 ZIP files): bioscan_images_cropped_full_part{1:113}.zip
 
 ###### <h3> Dataset Statistics
-To see statistics of the dataset, and run the following:
+To see the statistics of the dataset, run the following:
 ```bash
 python main.py --print_statistics 
 ``` 
  
-To split dataset into Train, Validation and Test sets run the following:
+To split dataset into Train, Validation and Test sets using a stratified class-based sampling and split run the following:
 ```bash
 python main.py --make_split 
 ``` 
+
+To see the statistics of the dataset split sets, run the following:
 ```bash
 python main.py --print_split_statistics
 ``` 
