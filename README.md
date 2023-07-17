@@ -13,7 +13,7 @@ Anyone interested in using BIOSCAN_1M Dataset and/or the corresponding code repo
 
 ###### <h3> Dataset
 BIOSCAN dataset provides researchers with information about insects. 
-Three main sources of information published by the BIOSCAN dataset are: 
+Three main sources of information published by the BIOSCAN-1M-Insect dataset are: 
 
 ###### <h4> I. DNA Barcode Sequences and Barcode Indexing 
 * DNA barcode sequence
