@@ -153,7 +153,7 @@ def set_configurations(configs=None):
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--checkpoint_path', type=str, default=configs["checkpoint_path"],
                         help="Path to the checkpoint.")
-    parser.add_argument('--use_metadata', type=str, help='If using metadata for cropping?')
+    parser.add_argument('--use_metadata', help='If using metadata for cropping?', default=False, action='store_true')
     parser.add_argument('--crop_ratio', type=float, default=1.4, help="Scale the bbox to crop larger or small area.")
     parser.add_argument('--equal_extend', default=True,
                         help="Extend cropped images in the height and width with the same length.", action="store_true")
