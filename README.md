@@ -8,14 +8,14 @@ dataset statistics analysis, as well as image-based classification experiments c
 the taxonomy classification of insects. 
 
 
-Anyone interested in using __BIOSCAN-1M Insect dataset__ and/or the corresponding code repository, please cite the [Paper](link_to_add):
+Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding code repository, please cite the [Paper](link_to_add):
 
 - Gharaee, Zahra and Gong, ZeMing and Pellegrino, Nicholas and Zarubiieva, Iuliia and Bruslund Haurum, Joakim and C. Lowe, Scott and  T.A. McKeown, Jaclyn and C.Y. Ho, Chris and McLeod, Joschka and C. Wei, Yi-Yun and Agda, Jireh and Ratnasingham, Sujeevan and Steinke, Dirk and X. Chang, Angel and W.~Taylor, Graham and Fieguth, Paul. (2023). A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset. *Proceedings of the Conference Name*, 2023, X-Y. [DOI](https://doi.org/10.xxxx/xxxxxx)
 
 
 ###### <h3> Dataset
 BIOSCAN dataset provides researchers with information about insects. 
-Three main sources of information published by the __BIOSCAN-1M Insect dataset__ are: 
+Three main sources of information published by the BIOSCAN-1M Insect dataset are: 
 
 ###### <h4> I. DNA Barcode Sequences and Barcode Indexing 
 * DNA barcode sequence
@@ -28,7 +28,7 @@ Three main sources of information published by the __BIOSCAN-1M Insect dataset__
 
 ###### <h4> III. RGB Images 
 
-We have published six packages, each containing 1,128,313 __BIOSCAN-1M Insect dataset's__ images. 
+We have published six packages, each containing 1,128,313 BIOSCAN-1M Insect dataset's images. 
 These packages follow a consistent data structure, where the images are divided into 113 data chunks. 
 Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313 images.
 - (1) Original JPEG images (113 zip files).
@@ -58,7 +58,7 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 
 ###### <h3> Metadata 
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
-named __BIOSCAN_Insect_Dataset_metadata__. This metadata file is available in both dataframe format (.tsv) 
+named BIOSCAN_Insect_Dataset_metadata. This metadata file is available in both dataframe format (.tsv) 
 and JSON-LD format (.jsonld). 
 The metadata file encompasses valuable information, including taxonomy annotations, DNA barcode sequences, 
 and indexes and labels for each data sample. Furthermore, the metadata file includes the image names and unique IDs 
@@ -69,7 +69,7 @@ testing in the six experiments conducted in our paper.
 To run the following steps you first need to download dataset and the metadata file, 
 and make path settings appropriately.
 ###### <h3> Dataset Access
-The __BIOSCAN-1M Insect dataset__ is available both on [GoogleDrive](https://drive.google.com/drive/folders/1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA?usp=sharing) and [zenodo](https://doi.org/10.5281/zenodo.8030065).
+The BIOSCAN-1M Insect dataset is available both on [GoogleDrive](https://drive.google.com/drive/folders/1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA?usp=sharing) and [zenodo](https://doi.org/10.5281/zenodo.8030065).
 To download a file from GoogleDrive run the following:
 
 ```bash
@@ -88,24 +88,24 @@ The list of files available for download from GoogleDrive are:
  - Cropped images (113 ZIP files): bioscan_images_cropped_full_part{1:113}.zip
 
 ###### <h3> Dataset Statistics
-To see the statistics of the __BIOSCAN-1M Insect dataset__, run the following:
+To see the statistics of the BIOSCAN-1M Insect dataset, run the following:
 ```bash
 python main.py --print_statistics 
 ``` 
  
-To split __BIOSCAN-1M Insect dataset__ into Train, Validation and Test sets using a stratified class-based sampling and split run the following:
+To split BIOSCAN-1M Insect dataset into Train, Validation and Test sets using a stratified class-based sampling and split run the following:
 ```bash
 python main.py --make_split 
 ``` 
 
-To see the statistics of the __BIOSCAN-1M Insect dataset__ split sets, run the following:
+To see the statistics of the BIOSCAN-1M Insect dataset split sets, run the following:
 ```bash
 python main.py --print_split_statistics
 ``` 
 
 ###### <h3> Preprocessing
 In order to enhance efficiency in terms of time and computational resources for conducting experiments 
-on the __BIOSCAN-1M Insect dataset's__ RGB images, we implemented an offline preprocessing step composed of two main modules:
+on the BIOSCAN-1M Insect dataset's RGB images, we implemented an offline preprocessing step composed of two main modules:
 - Resize tool
 - Crop tool
 
@@ -137,7 +137,7 @@ By setting --cropped_hdf5_path and --resized_cropped_hdf5_path, cropped images a
 
 ###### <h3> Classification Experiments
 Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
-The first set of experiments involved classifying __BIOSCAN-1M Insect dataset's__ images into 16 Orders. 
+The first set of experiments involved classifying BIOSCAN-1M Insect dataset's images into 16 Orders. 
 The second set of experiments specifically targeted the Order Diptera and 
 aimed to classify its members into 40 families, which constitute a significant portion of the order.
 
@@ -154,7 +154,7 @@ The requirements file used to run experiments is available in the requirement.tx
   
 
 ###### <h3> Copyright and License 
-The images included in the __BIOSCAN-1M Insect dataset__ available through this repository are subject to copyright 
+The images included in the BIOSCAN-1M Insect dataset available through this repository are subject to copyright 
 and licensing restrictions shown in the following:
 
  - Copyright Holder: CBG Photography Group
