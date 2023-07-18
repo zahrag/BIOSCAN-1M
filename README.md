@@ -3,7 +3,7 @@
 ###### <h3> Overview
 This repository houses the codes and data pertaining to the [BIOSCAN-1M-Insect project](https://biodiversitygenomics.net/1M_insects/). 
 Within this project, we introduce the __BIOSCAN-1M Insect dataset__, which can be accessed 
-for download via the provided link. The repository encompasses code for data sampling and splitting, 
+for download via the provided links. The repository encompasses code for data sampling and splitting, 
 dataset statistics analysis, as well as image-based classification experiments centered around 
 the taxonomy classification of insects. 
 
