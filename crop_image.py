@@ -53,6 +53,11 @@ def crop_image(configs, original_images):
     :param original_images: path list of uncropped images.
     :return:
     """
+
+    if len(original_images) == 0:
+        print("No images detected for cropping!")
+        return
+
     image_names, chunk_ids, chunk_number = None, None, None
     if os.path.isfile(configs["metadata_path"]):
         df = read_tsv(configs["metadata_path"])
