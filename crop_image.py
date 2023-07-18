@@ -214,16 +214,14 @@ def detect_uncropped_images(configs):
     :return: Path to the list of the uncropped images of the dataset
     """
 
-    uncropped_image_path = get_uncropped_images_metadata(configs['metadata_path'], configs['dataset_name'],
-                                                         configs['image_path'], configs['cropped_image_path'],
-                                                         configs['hdf5_path'], configs['cropped_hdf5_path'],
-                                                         configs['data_format'], get_list=configs['use_metadata'])
+    if configs['use_metadata']:
+        return get_uncropped_images_metadata(configs['metadata_path'], configs['dataset_name'],
+                                             configs['image_path'], configs['cropped_image_path'],
+                                             configs['hdf5_path'], configs['cropped_hdf5_path'],
+                                             configs['data_format'], get_list=configs['use_metadata'])
 
-    uncropped_image_path = get_uncropped_images(configs['data_format'], configs['dataset_name'],
-                                                configs['image_path'], configs['hdf5_path'],
-                                                not_get_list=configs['use_metadata'])
-
-    return uncropped_image_path
+    return get_uncropped_images(configs['data_format'], configs['dataset_name'], configs['image_path'],
+                                configs['hdf5_path'], not_get_list=configs['use_metadata'])
 
 
 def run_crop_tool(configs):
