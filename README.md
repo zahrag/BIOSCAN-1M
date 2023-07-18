@@ -58,7 +58,7 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 
 ###### <h3> Metadata 
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
-named *BIOSCAN_Insect_Dataset_metadata*. This metadata file is available in both dataframe format (.tsv) 
+named __BIOSCAN_Insect_Dataset_metadata__. This metadata file is available in both dataframe format (.tsv) 
 and JSON-LD format (.jsonld). 
 The metadata file encompasses valuable information, including taxonomy annotations, DNA barcode sequences, 
 and indexes and labels for each data sample. Furthermore, the metadata file includes the image names and unique IDs 
