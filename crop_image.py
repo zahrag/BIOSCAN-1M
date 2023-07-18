@@ -182,7 +182,7 @@ def get_uncropped_images_metadata(metadata, dataset_name,
 
 def get_uncropped_images(read_format, dataset_name, dir_path, hdf5_path, not_get_list=False):
     """
-    This function outputs a list of uncropped images saved in a directory or a hdf5 file.
+    This function outputs a list of uncropped images saved in a directory or in a hdf5 file.
     :param read_format: Data format to read from: folder/hdf5
     :param dataset_name: Name of the dataset.
     :param dir_path: Path to the directory of uncropped images.
