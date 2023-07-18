@@ -182,12 +182,12 @@ def detect_uncropped_images(metadata, dataset_name,
 
     elif read_format == "hdf5":
         file = h5py.File(hdf5_path, 'a')
-        output_file = h5py.File(cropped_hdf5_path, 'a')
+        cropped_file = h5py.File(cropped_hdf5_path, 'a')
         keys = file[dataset_name].keys()
-        if dataset_name in output_file.keys():
-            output_keys = output_file[dataset_name].keys()
+        if dataset_name in cropped_file.keys():
+            cropped_keys = cropped_file[dataset_name].keys()
         else:
-            output_keys = output_file.keys()
+            cropped_keys = cropped_file.keys()
 
         pbar = tqdm(image_names)
         for img in pbar:
@@ -195,7 +195,7 @@ def detect_uncropped_images(metadata, dataset_name,
             if img not in keys:
                 sys.exit(img + "does not exit in original hdf5 file.")
 
-            if img not in output_keys and "CROPPED_" + img not in keys:
+            if img not in cropped_keys and "CROPPED_" + img not in keys:
                 list_of_uncropped_image_path.append(img)
     else:
         sys.exit("Wrong data_format: " + read_format + " does not exist.")
