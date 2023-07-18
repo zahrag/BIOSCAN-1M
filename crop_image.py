@@ -126,9 +126,9 @@ def crop_image(configs, original_images):
         save_cropped_image(configs, orig_img, cropped_img, chunk_number)
 
 
-def get_uncropped_images_metadata(metadata, dataset_name,
-                                  image_path, cropped_image_path, hdf5_path, cropped_hdf5_path, read_format,
-                                  get_list=False):
+def detect_uncropped_images(metadata, dataset_name,
+                            image_path, cropped_image_path, hdf5_path, cropped_hdf5_path, read_format,
+                            use_metadata=False, get_list=False):
     """
     Using metadata file, this function outputs a list of path to images, we want to crop.
     :param metadata: Path to the metadata file.
@@ -138,6 +138,7 @@ def get_uncropped_images_metadata(metadata, dataset_name,
     :param hdf5_path: Path to the hdf5 file, which contains uncropped images.
     :param cropped_hdf5_path: Path to the hdf5 file where cropped images will be saved.
     :param read_format: File format to read data from.
+    :param use_metadata: If using metadata for cropping?
     :param get_list: If get image path list?
     :return:
     """
@@ -146,9 +147,26 @@ def get_uncropped_images_metadata(metadata, dataset_name,
         return
 
     list_of_uncropped_image_path = []
-    df = read_tsv(metadata)
-    image_names = df['image_file'].to_list()
 
+    # Get list of images to detect uncropped images exit among them
+    if use_metadata:
+        df = read_tsv(metadata)
+        image_names = df['image_file'].to_list()
+
+    else:
+        if read_format == "folder":
+            image_names = os.listdir(image_path)
+
+        elif read_format == "hdf5":
+            file = h5py.File(hdf5_path, 'a')
+            if dataset_name in file.keys():
+                image_names = file[dataset_name].keys()
+            else:
+                image_names = file.keys()
+        else:
+            sys.exit("Wrong data_format: " + read_format + " does not exist.")
+
+    # Detect uncropped images from images names list
     if read_format == "folder":
         pbar = tqdm(image_names)
         for img in pbar:
@@ -172,64 +190,17 @@ def get_uncropped_images_metadata(metadata, dataset_name,
             output_keys = output_file.keys()
 
         pbar = tqdm(image_names)
-        for i in pbar:
+        for img in pbar:
             pbar.set_description("Detect uncropped images")
-            if i not in keys:
-                sys.exit(i + "does not exit in original hdf5 file.")
+            if img not in keys:
+                sys.exit(img + "does not exit in original hdf5 file.")
 
-            if i not in output_keys and "CROPPED_" + i not in keys:
-                list_of_uncropped_image_path.append(i)
+            if img not in output_keys and "CROPPED_" + img not in keys:
+                list_of_uncropped_image_path.append(img)
     else:
         sys.exit("Wrong data_format: " + read_format + " does not exist.")
 
     return list_of_uncropped_image_path
-
-
-def get_uncropped_images(read_format, dataset_name, dir_path, hdf5_path, not_get_list=False):
-    """
-    This function outputs a list of uncropped images saved in a directory or in a hdf5 file.
-    :param read_format: Data format to read from: folder/hdf5
-    :param dataset_name: Name of the dataset.
-    :param dir_path: Path to the directory of uncropped images.
-    :param hdf5_path: Path to the hdf5 file of uncropped images.
-    :param not_get_list: if not getting the list?
-    :return:
-    """
-    if not_get_list:
-        return
-
-    if read_format == "folder":
-        list_of_uncropped_image_path = [f"{dir_path}/{img}" for img in os.listdir(dir_path)]
-
-    elif read_format == "hdf5":
-        file = h5py.File(hdf5_path, 'a')
-        if dataset_name in file.keys():
-            keys = file[dataset_name].keys()
-        else:
-            keys = file.keys()
-        list_of_uncropped_image_path = [img for img in keys]
-
-    else:
-        sys.exit("Wrong data_format: " + read_format + " does not exist.")
-
-    return list_of_uncropped_image_path
-
-
-def detect_uncropped_images(configs):
-    """
-    This function detects the images in the dataset file, which do not have a cropped version.
-    :param configs: Configurations.
-    :return: Path to the list of the uncropped images of the dataset
-    """
-
-    if configs['use_metadata']:
-        return get_uncropped_images_metadata(configs['metadata_path'], configs['dataset_name'],
-                                             configs['image_path'], configs['cropped_image_path'],
-                                             configs['hdf5_path'], configs['cropped_hdf5_path'],
-                                             configs['data_format'], get_list=configs['use_metadata'])
-
-    return get_uncropped_images(configs['data_format'], configs['dataset_name'], configs['image_path'],
-                                configs['hdf5_path'], not_get_list=configs['use_metadata'])
 
 
 def run_crop_tool(configs):
@@ -245,7 +216,13 @@ def run_crop_tool(configs):
         return
 
     # Detect uncropped images
-    path_to_uncropped_images = detect_uncropped_images(configs)
+    path_to_uncropped_images = detect_uncropped_images(configs['metadata_path'], configs['dataset_name'],
+                                                       configs['image_path'], configs['cropped_image_path'],
+                                                       configs['hdf5_path'], configs['cropped_hdf5_path'],
+                                                       configs['data_format'],
+                                                       use_metadata=configs['use_metadata'],
+                                                       get_list=configs['use_metadata'])
+
 
     # Crop original images without a cropped version and save in dataset file.
     crop_image(configs, path_to_uncropped_images)
