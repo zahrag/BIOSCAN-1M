@@ -198,7 +198,10 @@ def get_uncropped_images(read_format, dataset_name, dir_path, hdf5_path, not_get
 
     elif read_format == "hdf5":
         file = h5py.File(hdf5_path, 'a')
-        keys = file[dataset_name].keys()
+        if dataset_name in file.keys():
+            keys = file[dataset_name].keys()
+        else:
+            keys = file.keys()
         list_of_uncropped_image_path = [img for img in keys]
 
     else:
