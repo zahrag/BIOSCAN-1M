@@ -10,8 +10,6 @@ the taxonomy classification of insects.
 
 Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding code repository, please cite the [Paper](http://arxiv.org/abs/2307.10455):
 
-Gharaee, Z., Gong, Z., Pellegrino, N., Zarubiieva, I., Haurum, J. B., Lowe, S. C., McKeown, J. T. A., Ho, C. Y., McLeod, J., Wei, Y. C., Agda, J., Ratnasingham, S., Steinke, D., Chang, A. X., Taylor, G. W., & Fieguth, P. (2023). A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset. arXiv preprint arXiv:2307.10455.
-
 ```
 @misc{gharaee2023step,
     title={A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset},
