@@ -10,7 +10,19 @@ the taxonomy classification of insects.
 
 Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding code repository, please cite the [Paper](http://arxiv.org/abs/2307.10455):
 
-- Gharaee, Zahra and Gong, ZeMing and Pellegrino, Nicholas and Zarubiieva, Iuliia and Bruslund Haurum, Joakim and C. Lowe, Scott and  T.A. McKeown, Jaclyn and C.Y. Ho, Chris and McLeod, Joschka and C. Wei, Yi-Yun and Agda, Jireh and Ratnasingham, Sujeevan and Steinke, Dirk and X. Chang, Angel and W.~Taylor, Graham and Fieguth, Paul. (2023). A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset. *Proceedings of the Conference Name*, 2023, X-Y. [DOI](https://doi.org/10.xxxx/xxxxxx)
+Gharaee, Z., Gong, Z., Pellegrino, N., Zarubiieva, I., Haurum, J. B., Lowe, S. C., McKeown, J. T. A., Ho, C. Y., McLeod, J., Wei, Y. C., Agda, J., Ratnasingham, S., Steinke, D., Chang, A. X., Taylor, G. W., & Fieguth, P. (2023). A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset. arXiv preprint arXiv:2307.10455.
+
+```
+@misc{gharaee2023step,
+    title={A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset},
+    author={Gharaee, Z. and Gong, Z. and Pellegrino, N. and Zarubiieva, I. and Haurum, J. B. and Lowe, S. C. and McKeown, J. T. A. and Ho, C. Y. and McLeod, J. and Wei, Y. C. and Agda, J. and Ratnasingham, S. and Steinke, D. and Chang, A. X. and Taylor, G. W. and Fieguth, P.},
+    year={2023},
+    eprint={2307.10455},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+```
+
 
 
 ###### <h3> Dataset
