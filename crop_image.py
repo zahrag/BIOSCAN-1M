@@ -46,6 +46,46 @@ def save_cropped_image(configs, img, cropped_img, chunk_number):
         write_in_hdf5(output_hdf5, cropped_img, os.path.basename(img), image_dir=None, save_binary=False)
 
 
+def cropping(args, image, model, feature_extractor):
+    """
+    :param args: non-dictionary configurations.
+    :param image: image to crop.
+    :param model: Model used for cropping.
+    :param feature_extractor: Model used to extract features.
+    :return: Cropped image.
+    """
+
+    encoding = feature_extractor(images=image, return_tensors="pt")
+    pixel_values = encoding["pixel_values"].squeeze().unsqueeze(0)
+    outputs = model(pixel_values=pixel_values, pixel_mask=None)
+    bbox = get_bbox_from_output(outputs, image).detach().numpy()
+    bbox = np.round(bbox, 0)
+    left, top, right, bottom = bbox[0], bbox[1], bbox[2], bbox[3]
+    left, top, right, bottom = scale_bbox(args, left, top, right, bottom)
+    args.background_color_R = 240
+    args.background_color_G = 240
+    args.background_color_B = 240
+    if left < 0:
+        border_size = 0 - left
+        right = right - left
+        left = 0
+        image = expand_image(args, image, border_size, 'left')
+    if top < 0:
+        border_size = 0 - top
+        bottom = bottom - top
+        top = 0
+        image = expand_image(args, image, border_size, 'top')
+    if right > image.size[0]:
+        border_size = right - image.size[0] + 1
+        image = expand_image(args, image, border_size, 'right')
+    if bottom > image.size[1]:
+        border_size = bottom - image.size[1] + 1
+        image = expand_image(args, image, border_size, 'bottom')
+    cropped_img = image.crop((left, top, right, bottom))
+
+    return cropped_img
+
+
 def crop_image(configs, original_images):
     """
     This function does the cropping.
@@ -65,10 +105,8 @@ def crop_image(configs, original_images):
         chunk_ids = df['chunk_number'].to_list()
 
     feature_extractor = DetrFeatureExtractor.from_pretrained("facebook/detr-resnet-50")
-
     # Get non-dictionary type of the configurations used in the cropping tool.
     args = CustomArg(configs)
-
     model = load_model_from_ckpt(args)
 
     for orig_img in tqdm(original_images):
@@ -92,33 +130,8 @@ def crop_image(configs, original_images):
         else:
             sys.exit("Wrong data_format: " + configs['data_format'] + " does not exist.")
 
-        encoding = feature_extractor(images=image, return_tensors="pt")
-        pixel_values = encoding["pixel_values"].squeeze().unsqueeze(0)
-        outputs = model(pixel_values=pixel_values, pixel_mask=None)
-        bbox = get_bbox_from_output(outputs, image).detach().numpy()
-        bbox = np.round(bbox, 0)
-        left, top, right, bottom = bbox[0], bbox[1], bbox[2], bbox[3]
-        left, top, right, bottom = scale_bbox(args, left, top, right, bottom)
-        args.background_color_R = 240
-        args.background_color_G = 240
-        args.background_color_B = 240
-        if left < 0:
-            border_size = 0 - left
-            right = right - left
-            left = 0
-            image = expand_image(args, image, border_size, 'left')
-        if top < 0:
-            border_size = 0 - top
-            bottom = bottom - top
-            top = 0
-            image = expand_image(args, image, border_size, 'top')
-        if right > image.size[0]:
-            border_size = right - image.size[0] + 1
-            image = expand_image(args, image, border_size, 'right')
-        if bottom > image.size[1]:
-            border_size = bottom - image.size[1] + 1
-            image = expand_image(args, image, border_size, 'bottom')
-        cropped_img = image.crop((left, top, right, bottom))
+        # Cropping the image
+        cropped_img = cropping(args, image, model, feature_extractor)
 
         # Save the cropped image
         if chunk_ids is not None and image_names is not None:
