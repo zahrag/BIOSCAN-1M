@@ -87,7 +87,7 @@ def set_configurations(configs=None):
     parser.add_argument('--exp_name', type=str, default="small_insect_order", help='Name of the experiment')
     parser.add_argument('--dataset_name', type=str, default="bioscan_1M_insect_dataset", help='Name of the dataset.')
     parser.add_argument('--group_level', type=str, default="order", help='Taxonomic group ranking.')
-    parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset.')
+    parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset (folder, hdf5).')
     parser.add_argument('--data_structure', type=str, default="bioscan_1M_insect",
                         help='If using BIOSCAN_1M_Insect dataset structure, 113 chunks of data (part1:part113)?')
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
