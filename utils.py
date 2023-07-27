@@ -14,6 +14,7 @@ import io
 from PIL import Image
 import pandas as pd
 import json
+import csv
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -239,6 +240,20 @@ def make_tsv(df, name=None, path=None):
 def read_tsv(tsv_file):
     df = pd.read_csv(tsv_file, sep='\t', low_memory=False)
     return df
+
+
+def convert_tsv_to_jsonld(tsv_file, jsonld_file):
+
+    # Read data from a TSV file
+    data = []
+    with open(tsv_file, 'r', newline='') as file:
+        reader = csv.DictReader(file, delimiter='\t')
+        for row in reader:
+            data.append(row)
+
+    # Write data in a JSON-LD file
+    with open(jsonld_file, 'w') as file:
+        json.dump(data, file, indent=4)
 
 
 def read_jsonld(jsonld_file):
