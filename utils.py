@@ -190,11 +190,14 @@ def make_directory(path):
         os.makedirs(path)
 
 
-def extract_tar(tar_file=None, path=None):
-    make_directory(path)
-    tar_file = tarfile.open(tar_file)
-    tar_file.extractall(path)
-    tar_file.close()
+def move_to_dir(source=None, destination=None):
+    make_directory(destination)
+    shutil.move(source, destination)
+
+
+def copy_to_dir(source=None, destination=None):
+    make_directory(destination)
+    shutil.copy(source, destination)
 
 
 def create_zip(source_folder=None, output_zip=None):
@@ -214,21 +217,18 @@ def extract_zip(zip_file=None, path=None):
         zip_ref.extractall(path)
 
 
-def move_to_dir(source=None, destination=None):
-    make_directory(destination)
-    shutil.move(source, destination)
-
-
-def copy_to_dir(source=None, destination=None):
-    make_directory(destination)
-    shutil.copy(source, destination)
-
-
-def make_tar(name=None, path=None):
+def create_tar(name=None, path=None):
     make_directory(path)
     print(path)
     with tarfile.open(name, "w:gz") as tar:
         tar.add(path, arcname=os.path.basename(path))
+
+
+def extract_tar(tar_file=None, path=None):
+    make_directory(path)
+    tar_file = tarfile.open(tar_file)
+    tar_file.extractall(path)
+    tar_file.close()
 
 
 def make_tsv(df, name=None, path=None):
