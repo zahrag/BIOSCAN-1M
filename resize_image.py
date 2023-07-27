@@ -1,5 +1,5 @@
 import os
-from utils import resize_image, create_zip, write_in_hdf5
+from utils import resize_image, create_zip, write_in_hdf5, remove_file
 import h5py
 from PIL import Image, UnidentifiedImageError
 from tqdm import tqdm
@@ -34,7 +34,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
             pbar.set_description(f"Resize image to {resize_dimension} on the smaller dimension.")
             resize_image(f"{full_size_img_path}/{img}", f"{resized_img_path}/{img}", resize_dimension=resize_dimension)
         except UnidentifiedImageError:
-            # os.remove(f"{full_size_img_path}/{img}")
+            # remove_file(img, full_size_img_path)
             print(f"{img} Corrupted.")
             continue
 
@@ -61,7 +61,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
                 write_in_hdf5(hdf5, image, image_file, image_dir=image_dir, save_binary=save_binary)
 
             except UnidentifiedImageError:
-                # os.remove(image_dir)
+                # remove_file(image_file, resized_img_path)
                 print(f"{image_file} Corrupted.")
                 continue
 

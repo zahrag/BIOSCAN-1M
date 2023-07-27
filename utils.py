@@ -191,6 +191,14 @@ def make_directory(path):
         os.makedirs(path)
 
 
+def remove_directory(path):
+    shutil.rmtree(path, ignore_errors=False, onerror=None)
+
+
+def remove_file(file, path):
+    os.remove(os.path.join(path, file))
+
+
 def move_to_dir(source=None, destination=None):
     make_directory(destination)
     shutil.move(source, destination)
