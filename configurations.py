@@ -59,6 +59,9 @@ def extract_package(image_path, data_format="folder"):
     :return: Path to the images.
     """
 
+    if image_path is None:
+        return image_path
+
     if data_format != "folder" or os.path.isdir(image_path):
         return image_path
 
