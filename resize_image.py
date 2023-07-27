@@ -10,7 +10,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
     """
     This function resizes images to 256 on their smaller dimension, and saves both in folder and hdf5 if
     the path to these are preset.
-    :param full_size_img_path: Path to the full sized images.
+    :param full_size_img_path: Path to the directory of the full sized images .
     :param resized_img_path: Path to the directory to save resized images.
     :param resized_hdf5_path: Path to the hdf5 file to save resized images.
     :param save_binary: if True, less space required.
