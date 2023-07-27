@@ -111,7 +111,7 @@ def set_configurations(configs=None):
                         default=configs["image_path"])
     parser.add_argument('--hdf5_path', type=str, help='Path to the HDF5 files.', default=configs["hdf5_path"])
 
-    # The following needs to be set
+    # The following needs to be preset
     parser.add_argument('--resized_image_path', type=str, default=configs["resized_image_path"],
                         help="Path to the resized images.")
     parser.add_argument('--resized_hdf5_path', type=str, default=configs["resized_hdf5_path"],
@@ -153,6 +153,7 @@ def set_configurations(configs=None):
     parser.add_argument('--max_num_sample', type=int, default=50000, help='Number of samples of each subset.')
     parser.add_argument('--experiment_names', type=str, default=configs["experiment_names"],
                         help="Name of experiments conducted in BIOSCAN Paper.")
+
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--checkpoint_path', type=str, default=configs["checkpoint_path"],
                         help="Path to the checkpoint.")
@@ -161,7 +162,7 @@ def set_configurations(configs=None):
     parser.add_argument('--equal_extend', default=True,
                         help="Extend cropped images in the height and width with the same length.", action="store_true")
 
-    # #### Training Settings ######
+    # #### Train Settings ######
     parser.add_argument('--seed', type=int, default=1, help='Set the seed for reproducibility')
     parser.add_argument('--n_epochs', type=int, default=100)
     parser.add_argument('--epoch_decay', nargs='+', type=int, default=[20, 25])
