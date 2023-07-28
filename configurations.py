@@ -92,7 +92,7 @@ def set_configurations(configs=None):
     parser.add_argument('--group_level', type=str, default="order", help='Taxonomic group ranking.')
     parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset (folder, hdf5).')
     parser.add_argument('--data_structure', type=str, default="bioscan_1M_insect",
-                        help='If using BIOSCAN_1M_Insect dataset structure, 113 chunks of data (part1:part113)?')
+                        help='If using bioscan_1M_insect dataset structure, 113 chunks of data (part1:part113)?')
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
                         default="")
     parser.add_argument('--chunk_length', type=int, default=10000, help='Chunk length: number of images of each patch.')
