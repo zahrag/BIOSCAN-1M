@@ -23,7 +23,6 @@ class BioScanLoader(Dataset):
 
         self.split = split
         self.transform = transform
-        self.cropped = configs['cropped']
         self.data_format = configs['data_format']
         self.data_structure = configs['data_structure']
         self.image_dir = configs['image_path']
