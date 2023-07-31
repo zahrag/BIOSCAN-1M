@@ -83,7 +83,7 @@ The BIOSCAN-1M Insect dataset is available both on [GoogleDrive](https://drive.g
 To download a file from GoogleDrive run the following:
 
 ```bash
-python main.py --file_to_download <fine_name>
+python main.py --file_to_download <file_name>
 ``` 
 
 The list of files available for download from GoogleDrive are:
