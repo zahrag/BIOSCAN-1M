@@ -99,7 +99,7 @@ def crop_image(configs, original_images):
         return
 
     image_names, chunk_ids, chunk_number = None, None, None
-    if os.path.isfile(configs["metadata_path"]):
+    if configs["metadata_path"] is not None and os.path.isfile(configs["metadata_path"]):
         df = read_tsv(configs["metadata_path"])
         image_names = df['image_file'].to_list()
         chunk_ids = df['chunk_number'].to_list()
@@ -234,8 +234,7 @@ def run_crop_tool(configs):
                                                        configs['hdf5_path'], configs['cropped_hdf5_path'],
                                                        configs['data_format'],
                                                        use_metadata=configs['use_metadata'],
-                                                       get_list=configs['use_metadata'])
-
+                                                       get_list=True)
 
     # Crop original images without a cropped version and save in dataset file.
     crop_image(configs, path_to_uncropped_images)

@@ -61,7 +61,8 @@ if __name__ == '__main__':
 
     # ################################# RESIZE IMAGES ##############################################
     make_resize(configs["image_path"], configs["resized_image_path"],  configs['resized_hdf5_path'],
-                save_binary=True, resize_dimension=256, zip_name="original_256.zip")
+                save_binary=True, resize_dimension=256, zip_name="original_256.zip",
+                resize_images=configs["resize_image"])
 
     # ##################################### RUN PRE-PROCESSING ###################################################
     run_crop_tool(configs)

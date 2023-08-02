@@ -142,6 +142,8 @@ def set_configurations(configs=None):
                         default=False, action='store_true')
     parser.add_argument('--crop_image', help='Whether to crop dataset images?',
                         default=False, action='store_true')
+    parser.add_argument('--resize_image', help='Whether to resize dataset images?',
+                        default=False, action='store_true')
 
     # ####### Data Download #####
     parser.add_argument('--ID_mapping_path', type=str, default=configs["ID_mapping_path"],
