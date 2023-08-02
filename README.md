@@ -133,7 +133,7 @@ By applying this preprocessing step, we aimed to optimize the subsequent experim
 To resize and save original full size images, run the following:
 
 ```bash
-python main.py --resized_image_path path_to_resized_images --resized_hdf5_path path_to_resized_hdf5
+python main.py --resize_image --resized_image_path path_to_resized_images --resized_hdf5_path path_to_resized_hdf5
 ``` 
 
 To use our cropping tool, run the following, 
