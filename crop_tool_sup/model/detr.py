@@ -1,7 +1,7 @@
 import pytorch_lightning as pl
 from transformers import DetrForObjectDetection
 import torch
-
+import io
 
 class Detr(pl.LightningModule):
 
@@ -73,7 +73,22 @@ class Detr(pl.LightningModule):
 
 
 def load_model_from_ckpt(args):
-    model = Detr.load_from_checkpoint(lr=1e-4, lr_backbone=1e-5, weight_decay=1e-4,
-                                      checkpoint_path=args.checkpoint_path)
+
+    original = False
+    if original:
+        model = Detr.load_from_checkpoint(lr=1e-4, lr_backbone=1e-5, weight_decay=1e-4,
+                                          checkpoint_path=args.checkpoint_path)
+    else:
+        # Load the checkpoint into a buffer
+        with open(args.checkpoint_path, 'rb') as f:
+            buffer = io.BytesIO(f.read())
+
+        # Load the model from the buffer
+        model = Detr.load_from_checkpoint(
+            lr=1e-4, lr_backbone=1e-5, weight_decay=1e-4,
+            checkpoint_path=buffer,  # Pass the buffer instead of the file path
+            map_location=torch.device('cpu'),
+        )
+
     model.eval()
     return model
