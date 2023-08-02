@@ -22,21 +22,21 @@ def get_exp_configs():
 
         # ### Set the following configurations for experiments ### #
         "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
+        "checkpoint_path": "crop_tool/checkpoint/BIOSCAN_Insect_crop_tool_checkpoint.ckpt",
         "file_to_download": None,            # File selected to download from the BIOSSCAN_1M_Insect dataset GoogleDrive
         "download_path": None,               # path to download the dataset files
         "dataset_path": None,                # root directory of the dataset files
         "metadata_path": None,               # path to the metadata file (.tsv)
         "hdf5_path": None,                   # path to the HDF5 file containing the original full-size images
-        "image_path": '/home/zahra/Desktop/BioScan/BioScan/dataset/downloaded_drive/images',                  # path to the original full-size images
+        "image_path": None,                  # path to the original full-size images
         "resized_image_path": None,          # path to the resized images
         "resized_hdf5_path": None,           # path to the hdf5 of the resized images
-        "cropped_image_path": '/home/zahra/Desktop/BioScan/BioScan/dataset/downloaded_drive/images_cropped',          # path to the cropped images
+        "cropped_image_path": None,          # path to the cropped images
         "cropped_hdf5_path": None,           # path to the hdf5 file of the cropped images
         "resized_cropped_image_path": None,  # path to the resized cropped images
         "resized_cropped_hdf5_path": None,   # path to the hdf5 file of the resized cropped images
         "results_path": None,                # path to save the results
         "vit_pretrained_path": None,         # path to the directory where the vit backbone is saved
-        "checkpoint_path": "/home/zahra/Desktop/BioScan/BioScan/crop_tool/checkpoint_dir/training_with_1000_pinned_and_1000_wells_images.ckpt",             # path to the directory where the crop tool checkpoint is saved
 
     }
     return config
