@@ -22,7 +22,7 @@ def get_exp_configs():
 
         # ### Set the following configurations for experiments ### #
         "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
-        "checkpoint_path": "crop_tool/checkpoint/BIOSCAN_Insect_crop_tool_checkpoint.ckpt",
+        "checkpoint_path": "crop_tool_sup/checkpoint/BIOSCAN_Insect_crop_tool_checkpoint.ckpt",
         "file_to_download": None,            # File selected to download from the BIOSSCAN_1M_Insect dataset GoogleDrive
         "download_path": None,               # path to download the dataset files
         "dataset_path": None,                # root directory of the dataset files
