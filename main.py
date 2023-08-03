@@ -59,12 +59,12 @@ if __name__ == '__main__':
     # ################################# DOWNLOAD DATASET FROM DRIVE ##############################################
     make_download(configs)
 
-    # ################################# RESIZE IMAGES ##############################################
+    # ################################### PRE-PROCESSING: RESIZING ###############################################
     make_resize(configs["image_path"], configs["resized_image_path"],  configs['resized_hdf5_path'],
                 save_binary=True, resize_dimension=256, zip_name="original_256.zip",
                 resize_images=configs["resize_image"])
 
-    # ##################################### RUN PRE-PROCESSING ###################################################
+    # ##################################### PRE-PROCESSING: CROPPING ###############################################
     run_crop_tool(configs)
 
     # ################################# PRINT DATASET STATISTICS #################################################
