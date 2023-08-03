@@ -44,7 +44,7 @@ def get_exp_configs():
 
 if __name__ == '__main__':
 
-    # ################################# HYPER_PARAMETER SETTINGS ##############################################
+    # ################################# HYPER_PARAMETER SETTINGS #################################################
     # Get experiment's specific configurations
     exp_configs = get_exp_configs()
     # Get model configurations
