@@ -14,7 +14,7 @@ def get_exp_configs():
     """ This function delivers model configurations ..."""
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
-    base_configs = BioScan_Configurations(exp_ID=5)
+    base_configs = BioScan_Configurations()
 
     config = {
         "date_time": timestamp,
