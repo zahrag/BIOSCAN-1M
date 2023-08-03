@@ -156,7 +156,7 @@ def detect_uncropped_images(metadata, dataset_name,
 
     list_of_uncropped_image_path, chunk_ids = [], []
 
-    # Get list of images to detect uncropped images exit among them
+    # Get the list of image names
     if use_metadata:
         df = read_tsv(metadata)
         image_names = df['image_file'].to_list()
@@ -175,7 +175,7 @@ def detect_uncropped_images(metadata, dataset_name,
         else:
             sys.exit("Wrong data_format: " + read_format + " does not exist.")
 
-    # Detect uncropped images from images names list
+    # Detect uncropped images from image names list
     if read_format == "folder":
         pbar = tqdm(image_names)
         for img in pbar:
