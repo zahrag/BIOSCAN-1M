@@ -86,7 +86,7 @@ def cropping(args, image, model, feature_extractor):
     return cropped_img
 
 
-def crop_image(configs, original_images):
+def crop_image(configs, original_images, chunk_ids):
     """
     This function does the cropping.
     :param configs: Configurations.
@@ -97,12 +97,6 @@ def crop_image(configs, original_images):
     if len(original_images) == 0:
         print("No images detected for cropping!")
         return
-
-    image_names, chunk_ids, chunk_number = None, None, None
-    if configs["metadata_path"] is not None and os.path.isfile(configs["metadata_path"]):
-        df = read_tsv(configs["metadata_path"])
-        image_names = df['image_file'].to_list()
-        chunk_ids = df['chunk_number'].to_list()
 
     feature_extractor = DetrFeatureExtractor.from_pretrained("facebook/detr-resnet-50")
     # Get non-dictionary type of the configurations used in the cropping tool.
@@ -134,8 +128,9 @@ def crop_image(configs, original_images):
         cropped_img = cropping(args, image, model, feature_extractor)
 
         # Save the cropped image
-        if chunk_ids is not None and image_names is not None:
-            chunk_number = chunk_ids[image_names.index(os.path.basename(orig_img))]
+        chunk_number = None
+        if chunk_ids:
+            chunk_number = chunk_ids[original_images.index(orig_img)]
         save_cropped_image(configs, orig_img, cropped_img, chunk_number)
 
 
@@ -159,12 +154,13 @@ def detect_uncropped_images(metadata, dataset_name,
     if not get_list:
         return
 
-    list_of_uncropped_image_path = []
+    list_of_uncropped_image_path, chunk_ids = [], []
 
     # Get list of images to detect uncropped images exit among them
     if use_metadata:
         df = read_tsv(metadata)
         image_names = df['image_file'].to_list()
+        chunk_ids = df['chunk_number'].to_list()
 
     else:
         if read_format == "folder":
@@ -213,7 +209,7 @@ def detect_uncropped_images(metadata, dataset_name,
     else:
         sys.exit("Wrong data_format: " + read_format + " does not exist.")
 
-    return list_of_uncropped_image_path
+    return list_of_uncropped_image_path, chunk_ids
 
 
 def run_crop_tool(configs):
@@ -229,15 +225,15 @@ def run_crop_tool(configs):
         return
 
     # Detect uncropped images
-    path_to_uncropped_images = detect_uncropped_images(configs['metadata_path'], configs['dataset_name'],
-                                                       configs['image_path'], configs['cropped_image_path'],
-                                                       configs['hdf5_path'], configs['cropped_hdf5_path'],
-                                                       configs['data_format'],
-                                                       use_metadata=configs['use_metadata'],
-                                                       get_list=True)
+    path_to_uncropped_images, chunk_ids = detect_uncropped_images(configs['metadata_path'], configs['dataset_name'],
+                                                                  configs['image_path'], configs['cropped_image_path'],
+                                                                  configs['hdf5_path'], configs['cropped_hdf5_path'],
+                                                                  configs['data_format'],
+                                                                  use_metadata=configs['use_metadata'],
+                                                                  get_list=True)
 
     # Crop original images without a cropped version and save in dataset file.
-    crop_image(configs, path_to_uncropped_images)
+    crop_image(configs, path_to_uncropped_images, chunk_ids)
 
     # Resize cropped images to 256 on their smaller dimension
     make_resize(configs['cropped_image_path'],
