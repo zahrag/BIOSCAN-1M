@@ -16,6 +16,7 @@ def make_resize(full_size_img_path, resized_img_path, resized_hdf5_path,
     :param save_binary: if True, less space required.
     :param resize_dimension: Dimension to resize images.
     :param zip_name: If not None, the resized image folder is compressed to <zip_name>.zip
+    :param resize_images: If resize images?
     :return:
     """
 
