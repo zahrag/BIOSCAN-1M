@@ -154,7 +154,7 @@ aimed to classify its members into 40 families, which constitute a significant p
 To train the model on a classification task using a baseline model, 
 you can run the following command, setting the name of the experiment:
 ```bash
-python main.py --loader --train --data_format hdf5 --exp_name <experiment_name>
+python main.py --loader --train --data_format <folder/hdf5> --exp_name <experiment_name>
 ``` 
 Both the folder and HDF5 data formats are supported, 
 making it convenient to conduct experiments using dataset packages.
