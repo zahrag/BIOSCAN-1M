@@ -64,7 +64,7 @@ if __name__ == '__main__':
                 save_binary=True, resize_dimension=256, zip_name="original_256.zip",
                 resize_images=configs["resize_image"])
 
-    # ##################################### PRE-PROCESSING: CROPPING ###############################################
+    # ##################################### PRE-PROCESSING: CROPPING #############################################
     run_crop_tool(configs)
 
     # ################################# PRINT DATASET STATISTICS #################################################
@@ -83,13 +83,13 @@ if __name__ == '__main__':
 
     show_statistics(configs, gt_ID=data_idx_label, split='test')
 
-    # ###################################### DATALOADER ##########################################################
+    # ###################################### DATALOADER ###########################################################
     train_dataloader, val_dataloader, test_dataloader, dataset_attributes = get_dataloader(configs, data_idx_label)
 
-    # ###################################### TRAINING MODEL ######################################################
+    # ###################################### TRAINING MODEL #######################################################
     train(configs, train_dataloader, val_dataloader, dataset_attributes)
 
-    # ###################################### TESTING MODEL ######################################################
+    # ###################################### TESTING MODEL ########################################################
     test(configs, test_dataloader, dataset_attributes)
 
 
