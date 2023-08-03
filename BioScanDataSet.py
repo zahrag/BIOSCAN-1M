@@ -116,7 +116,7 @@ class BioScan(Dataset):
             self.data_list = self.taxonomy_groups_list_dict[configs["group_level"]]
 
         else:
-            print(f'Dataset Does NOT Have Taxonomy Group Ranking {configs["group_level"]}')
+            print(f'Dataset Does NOT Have the Taxonomy Group Ranking: {configs["group_level"]}')
             return
 
         # Get the data dictionary
