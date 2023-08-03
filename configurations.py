@@ -7,7 +7,7 @@ import sys
 
 class BioScan_Configurations():
 
-    def __init__(self, exp_ID):
+    def __init__(self, exp_ID=5):
         """
         This class handles basic configurations of the BIOSCAN-1M Insect Dataset and experiments.
         """
