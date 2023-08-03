@@ -133,7 +133,7 @@ By applying this preprocessing step, we aimed to optimize the subsequent experim
 To resize and save original full size images, run the following:
 
 ```bash
-python main.py --resize_image --resized_image_path <path_to_resized_images> --resized_hdf5_path < path_to_resized_hdf5 >
+python main.py --resize_image --resized_image_path <path_to_resized_images> --resized_hdf5_path <path_to_resized_hdf5>
 ``` 
 
 To use our cropping tool, run the following, 
@@ -154,7 +154,7 @@ aimed to classify its members into 40 families, which constitute a significant p
 To train the model on a classification task using a baseline model, 
 you can run the following command, setting the name of the experiment:
 ```bash
-python main.py --loader --train --data_format < folder/hdf5 > --exp_name <experiment_name>
+python main.py --loader --train --data_format <hdf5/folder> --exp_name <experiment_name>
 ``` 
 Both the folder and HDF5 data formats are supported, 
 making it convenient to conduct experiments using dataset packages.
