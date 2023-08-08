@@ -46,7 +46,7 @@ def plot_results(class_acc, class_idx, dataset='', metric='', fig_path='', plot=
     cmaps = ['Blues', 'YlGnBu']
     micro = np.reshape(micro, (1, N))
     deg_r = 45
-    if len(micro) > 20:
+    if micro.shape[1] > 20:
         deg_r = 75
 
     plt.figure(figsize=(8, 3))
@@ -118,12 +118,15 @@ def plot_confusion_matrix(cm, classes,
         print('Confusion matrix, without normalization')
 
     # Set the figure size
-    plt.figure(figsize=(10, 8.7))
+    plt.figure(figsize=(10, 9))
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
     plt.colorbar(shrink=0.85)
     tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=55)
+    deg_r, f_size = 45, 10
+    if len(classes) > 20:
+        deg_r, f_size = 75, 5
+    plt.xticks(tick_marks, classes, rotation=deg_r)
     plt.yticks(tick_marks, classes, rotation=0)
 
     fmt = '.2f' if normalize else 'd'
@@ -131,7 +134,8 @@ def plot_confusion_matrix(cm, classes,
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
         plt.text(j, i, format(cm[i, j], fmt),
                  horizontalalignment="center",
-                 color="white" if cm[i, j] > thresh else "black")
+                 color="white" if cm[i, j] > thresh else "black",
+                 fontsize=f_size)
 
     plt.ylabel('True Class', fontsize=14)
     plt.xlabel('Predicted Class', fontsize=14)
