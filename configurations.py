@@ -5,38 +5,6 @@ import torch
 import sys
 
 
-class BioScan_Configurations():
-
-    def __init__(self, exp_ID=5):
-        """
-        This class handles basic configurations of the BIOSCAN-1M Insect Dataset and experiments.
-        """
-
-        self.dataset_names = {'1': 'bioscan_1M_insect_dataset',
-                              '2': 'bioscan_insect_diptera_dataset',
-                              }
-
-        self.experiment_names = ['large_diptera_family',
-                                 'medium_diptera_family',
-                                 'small_diptera_family',
-                                 'large_insect_order',
-                                 'medium_insect_order',
-                                 'small_insect_order',
-                                 ]
-
-        self.exp = self.experiment_names[exp_ID]
-        self.group_level = get_group_level(exp_name=self.exp)
-        self.max_num_sample = 0
-        if self.exp in self.experiment_names[2:4]:
-            self.max_num_sample = 200000
-        elif self.exp in self.experiment_names[4:6]:
-            self.max_num_sample = 50000
-
-        self.data_formats = ["hdf5",    # hdf5_path
-                             "folder",  # image_path (handles directory, tar, and zip)
-                             ]
-
-
 def get_group_level(exp_name=''):
 
     name = ''.join(list(exp_name)[-6:])
@@ -90,7 +58,8 @@ def set_configurations(configs=None):
     parser.add_argument('--exp_name', type=str, default="small_insect_order", help='Name of the experiment')
     parser.add_argument('--dataset_name', type=str, default="bioscan_1M_insect_dataset", help='Name of the dataset.')
     parser.add_argument('--group_level', type=str, default="order", help='Taxonomic group ranking.')
-    parser.add_argument('--data_format', type=str, default="folder", help='Format of the dataset (folder, hdf5).')
+    parser.add_argument('--data_format', type=str, default="folder", choices=["hdf5", "folder"],
+                        help='Format of the dataset (folder, hdf5).')
     parser.add_argument('--data_structure', type=str, default="bioscan_1M_insect",
                         help='If using bioscan_1M_insect dataset structure, 113 chunks of data (part1:part113)?')
     parser.add_argument('--best_model', type=str, help='directory where best results saved (inference/test mode).',
@@ -152,9 +121,17 @@ def set_configurations(configs=None):
                         help="File to download from drive.")
 
     # ####### Data Split and Subset Creation #####
-    parser.add_argument('--max_num_sample', type=int, default=50000, help='Number of samples of each subset.')
-    parser.add_argument('--experiment_names', type=str, default=configs["experiment_names"],
-                        help="Name of experiments conducted in BIOSCAN Paper.")
+    parser.add_argument('--max_num_sample', type=int, default=50000, choices=[50000, 200000],
+                        help='Number of samples of each subset.')
+    parser.add_argument('--experiment_names', type=str,
+                        default=['large_diptera_family',
+                                 'medium_diptera_family',
+                                 'small_diptera_family',
+                                 'large_insect_order',
+                                 'medium_insect_order',
+                                 'small_insect_order',
+                                 ],
+                        help="Name of experiments conducted with BIOSCAN_1M_Insect Dataset.")
 
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--checkpoint_path', type=str, default=configs["checkpoint_path"],

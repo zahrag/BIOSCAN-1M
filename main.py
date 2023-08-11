@@ -7,18 +7,16 @@ from train import train
 from test import test
 from crop_image import run_crop_tool
 from resize_image import make_resize
-from configurations import set_configurations, make_path_configs, BioScan_Configurations, get_group_level, extract_package
+from configurations import set_configurations, make_path_configs, get_group_level, extract_package
 
 
 def get_exp_configs():
     """ This function delivers model configurations ..."""
 
     timestamp = datetime.datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
-    base_configs = BioScan_Configurations()
 
     config = {
         "date_time": timestamp,
-        "experiment_names": base_configs.experiment_names,
 
         # ### Set the following configurations for experiments ### #
         "ID_mapping_path": "dataset/bioscan_1M_insect_dataset_file_ID_mapping.txt",
