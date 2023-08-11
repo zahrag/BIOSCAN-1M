@@ -5,48 +5,6 @@ import torch
 import sys
 
 
-def get_group_level(exp_name=''):
-
-    name = ''.join(list(exp_name)[-6:])
-    if name == "family":
-        group_level = 'family'
-    elif name == "_order":
-        group_level = 'order'
-    else:
-        print(f"experiment name is not verified: {exp_name}")
-        return
-
-    return group_level
-
-
-def extract_package(image_path, data_format="folder"):
-    """
-    This function extracts and set path to the dataset image packages: original_256.zip, cropped_256.zip.
-    :param image_path: Path to the dataset package file or directory of images.
-    :param data_format: Format of the data set for experiments.
-    :return: Path to the images.
-    """
-
-    if image_path is None:
-        return image_path
-
-    if data_format != "folder" or os.path.isdir(image_path):
-        return image_path
-
-    data_format = os.path.splitext(os.path.basename(image_path))[1]
-    path_to_extract = os.path.join(os.path.dirname(image_path), os.path.splitext(os.path.basename(image_path))[0])
-    if data_format == "zip":
-        extract_zip(zip_file=image_path, path=path_to_extract)
-    elif data_format == "tar":
-        extract_tar(tar_file=image_path, path=path_to_extract)
-    else:
-        sys.exit("Wrong data_format: " + data_format + " does not exist.")
-
-    path_to_images = os.path.join(path_to_extract,
-                                  f"bioscan/images/{os.path.splitext(os.path.basename(image_path))[0]}")
-    return path_to_images
-
-
 def set_configurations(configs=None):
 
     # ################################# HYPER_PARAMETER SETTINGS ##############################################
@@ -103,8 +61,6 @@ def set_configurations(configs=None):
                         default=False, action='store_true')
     parser.add_argument('--loader', help='Whether to build dataloader?',
                         default=False, action='store_true')
-    parser.add_argument('--no_transform', default=False, action='store_true',
-                        help='Not using transformation in dataloader?')
     parser.add_argument('--train', help='Whether to train the model?',
                         default=False, action='store_true')
     parser.add_argument('--test', help='Whether to test the model?',
@@ -155,6 +111,8 @@ def set_configurations(configs=None):
     parser.add_argument('--k', nargs='+', help='value of k for computing the top-k loss and computing top-k accuracy',
                         default=[1, 3, 5, 10], type=int)
     parser.add_argument('--pretrained', default=True, action='store_true')
+    parser.add_argument('--no_transform', default=False, action='store_true',
+                        help='Not using transformation in dataloader?')
     parser.add_argument('--vit_pretrained', type=str, default=configs["vit_pretrained_path"],
                         help="Path to the checkpoint.")
     parser.add_argument('--loss', type=str, help='decide which loss to use during training', default='CE',
@@ -178,15 +136,46 @@ def set_configurations(configs=None):
     return dict_args
 
 
-def save_configs(datetime, configs, log_dir=None):
+def extract_package(image_path, data_format="folder"):
+    """
+    This function extracts and set path to the dataset image packages: original_256.zip, cropped_256.zip.
+    :param image_path: Path to the dataset package file or directory of images.
+    :param data_format: Format of the data set for experiments.
+    :return: Path to the images.
+    """
 
-    info = f"Configurations of the Experiments Run on {datetime}\n"
-    for item in configs.keys():
-        info += f'{item}:{configs[item]}\n'
+    if image_path is None:
+        return image_path
 
-    with open(log_dir + f"{configs['exp_name']}_configs.txt", "w") as fp:
-        fp.write(info)
-    fp.close()
+    if data_format != "folder" or os.path.isdir(image_path):
+        return image_path
+
+    data_format = os.path.splitext(os.path.basename(image_path))[1]
+    path_to_extract = os.path.join(os.path.dirname(image_path), os.path.splitext(os.path.basename(image_path))[0])
+    if data_format == "zip":
+        extract_zip(zip_file=image_path, path=path_to_extract)
+    elif data_format == "tar":
+        extract_tar(tar_file=image_path, path=path_to_extract)
+    else:
+        sys.exit("Wrong data_format: " + data_format + " does not exist.")
+
+    path_to_images = os.path.join(path_to_extract,
+                                  f"bioscan/images/{os.path.splitext(os.path.basename(image_path))[0]}")
+    return path_to_images
+
+
+def get_group_level(exp_name=''):
+
+    name = ''.join(list(exp_name)[-6:])
+    if name == "family":
+        group_level = 'family'
+    elif name == "_order":
+        group_level = 'order'
+    else:
+        print(f"experiment name is not verified: {exp_name}")
+        return
+
+    return group_level
 
 
 def make_path_configs(configs):
@@ -204,4 +193,13 @@ def make_path_configs(configs):
     return configs
 
 
+def save_configs(datetime, configs, log_dir=None):
+
+    info = f"Configurations of the Experiments Run on {datetime}\n"
+    for item in configs.keys():
+        info += f'{item}:{configs[item]}\n'
+
+    with open(log_dir + f"{configs['exp_name']}_configs.txt", "w") as fp:
+        fp.write(info)
+    fp.close()
 
