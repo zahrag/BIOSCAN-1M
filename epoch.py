@@ -76,8 +76,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
             class_acc_dict['class_topk_acc'][k], class_acc_dict['class_avgk_acc'][k] = defaultdict(int), defaultdict(int)
 
         # Store estimated probas and labels of the whole validation set to compute lambda
-        list_val_proba = []
-        list_val_labels = []
+        list_val_proba, list_val_labels = [], []
         for batch_idx, (batch_x_val, batch_y_val) in enumerate(tqdm(val_loader, desc='val', position=0)):
             if use_gpu:
                 batch_x_val, batch_y_val = batch_x_val.cuda(), batch_y_val.cuda()
