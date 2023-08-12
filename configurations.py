@@ -178,28 +178,31 @@ def get_group_level(exp_name=''):
     return group_level
 
 
-def make_path_configs(configs):
-
-    if configs["train"]:
-        save_dir = os.path.join(os.getcwd(), configs["results_path"])
-        save_dir += "/{timestamp:s}_{dataset:s}_{loss:s}_{model:s}/".format(timestamp=configs["date_time"],
-                                                                            dataset=configs['exp_name'],
-                                                                            loss=configs['loss'],
-                                                                            model=configs['model'])
-        make_directory(save_dir)
-        save_configs(configs["date_time"], configs, log_dir=save_dir)
-        configs["results_path"] = save_dir
-
-    return configs
-
-
-def save_configs(datetime, configs, log_dir=None):
+def save_configs(datetime, configs, log_dir, exp_name):
 
     info = f"Configurations of the Experiments Run on {datetime}\n"
     for item in configs.keys():
         info += f'{item}:{configs[item]}\n'
 
-    with open(log_dir + f"{configs['exp_name']}_configs.txt", "w") as fp:
+    with open(log_dir + f"{exp_name}_configs.txt", "w") as fp:
         fp.write(info)
     fp.close()
 
+
+def save_configurations(configs):
+
+    # Extract input package if compressed
+    configs['image_path'] = extract_package(configs['image_path'], data_format=configs['data_format'])
+
+    # Get group_level from experiments name
+    configs['group_level'] = get_group_level(exp_name=configs['exp_name'])
+
+    if configs["train"]:
+        result_dir = os.path.join(os.getcwd(), configs['results_path'])
+        experiment_name = f"{configs['exp_name']}_{configs['model']}_{configs['loss']}_{configs['seed']}"
+        exp_dir = os.path.join(result_dir, experiment_name)
+        make_directory(exp_dir)
+        configs["results_path"] = exp_dir
+        save_configs(configs["date_time"], configs, exp_dir, experiment_name)
+
+    return configs
