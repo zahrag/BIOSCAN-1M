@@ -57,7 +57,7 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
     """Single val epoch pass.
     At the end of the epoch, updates the lists loss_val, acc_val, topk_acc_val and avgk_acc_val"""
 
-    print("-------------- VALIDATION ---------------")
+    print("\n-------------- VALIDATION ---------------")
     model.eval()
     with torch.no_grad():
         n_val = dataset_attributes['n_val']
@@ -84,11 +84,9 @@ def val_epoch(model, val_loader, criteria, loss_val, acc_val, topk_acc_val, avgk
 
             # Predicted labels as output of the model
             batch_output_val = model(batch_x_val)
-            # print(f"Batch {batch_idx} Output:{batch_output_val}")
 
             # Probability vector of all classes
             batch_proba = F.softmax(batch_output_val)
-            # print(f"Batch {batch_idx} Probability:{batch_proba}")
 
             # Store batch probas and labels
             list_val_proba.append(batch_proba)
@@ -187,6 +185,8 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
         for k in list_k:
             class_acc_dict['class_topk_acc'][k], class_acc_dict['class_avgk_acc'][k] = defaultdict(int), defaultdict(int)
 
+        list_test_proba = []
+        list_test_labels = []
         for batch_idx, (batch_x_test, batch_y_test) in enumerate(tqdm(test_loader, desc='test', position=0)):
             if use_gpu:
                 batch_x_test, batch_y_test = batch_x_test.cuda(), batch_y_test.cuda()
@@ -194,6 +194,9 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
             batch_proba_test = F.softmax(batch_output_test)
             loss_batch_test = criteria(batch_output_test, batch_y_test)
             loss_epoch_test += loss_batch_test.item()
+
+            list_test_labels.append(batch_y_test)
+            list_test_proba.append(batch_proba_test)
 
             n_correct_test += torch.sum(torch.eq(batch_y_test, torch.argmax(batch_output_test, dim=-1))).item()
             update_correct_per_class(batch_proba_test, batch_y_test, class_acc_dict['class_acc'])
@@ -203,6 +206,9 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
                 if lmbda:
                     n_correct_avgk_test[k] += count_correct_avgk(probas=batch_proba_test, labels=batch_y_test, lmbda=lmbda[k]).item()
                     update_correct_per_class_avgk(batch_proba_test, batch_y_test, class_acc_dict['class_avgk_acc'][k], lmbda[k])
+
+        y_true = torch.cat(list_test_labels)
+        y_pred = torch.cat(list_test_proba)
 
         # After seeing test set update the statistics over batches and store them
         loss_epoch_test /= batch_idx
@@ -223,4 +229,4 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
             class_acc_topk_list = list(class_acc_dict['class_topk_acc'][k].values())
             macro_topk_acc_epoch_test[k] = sum(class_acc_topk_list) / dataset_attributes['n_classes']
 
-    return loss_epoch_test, acc_epoch_test, topk_acc_epoch_test, avgk_acc_epoch_test, class_acc_dict, macro_topk_acc_epoch_test
+    return loss_epoch_test, acc_epoch_test, topk_acc_epoch_test, avgk_acc_epoch_test, class_acc_dict, macro_topk_acc_epoch_test, y_true, y_pred
