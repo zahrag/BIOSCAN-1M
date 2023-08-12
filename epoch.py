@@ -185,8 +185,7 @@ def test_epoch(model, test_loader, criteria, list_k, lmbda, use_gpu, dataset_att
         for k in list_k:
             class_acc_dict['class_topk_acc'][k], class_acc_dict['class_avgk_acc'][k] = defaultdict(int), defaultdict(int)
 
-        list_test_proba = []
-        list_test_labels = []
+        list_test_proba, list_test_labels = [], []
         for batch_idx, (batch_x_test, batch_y_test) in enumerate(tqdm(test_loader, desc='test', position=0)):
             if use_gpu:
                 batch_x_test, batch_y_test = batch_x_test.cuda(), batch_y_test.cuda()
