@@ -189,7 +189,7 @@ def save_configs(datetime, configs, log_dir, exp_name):
     for item in configs.keys():
         info += f'{item}:{configs[item]}\n'
 
-    with open(log_dir + f'{exp_name}_configs.txt', 'w') as fp:
+    with open(os.path.join(log_dir, f'{exp_name}_configs.txt'), 'w') as fp:
         fp.write(info)
     fp.close()
 
