@@ -15,6 +15,7 @@ from PIL import Image
 import pandas as pd
 import json
 import csv
+from sklearn.metrics import f1_score
 
 from torchvision.models import resnet18, resnet34, resnet50, resnet101, resnet152, inception_v3, mobilenet_v2, densenet121, \
     densenet161, densenet169, densenet201, alexnet, squeezenet1_0, shufflenet_v2_x1_0, wide_resnet50_2, wide_resnet101_2,\
@@ -337,6 +338,11 @@ def read_from_hdf5(hdf5, image_name, saved_as_binary=False):
         image = Image.fromarray(data)
 
     return image
+
+
+def get_f1_score(y_true, y_pred, metric='micro'):
+    """ This function computes F1-Score using metrics: 'micro', 'macro', 'weighted', None """
+    return f1_score(y_true.cpu().numpy().tolist(), torch.argmax(y_pred, dim=-1).cpu().numpy().tolist(), average=metric)
 
 
 class MulticlassFocalLoss(torch.nn.Module):

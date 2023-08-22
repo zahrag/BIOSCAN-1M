@@ -7,6 +7,7 @@ from epoch import test_epoch
 from utils import MulticlassFocalLoss
 from visualize_results import vis_results
 from utils import open_pickle
+from utils import get_f1_score
 
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
@@ -41,6 +42,10 @@ def test(configs, test_loader, dataset_attributes):
                                                                                        configs["use_gpu"],
                                                                                        dataset_attributes)
 
+    # Calculate F1 scores
+    f1_micro = get_f1_score(y_true, y_pred, metric='micro')
+    f1_macro = get_f1_score(y_true, y_pred, metric='macro')
+
     # Save Test results as a dictionary and save it as a pickle file in desired location
     results = {'test_results': {'loss': loss_test_ba,
                                 'accuracy': acc_test_ba,
@@ -51,6 +56,7 @@ def test(configs, test_loader, dataset_attributes):
                                 'y_true': y_true,
                                 'y_pred': y_pred,
                                 'class_to_idx': dataset_attributes['class_to_idx'],
+                                'f1_score': {'f1_micro': f1_micro, 'f1_macro': f1_macro},
                                 },
                'params': configs}
 

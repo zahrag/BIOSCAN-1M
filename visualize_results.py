@@ -32,6 +32,7 @@ def print_results(configs, res):
     print(f"Top-K Accuracy: {res['topk_accuracy']}")
     print(f"Macro-Avg-Class Accuracy: {res['macro_topk_acc_test']}")
     print(f"Agerage Top-K Accuracy:{res['avgk_accuracy']}")
+    print(f"F1-Score-Micro:{res['f1_score']['f1_micro']}\nF1-Score-Macro:{res['f1_score']['f1_macro']}")
 
 
 def plot_results(class_acc, class_idx, dataset='', metric='', fig_path='', plot=False):
