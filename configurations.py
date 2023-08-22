@@ -14,7 +14,9 @@ def set_configurations(configs=None):
     parser.add_argument('--date_time', type=str, default=configs['date_time'], help='Data & time of the experiment')
     # #### Base Settings ######
     parser.add_argument('--exp_name', type=str, default='small_insect_order',
-                        help='Name of the experiment')
+                        choices=['large_diptera_family', 'medium_diptera_family', 'small_diptera_family',
+                                 'large_insect_order', 'medium_insect_order', 'small_insect_order'],
+                        help='Name of the experiment to conduct with BIOSCAN_1M_Insect Dataset.')
     parser.add_argument('--dataset_name', type=str, default='bioscan_1M_insect_dataset',
                         help='Name of the dataset.')
     parser.add_argument('--group_level', type=str, default='order',
@@ -84,10 +86,10 @@ def set_configurations(configs=None):
     parser.add_argument('--chunk_num', type=int, default=0, help='set the data chunk number.')
     parser.add_argument('--max_num_sample', type=int, default=50000, choices=[50000, 200000],
                         help='Number of samples of each subset.')
-    parser.add_argument('--experiment_names', type=str, default='small_insect_order',
-                        choices=['large_diptera_family', 'medium_diptera_family', 'small_diptera_family',
-                                 'large_insect_order', 'medium_insect_order', 'small_insect_order',],
-                        help='Name of experiments conducted with BIOSCAN_1M_Insect Dataset.')
+    parser.add_argument('--experiment_names', type=str,
+                        default=['large_diptera_family', 'medium_diptera_family', 'small_diptera_family',
+                                 'large_insect_order', 'medium_insect_order', 'small_insect_order'],
+                        help='Name of all experiments conducted with BIOSCAN_1M_Insect Dataset paper.')
 
     # #### Preprocessing: Cropping Settings ######
     parser.add_argument('--checkpoint_path', type=str, default=configs['checkpoint_path'],
