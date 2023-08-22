@@ -18,7 +18,7 @@ def test(configs, test_loader, dataset_attributes):
 
     set_seed(configs, use_gpu=torch.cuda.is_available())
 
-    log_file = f'{configs["results_path"]}/{configs["best_model"]}/{configs["exp_name"]}_train_val.pkl'
+    log_file = f'{configs["results_path"]}/{configs["best_model"]}_train_val.pkl'
     lmbda_best_acc = []
     if os.path.exists(log_file):
         tr_val_results = open_pickle(log_file)
@@ -26,7 +26,7 @@ def test(configs, test_loader, dataset_attributes):
     else:
         print("To compute Average-K Accuracy:\nGet lmbda by testing the best trained model on the validation data!")
 
-    best_model = f'{configs["results_path"]}/{configs["best_model"]}/{configs["exp_name"]}_weights_best_acc.tar'
+    best_model = f'{configs["results_path"]}/{configs["best_model"]}_weights_best_acc.tar'
     model = get_model(configs, n_classes=dataset_attributes['n_classes'])
     load_model(model, best_model, configs["use_gpu"])
     model.cuda()
@@ -57,7 +57,7 @@ def test(configs, test_loader, dataset_attributes):
     # Visualize test results
     vis_results(configs, results)
 
-    with open(f'{configs["results_path"]}/{configs["best_model"]}/{configs["exp_name"]}_test_results.pkl', 'wb') as f:
+    with open(f'{configs["results_path"]}/{configs["best_model"]}_test_results.pkl', 'wb') as f:
         pickle.dump(results, f)
 
 
