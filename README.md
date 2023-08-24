@@ -164,7 +164,7 @@ making it convenient to conduct experiments using dataset packages.
 To evaluate our top-performing models, which were trained through the experiments outlined and executed 
 in the [BIOSCAN-1M-Insect paper](http://arxiv.org/abs/2307.10455), please proceed to download the available checkpoints from the 
 [GoogleDrive](https://drive.google.com/drive/folders/1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA?usp=sharing),  
-Stored in a designated directory **BIOSCAN_1M_Insect_checkpoints/classification_checkpoints**, 
+stored in a designated directory **BIOSCAN_1M_Insect_checkpoints/classification_checkpoints**, 
 ensuring accurate path configuration.
 
 Subsequently, for Order-level classification utilizing the resized-cropped images of the BIOSCAN Large dataset, 
