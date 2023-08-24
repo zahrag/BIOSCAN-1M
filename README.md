@@ -151,6 +151,7 @@ The first set of experiments involved classifying BIOSCAN-1M Insect dataset's im
 The second set of experiments specifically targeted the Order Diptera and 
 aimed to classify its members into 40 families, which constitute a significant portion of the order.
 
+###### <h4> Train
 To train the model on a classification task using a baseline model, 
 you can run the following command, setting the name of the experiment:
 ```bash
@@ -158,6 +159,20 @@ python main.py --loader --train --data_format <hdf5/folder> --exp_name <experime
 ``` 
 Both the folder and HDF5 data formats are supported, 
 making it convenient to conduct experiments using dataset packages.
+
+###### <h4> Test
+To evaluate our top-performing models, which were trained through the experiments outlined and executed 
+in the [BIOSCAN-1M-Insect paper](http://arxiv.org/abs/2307.10455), please proceed to download the available checkpoints from the 
+[GoogleDrive](https://drive.google.com/drive/folders/1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA?usp=sharing),  
+Stored in a designated directory **BIOSCAN_1M_Insect_checkpoints/classification_checkpoints**, 
+ensuring accurate path configuration.
+
+Subsequently, for Order-level classification utilizing the Large BIOSCAN dataset, execute the following instructions:
+
+```bash
+python run main.py --loader --test --best_model large_insect_order_vit_base_patch16_224_CE_s2 --model vit_base_patch16_224 --loss CE --seed 2 
+``` 
+
 
 ###### <h3> Requirement 
 The requirements file used to run experiments is available in the requirement.txt.
