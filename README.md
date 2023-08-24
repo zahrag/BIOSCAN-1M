@@ -170,7 +170,7 @@ ensuring accurate path configuration.
 Subsequently, for Order-level classification utilizing the Large BIOSCAN dataset, execute the following instructions:
 
 ```bash
-python main.py --loader --test --best_model large_insect_order_vit_base_patch16_224_CE_s2.tar --model vit_base_patch16_224 --loss CE --seed 2 
+python main.py --loader --test --best_model large_insect_order_vit_base_patch16_224_CE_s2 --model vit_base_patch16_224 --loss CE --seed 2 
 ``` 
 
 
