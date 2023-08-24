@@ -112,6 +112,7 @@ def get_exp_configs(image_path, model_path):
         'seed': 2,
         'model': 'vit_base_patch16_224',
         'pretrained': True,
+        'test': True,
         'gt_labels_order': {'Diptera': 0,
                             'Hymenoptera': 1,
                             'Coleoptera': 2,
