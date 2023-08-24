@@ -167,7 +167,8 @@ in the [BIOSCAN-1M-Insect paper](http://arxiv.org/abs/2307.10455), please procee
 Stored in a designated directory **BIOSCAN_1M_Insect_checkpoints/classification_checkpoints**, 
 ensuring accurate path configuration.
 
-Subsequently, for Order-level classification utilizing the Large BIOSCAN dataset, execute the following instructions:
+Subsequently, for Order-level classification utilizing the resized-cropped images of the BIOSCAN Large dataset, 
+execute the following instructions:
 
 ```bash
 python main.py --loader --test --best_model large_insect_order_vit_base_patch16_224_CE_s2 --model vit_base_patch16_224 --loss CE --seed 2 
