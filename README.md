@@ -171,7 +171,7 @@ Subsequently, for Order-level classification utilizing the resized and cropped i
 execute the following instructions:
 
 ```bash
-python main.py --loader --test --best_model large_insect_order_vit_base_patch16_224_CE_s2 --model vit_base_patch16_224 --loss CE --seed 2 
+python main.py --loader --test --exp_name large_insect_order --best_model large_insect_order_vit_base_patch16_224_CE_s2 --model vit_base_patch16_224 --loss CE --seed 2 
 ``` 
 
 ###### <h4> Generalization
