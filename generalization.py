@@ -71,7 +71,7 @@ class generalization():
         set_seed(configs, use_gpu=torch.cuda.is_available())
 
         best_model = configs['best_model']
-        model = get_model(configs, n_classes=len(configs['gt_labels_order'].keys()))
+        model = get_model(configs, n_classes=len(configs['gt_taxa_labels'].keys()))
         load_model(model, best_model, configs['use_gpu'])
         model.cuda()
         model.eval()
@@ -93,7 +93,7 @@ class generalization():
             y_name = list(itertools.chain(*list_test_name))
 
         self.write_id_mapping(y_name, y_pred_label,
-                              configs['gt_labels_order'],
+                              configs['gt_taxa_labels'],
                               configs['date_time'], path=os.path.dirname(configs['image_path']))
 
 
@@ -113,7 +113,7 @@ def get_exp_configs(image_path, model_path):
         'model': 'vit_base_patch16_224',
         'pretrained': True,
         'test': True,
-        'gt_labels_order': {'Diptera': 0,
+        'gt_taxa_labels': {'Diptera': 0,
                             'Hymenoptera': 1,
                             'Coleoptera': 2,
                             'Hemiptera': 3,
