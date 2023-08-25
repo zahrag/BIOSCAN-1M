@@ -55,7 +55,7 @@ class generalization():
     def get_keys_by_value(self, dictionary, value):
         return [key for key, val in dictionary.items() if val == value]
 
-    def write_id_mapping(self, image_name, y_pred, gt_labels, date_time, path=""):
+    def write_predicted_label(self, image_name, y_pred, gt_labels, date_time, path=""):
 
         info = ""
         for cnt, image_name in enumerate(image_name):
@@ -92,9 +92,9 @@ class generalization():
             y_pred_label = torch.cat(list_test_pred)
             y_name = list(itertools.chain(*list_test_name))
 
-        self.write_id_mapping(y_name, y_pred_label,
-                              configs['gt_taxa_labels'],
-                              configs['date_time'], path=os.path.dirname(configs['image_path']))
+        self.write_predicted_label(y_name, y_pred_label,
+                                   configs['gt_taxa_labels'],
+                                   configs['date_time'], path=os.path.dirname(configs['image_path']))
 
 
 def get_exp_configs(image_path, model_path):
