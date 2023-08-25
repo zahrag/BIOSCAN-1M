@@ -71,7 +71,7 @@ class generalization():
         set_seed(configs, use_gpu=torch.cuda.is_available())
 
         best_model = configs['best_model']
-        model = get_model(configs, n_classes=16)
+        model = get_model(configs, n_classes=len(configs['gt_labels_order'].keys()))
         load_model(model, best_model, configs['use_gpu'])
         model.cuda()
         model.eval()
