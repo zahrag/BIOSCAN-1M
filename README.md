@@ -167,7 +167,7 @@ in the [BIOSCAN-1M-Insect paper](http://arxiv.org/abs/2307.10455), please procee
 stored in a designated directory **BIOSCAN_1M_Insect_checkpoints/classification_checkpoints**, 
 ensuring accurate path configuration.
 
-Subsequently, for Order-level classification utilizing the resized and cropped images of the BIOSCAN Large dataset, 
+Subsequently, for Order-level classification utilizing the resized and cropped images of the BIOSCAN-1M Insect Large dataset, 
 execute the following instructions:
 
 ```bash
@@ -176,7 +176,7 @@ python main.py --loader --test --best_model large_insect_order_vit_base_patch16_
 
 ###### <h4> Generalization
 To assess the generalization capabilities of our models, which were trained on the BIOSCAN-1M-Insect dataset, 
-specifically for Order-level classification involving resized and cropped images from the BIOSCAN Large dataset, 
+specifically for Order-level classification involving resized and cropped images from the BIOSCAN-1M Insect Large dataset, 
 it is imperative to ensure precise path configurations to the new images as well as trained model within 
 the generalization.py script. Subsequently, follow these steps:
 
