@@ -66,7 +66,7 @@ class BioScanSplit(Dataset):
                 data_dict_remained[key] = data_dict[key]
 
             else:
-                print(f"Order  {key} ---- NOT enough samples for data split!")
+                print(f"Taxa  {key} ---- does NOT have enough samples for data split!")
 
         train_indexes = list(itertools.chain(*tr_set))
         validation_indexes = list(itertools.chain(*val_set))
