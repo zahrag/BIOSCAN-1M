@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
     """
     This script is written to predict Order labels of new images taken from Insects by Centre for Biodiversity Genomics.
-    Additionally the codes allows to evaluate generalization capabilities of our best model trained on the cropped and 
+    Additionally the code allows to evaluate generalization capabilities of our best model trained on the cropped and 
     resized BIOSCAN-1M-Insect Large dataset images accessible online via zenodo:https://zenodo.org/record/8030065.
     
     To run the code, please assure correct path settings to the directory where the new images (image_path) as well as 
