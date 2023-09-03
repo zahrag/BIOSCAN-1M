@@ -136,14 +136,17 @@ To resize and save original full size images, run the following:
 python main.py --resize_image --resized_image_path <path_to_resized_images> --resized_hdf5_path <path_to_resized_hdf5>
 ``` 
 
-To use our cropping tool, run the following, 
+To use our cropping tool, download the available checkpoint **BIOSCAN_Insect_crop_tool_checkpoint.ckpt** stored 
+in a designated directory **BIOSCAN_1M_Insect_checkpoints/crop_tool_checkpoint** ensuring accurate path configuration 
+to the checkpoint_path in the main.py script and run the following, 
 which creates and saves cropped images and their resized versions:
 
 ```bash
 python main.py --crop_image --cropped_image_path <path_to_cropped_images> --resized_cropped_image_path <path_to_resized_cropped_images>
 ``` 
 
-By setting --cropped_hdf5_path and --resized_cropped_hdf5_path, cropped images and resized cropped images will be saved in HDF5 file format as well.
+By setting --cropped_hdf5_path and --resized_cropped_hdf5_path, 
+cropped images and resized cropped images will be saved in HDF5 file format as well.
 
 ###### <h3> Classification Experiments
 Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
