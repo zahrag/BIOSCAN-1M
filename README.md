@@ -139,7 +139,7 @@ python main.py --resize_image --resized_image_path <path_to_resized_images> --re
 To use our cropping tool, from project's [GoogleDrive](https://drive.google.com/drive/folders/1ft17GpcC_xDhx5lOBhYAEtox0sdZchjA?usp=sharing), download the available 
 checkpoint **BIOSCAN_Insect_crop_tool_checkpoint.ckpt** stored in a designated 
 directory **BIOSCAN_1M_Insect_checkpoints/crop_tool_checkpoint** ensuring accurate path configuration in the 
-main.py script and run the following, which creates and saves cropped images and their resized versions:
+main.py script and run the following to create and save cropped images as well as their resized versions:
 
 ```bash
 python main.py --crop_image --cropped_image_path <path_to_cropped_images> --resized_cropped_image_path <path_to_resized_cropped_images>
