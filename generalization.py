@@ -140,7 +140,7 @@ def get_exp_configs(image_path, model_path):
 if __name__ == '__main__':
 
     """
-    This script is written to predict Order labels of new images taken from Insects by Centre for Biodiversity Genomics.
+    This script is written to predict Order labels of new Insect images taken by the Centre for Biodiversity Genomics (CBG).
     Additionally the code allows to evaluate generalization capabilities of our best model trained on the cropped and 
     resized BIOSCAN-1M-Insect Large dataset images accessible online through the project's GoogleDrive 
     and zenodo:https://zenodo.org/record/8030065.
