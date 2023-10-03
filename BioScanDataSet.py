@@ -244,7 +244,7 @@ def show_dataset_statistics(configs):
     group_level_dict = {}
     for taxa in dataset_taxa:
         configs["group_level"] = taxa
-        dataset.set_statistics(configs)
+        dataset.set_statistics(configs, split='all')
         group_level_dict[f"{taxa}_n_subgroups"] = len(dataset.data_dict)
         group_level_dict[f"{taxa}_n_not_grouped_samples"] = 0
         if "not_classified" in dataset.data_dict:
