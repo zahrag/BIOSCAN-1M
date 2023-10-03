@@ -100,7 +100,7 @@ The list of files available for download from GoogleDrive are:
 ###### <h3> Dataset Statistics
 To see the statistics of the BIOSCAN-1M Insect dataset, run the following:
 ```bash
-python main.py --print_statistics 
+python main.py --print_statistics --exp_name <experiment_name>
 ``` 
  
 To split BIOSCAN-1M Insect dataset into Train, Validation and Test sets using a stratified class-based sampling and split run the following:
@@ -110,7 +110,7 @@ python main.py --make_split
 
 To see the statistics of the BIOSCAN-1M Insect dataset split sets, run the following:
 ```bash
-python main.py --print_split_statistics
+python main.py --print_split_statistics --exp_name <experiment_name>
 ``` 
 
 ###### <h3> Preprocessing
