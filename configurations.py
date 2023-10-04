@@ -17,7 +17,7 @@ def set_configurations(configs=None):
                         choices=['large_diptera_family', 'medium_diptera_family', 'small_diptera_family',
                                  'large_insect_order', 'medium_insect_order', 'small_insect_order'],
                         help='Name of the experiment to conduct with BIOSCAN_1M_Insect Dataset.')
-    parser.add_argument('--dataset_name', type=str, default='bioscan_1M_insect_dataset',
+    parser.add_argument('--dataset_name', type=str, default='bioscan_dataset',
                         help='Name of the dataset.')
     parser.add_argument('--group_level', type=str, default='order',
                         choices=['order', 'family', 'subfamily', 'tribe', 'genus', 'species',

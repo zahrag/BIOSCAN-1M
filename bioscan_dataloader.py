@@ -47,7 +47,7 @@ class BioScanLoader(Dataset):
 
         if self.data_format == "hdf5":
             hdf5 = h5py.File(self.hdf5_dir, 'r')
-            group_name = "bioscan_1M_insect_dataset"
+            group_name = "bioscan_dataset"
             if group_name in hdf5.keys():
                 hdf5 = hdf5[group_name]
             image = read_from_hdf5(hdf5, self.img_names[index], saved_as_binary=True)
