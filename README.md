@@ -11,13 +11,11 @@ the taxonomy classification of insects.
 Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding code repository, please cite the [Paper](http://arxiv.org/abs/2307.10455):
 
 ```
-@misc{gharaee2023step,
-    title={A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset},
+@inproceedings{gharaee2023step,
+    title={A Step Towards Worldwide Biodiversity Assessment: The {BIOSCAN-1M} Insect Dataset},
+    booktitle = {Advances in Neural Information Processing Systems (NeurIPS) Datasets & Benchmarks Track},
     author={Gharaee, Z. and Gong, Z. and Pellegrino, N. and Zarubiieva, I. and Haurum, J. B. and Lowe, S. C. and McKeown, J. T. A. and Ho, C. Y. and McLeod, J. and Wei, Y. C. and Agda, J. and Ratnasingham, S. and Steinke, D. and Chang, A. X. and Taylor, G. W. and Fieguth, P.},
     year={2023},
-    eprint={2307.10455},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
 }
 ```
 
