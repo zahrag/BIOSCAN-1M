@@ -199,7 +199,7 @@ and licensing restrictions shown in the following:
  - Copyright Holder: CBG Photography Group
  - Copyright Institution: Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)
  - Photographer: CBG Robotic Imager
- - Copyright License: Creative Commons-Attribution Non-Commercial Share-Alike
+ - Copyright License: Creative Commons-Attribution Non-Commercial Share-Alike 4.0
  - Copyright Contact: collectionsBIO@gmail.com
  - Copyright Year: 2021
 
