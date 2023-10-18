@@ -285,7 +285,7 @@ def create_hdf5(date_time, dataset_name='', path='', data_typ='Original Full Siz
         dataset.attrs['Copyright Holder'] = 'CBG Photography Group'
         dataset.attrs['Copyright Institution'] = 'Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)'
         dataset.attrs['Photographer'] = 'CBG Robotic Imager'
-        dataset.attrs['Copyright License'] = 'Creative Commons-Attribution Non-Commercial Share-Alike'
+        dataset.attrs['Copyright License'] = 'Creative Commons-Attribution Non-Commercial Share-Alike (CC BY-NC-SA 4.0)'
         dataset.attrs['Copyright Contact'] = 'collectionsBIO@gmail.com'
         dataset.attrs['Copyright Year'] = '2021'
         dataset.attrs['Author'] = author
