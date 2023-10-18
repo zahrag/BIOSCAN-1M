@@ -189,7 +189,7 @@ python generalization.py
 
 
 ###### <h3> Requirement 
-The requirements file used to run experiments is available in the requirement.txt.
+The requirements used to run the experiments are available in the [requirements.txt](requirements.txt) file.
   
 
 ###### <h3> Copyright and License 
