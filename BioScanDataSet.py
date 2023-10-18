@@ -231,7 +231,7 @@ def show_dataset_statistics(configs):
     print("Copyright Holder: CBG Photography Group")
     print("Copyright Institution: Centre for Biodiversity Genomics (email:CBGImaging@gmail.com)")
     print("Photographer: CBG Robotic Imager")
-    print("Copyright License: Creative Commons-Attribution Non-Commercial Share-Alike")
+    print("Copyright License: Creative Commons-Attribution Non-Commercial Share-Alike (CC BY-NC-SA 4.0)")
     print("Copyright Contact: collectionsBIO@gmail.com")
     print("Copyright Year: 2021")
     print("----------------------------------------------------------------------------------------")
