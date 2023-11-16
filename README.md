@@ -35,7 +35,7 @@ The provided DNA barcode sequence showcases the arrangement of nucleotides—Ade
 TTTATATTTTATTTTCGGGGCATGAGCAGGTATAGTGGGAACTTCATTAAGACTTTTAATTCGTGCAGAATTAGGTCAACCTGGTTACCTCATTGGTGACGATCAAGTTTATAATGTTATTGTAACGGCCCATGCCTTTGTAATAATCTTCTTCATAGTTATACCAATTATAATTGGTGGGTTTGGAAATTGATTAGTACCTTTAATACTAGGAGCCCCTGATATAGCATTCCCTCGAATGAATAATATAAGATTTTGATTATTACCACCATCGCTTACTCTCTTGCTTTCGAGAAGTTTAGTAGAAAATGGTGCAGGAACTGGGTGAACTGTTTATCCTCCTTTATCAGGTGGAATTGCTCATGGTGGAGCTTCAGTAGACCTGGCAATCTTCTCTTTACATTTAGCTGGAATTTCATCAATTCTAGGTGCTGTAAATTTCATTACAACTACAATTAATATACGATCCCCTGGAATAGCTTTAGACCAAACTCCTTTATTTGTATGATCAGTGGCTATTACTGCCTTATTACTACTCCTATCCCTACCCGTCCTTGCCGGTGCAATCACAATATTATTAACTGATCGAAACCTTAATACCTCATTCTTTGACCCCGCTGGTGGAGGAGACCCTATTCTTTACCAACATTTATT
 ```
 
-![Alt Text](dataset/bioscan_images/DNA_sequence.pdf)
+![Alt Text](dataset/bioscan_images/DNA_sequence.png)
 
 This visual representation offers a glimpse into the intricate structure of DNA. 
 The color scheme is designed as follows:
@@ -49,7 +49,7 @@ These nucleotides, represented by their respective colors, play a pivotal role i
 
 
 ###### <h4> II. Barcode Index Number (BIN)
-![Alt Text](dataset/bioscan_images/BIN.pdf)
+![Alt Text](dataset/bioscan_images/BIN.png)
 
 Organisms are grouped into Operational Taxonomic Units (OTUs) through genetic similarity, forming a genetic proxy for species. 
 Each OTU is assigned a unique Barcode Index Number (BIN), serving as a Uniform Resource Identifier (URI). 
