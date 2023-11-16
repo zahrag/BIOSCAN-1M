@@ -51,7 +51,7 @@ These nucleotides, represented by their respective colors, play a pivotal role i
 ###### <h4> II. Barcode Index Number (BIN)
 Organisms are grouped into Operational Taxonomic Units (OTUs) through genetic similarity, forming a genetic proxy for species. 
 Each OTU is assigned a unique Barcode Index Number (BIN), serving as a Uniform Resource Identifier (URI). 
-This BIN ensures that genetically identical taxa share the same identifier, registered in the Barcode Of Life Data system. 
+This BIN ensures that genetically identical taxa share the same identifier, registered in the Barcode Of Life Data system (BOLD). 
 
 ```
 BOLD:AER5166
