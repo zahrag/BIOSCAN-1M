@@ -49,6 +49,9 @@ These nucleotides, represented by their respective colors, play a pivotal role i
 
 
 ###### <h4> II. Barcode Index Number (BIN)
+```
+BOLD:AEK0677
+```
 ![Alt Text](dataset/bioscan_images/BIN.png)
 
 Organisms are grouped into Operational Taxonomic Units (OTUs) through genetic similarity, forming a genetic proxy for species. 
