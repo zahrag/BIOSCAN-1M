@@ -26,8 +26,7 @@ Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding co
 ![Alt Text](dataset/bioscan_images/Fig1.png)
 
 BIOSCAN dataset provides researchers with information about insects. 
-Three main sources of information published by the BIOSCAN-1M Insect dataset are: 
-
+Each record of the BIOSCAN-1M Insect dataset contains four primary attributes.
 
 ###### <h4> I. DNA Barcode Sequence
 The provided DNA barcode sequence showcases the arrangement of nucleotides—Adenine (A), Thymine (T), Cytosine (C), and Guanine (G)—depicted in blocks of distinct colors:
