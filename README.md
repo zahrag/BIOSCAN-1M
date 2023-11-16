@@ -54,7 +54,7 @@ Each OTU is assigned a unique Barcode Index Number (BIN), serving as a Uniform R
 This BIN ensures that genetically identical taxa share the same identifier, registered in the Barcode Of Life Data system. 
 
 ```
-BOLD:AEK0677
+BOLD:AER5166
 ```
 ![Alt Text](dataset/bioscan_images/BIN.png)
 
