@@ -64,7 +64,7 @@ emphasizing the significance of genetic code in taxonomy.
 
 
 
-###### <h4> III. Biological Taxonomy Ranking
+###### <h4> III. Biological Taxonomy Ranking (Linnean names)
 ![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
 
 ###### <h4> IV. RGB Images 
