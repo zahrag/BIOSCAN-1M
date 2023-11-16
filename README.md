@@ -22,19 +22,47 @@ Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding co
 
 
 ###### <h3> Dataset
-BIOSCAN dataset provides researchers with information about insects. 
-Three main sources of information published by the BIOSCAN-1M Insect dataset are: 
-
-###### <h4> I. DNA Barcode Sequences and Barcode Indexing 
-* DNA barcode sequence
-* Barcode Index Number (BIN)
 
 ![Alt Text](dataset/bioscan_images/Fig1.png)
 
-###### <h4> II. Biological Taxonomy Ranking
+BIOSCAN dataset provides researchers with information about insects. 
+Three main sources of information published by the BIOSCAN-1M Insect dataset are: 
+
+
+###### <h4> I. DNA Barcode Sequence
+The provided DNA barcode sequence showcases the arrangement of nucleotides—Adenine (A), Thymine (T), Cytosine (C), and Guanine (G)—depicted in blocks of distinct colors:
+```
+TTTATATTTTATTTTCGGGGCATGAGCAGGTATAGTGGGAACTTCATTAAGACTTTTAATTCGTGCAGAATTAGGTCAACCTGGTTACCTCATTGGTGACGATCAAGTTTATAATGTTATTGTAACGGCCCATGCCTTTGTAATAATCTTCTTCATAGTTATACCAATTATAATTGGTGGGTTTGGAAATTGATTAGTACCTTTAATACTAGGAGCCCCTGATATAGCATTCCCTCGAATGAATAATATAAGATTTTGATTATTACCACCATCGCTTACTCTCTTGCTTTCGAGAAGTTTAGTAGAAAATGGTGCAGGAACTGGGTGAACTGTTTATCCTCCTTTATCAGGTGGAATTGCTCATGGTGGAGCTTCAGTAGACCTGGCAATCTTCTCTTTACATTTAGCTGGAATTTCATCAATTCTAGGTGCTGTAAATTTCATTACAACTACAATTAATATACGATCCCCTGGAATAGCTTTAGACCAAACTCCTTTATTTGTATGATCAGTGGCTATTACTGCCTTATTACTACTCCTATCCCTACCCGTCCTTGCCGGTGCAATCACAATATTATTAACTGATCGAAACCTTAATACCTCATTCTTTGACCCCGCTGGTGGAGGAGACCCTATTCTTTACCAACATTTATT
+```
+
+![Alt Text](dataset/bioscan_images/DNA_sequence.pdf)
+
+This visual representation offers a glimpse into the intricate structure of DNA. 
+The color scheme is designed as follows:
+
+- Adenine (A): Red
+- Thymine (T): Blue
+- Cytosine (C): Green
+- Guanine (G): Yellow
+
+These nucleotides, represented by their respective colors, play a pivotal role in defining the genetic information encoded within the DNA sequence. 
+
+
+###### <h4> II. Barcode Index Number (BIN)
+![Alt Text](dataset/bioscan_images/BIN.pdf)
+
+Organisms are grouped into Operational Taxonomic Units (OTUs) through genetic similarity, forming a genetic proxy for species. 
+Each OTU is assigned a unique Barcode Index Number (BIN), serving as a Uniform Resource Identifier (URI). 
+This BIN ensures that genetically identical taxa share the same identifier, registered in the Barcode Of Life Data system. 
+BINs, acting as an alternative to Linnean names, provide a genetic-centric classification for organisms, 
+emphasizing the significance of genetic code in taxonomy.
+
+
+
+###### <h4> III. Biological Taxonomy Ranking
 ![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
 
-###### <h4> III. RGB Images 
+###### <h4> IV. RGB Images 
 
 We have published six packages, each containing 1,128,313 BIOSCAN-1M Insect dataset's images. 
 These packages follow a consistent data structure, where the images are divided into 113 data chunks. 
