@@ -1,5 +1,7 @@
 # BIOSCAN-1M Insect
 
+![Alt Text](dataset/bioscan_images/Fig1.png)
+
 ###### <h3> Overview
 This repository houses the codes and data pertaining to the [BIOSCAN-1M-Insect project](https://biodiversitygenomics.net/1M_insects/). 
 Within this project, we introduce the __BIOSCAN-1M Insect dataset__, which can be accessed 
@@ -19,14 +21,14 @@ Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding co
 }
 ```
 
-
-
 ###### <h3> Dataset
 
-![Alt Text](dataset/bioscan_images/Fig1.png)
-
 BIOSCAN dataset provides researchers with information about insects. 
-Each record of the BIOSCAN-1M Insect dataset contains four primary attributes.
+Each record of the BIOSCAN-1M Insect dataset contains four primary attributes:
+* DNA Barcode Sequence
+* Barcode Index Number (BIN)
+* Biological Taxonomy Ranking
+* RGB image
 
 ###### <h4> I. DNA Barcode Sequence
 The provided DNA barcode sequence showcases the arrangement of nucleotides—Adenine (A), 
