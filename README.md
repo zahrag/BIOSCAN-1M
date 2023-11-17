@@ -188,7 +188,7 @@ cropped images and resized cropped images will be saved in HDF5 file format as w
 
 ###### <h3> Classification Experiments
 Two image-based classification experiments were conducted, focusing on the taxonomy ranking of insects. 
-The first set of experiments involved classifying BIOSCAN-1M Insect dataset's images into 16 Orders. 
+The first set of experiments involved classifying BIOSCAN-1M Insect dataset's images into 16 orders. 
 The second set of experiments specifically targeted the Order Diptera and 
 aimed to classify its members into 40 families, which constitute a significant portion of the order.
 
@@ -213,7 +213,7 @@ in the [BIOSCAN-1M-Insect paper](http://arxiv.org/abs/2307.10455), please procee
 stored in a designated directory **BIOSCAN_1M_Insect_checkpoints/classification_checkpoints**, 
 ensuring accurate path configuration to the dataset images, metadata file and results within the main.py script.
 
-Subsequently, for Order-level classification utilizing the resized and cropped images of the BIOSCAN-1M Insect Large dataset, 
+Subsequently, for order-level classification utilizing the resized and cropped images of the BIOSCAN-1M Insect Large dataset, 
 execute the following instructions:
 
 ```bash
@@ -222,7 +222,7 @@ python main.py --loader --test --exp_name large_insect_order --best_model large_
 
 ###### <h4> Generalization
 To assess the generalization capabilities of our models, which were trained on the BIOSCAN-1M-Insect dataset, 
-specifically for Order-level classification involving resized and cropped images from the BIOSCAN-1M Insect Large dataset, 
+specifically for order-level classification involving resized and cropped images from the BIOSCAN-1M Insect Large dataset, 
 it is imperative to ensure precise path configurations to the new images as well as trained model within 
 the generalization.py script. Subsequently, follow these steps:
 
