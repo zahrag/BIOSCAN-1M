@@ -1,4 +1,4 @@
-# BIOSCAN-1M
+# BIOSCAN-1M Insect
 
 ###### <h3> Overview
 This repository houses the codes and data pertaining to the [BIOSCAN-1M-Insect project](https://biodiversitygenomics.net/1M_insects/). 
