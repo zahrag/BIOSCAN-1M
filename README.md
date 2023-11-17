@@ -27,7 +27,7 @@ BIOSCAN dataset provides researchers with information about insects.
 Each record of the BIOSCAN-1M Insect dataset contains four primary attributes:
 * DNA Barcode Sequence
 * Barcode Index Number (BIN)
-* Biological Taxonomy Ranking
+* Biological Taxonomy Ranking Annotations
 * RGB image
 
 ###### <h4> I. DNA Barcode Sequence
