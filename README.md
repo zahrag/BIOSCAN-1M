@@ -219,6 +219,8 @@ execute the following instructions:
 ```bash
 python main.py --loader --test --exp_name large_insect_order --best_model large_insect_order_vit_base_patch16_224_CE_s2 --model vit_base_patch16_224 --loss CE --seed 2 
 ``` 
+![My Image](dataset/bioscan_images/BIOSCAN_Fig5_upd3_.png "Class Distribution")
+Figure presents per-class top-1 test accuracy of the Insect-Order and Diptera-Family classification experiments of the Large dataset. 
 
 ###### <h4> Generalization
 To assess the generalization capabilities of our models, which were trained on the BIOSCAN-1M-Insect dataset, 
