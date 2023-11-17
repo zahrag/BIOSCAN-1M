@@ -67,6 +67,8 @@ emphasizing the significance of genetic code in taxonomy.
 
 
 ###### <h4> III. Biological Taxonomy Ranking (Linnean names)
+Taxonomic group ranking annotations categorize organisms hierarchically based on evolutionary relationships. 
+It organizes species into groups based on shared characteristics and genetic relatedness.
 ![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
 
 ###### <h4> IV. RGB Images 
