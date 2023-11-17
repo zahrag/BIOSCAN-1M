@@ -101,6 +101,11 @@ Figure shows original insect images from 16 orders of the BIOSCAN-1M Insect data
 The numbers below each image identify the number of images in each class, and clearly illustrate 
 the degree of class imbalance in the BIOSCAN-1M Insect dataset.
 
+![My Image](dataset/bioscan_images/BIOSCAN_Fig2_upd3.png "Class Distribution")
+Figure depicts class distribution and class imbalance in the BIOSCAN-1M Insect dataset. 
+We focus on the 16 most densely populated orders (top) and the 40 most densely populated diptera families (bottom).
+The image demonstrates that class imbalance is an inherent characteristic within the insect community. 
+
 ###### <h3> Metadata 
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
 named BIOSCAN_Insect_Dataset_metadata. This metadata file is available in both dataframe format (.tsv) 
@@ -138,10 +143,6 @@ To see the statistics of the BIOSCAN-1M Insect dataset, run the following:
 python main.py --print_statistics --exp_name <experiment_name>
 ``` 
 
-![My Image](dataset/bioscan_images/BIOSCAN_Fig2_upd3.png "Class Distribution")
-Figure depicts class distribution and class imbalance in the BIOSCAN-1M Insect dataset. 
-We focus on the 16 most densely populated orders (top) and the 40 most densely populated diptera families (bottom).
-The image demonstrates that class imbalance is an inherent characteristic within the insect community. 
 
 ###### <h3> Dataset Sampling
 To split BIOSCAN-1M Insect dataset into Train, Validation and Test sets using a stratified class-based sampling and split run the following:
