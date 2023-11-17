@@ -77,6 +77,7 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 - (3) Original JPEG images resized to 256 on the smaller dimension (ZIP and HDF5).
 - (4) Cropped JPEG images resized to 256 on their smaller dimension (ZIP and HDF5).
 
+
 <div align="center">
 
 | <img src="dataset/bioscan_images/Diptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Hymenoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Coleoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Hemiptera.jpg" width="200px" class="image"> |
@@ -96,6 +97,9 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 |                              **Dermaptera: 66**                               |                              **Archaeognatha: 63**                               |                              **Plecoptera: 30**                               |                               **Embioptera: 6**                               |
 
 </div>
+Image shows insect images from 16 orders of the BIOSCAN-1M Insect dataset. 
+The numbers below each image identify the number of images in each class, and clearly illustrate 
+the degree of class imbalance in the BIOSCAN-1M Insect dataset.
 
 ###### <h3> Metadata 
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
