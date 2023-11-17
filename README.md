@@ -101,10 +101,6 @@ Figure shows original insect images from 16 orders of the BIOSCAN-1M Insect data
 The numbers below each image identify the number of images in each class, and clearly illustrate 
 the degree of class imbalance in the BIOSCAN-1M Insect dataset.
 
-![My Image](dataset/bioscan_images/BIOSCAN_Fig2_upd3.png "Class Distribution")
-Figure depicts class distribution and class imbalance in the BIOSCAN-1M Insect dataset. 
-We focus on the 16 most densely populated orders (top) and the 40 most densely populated diptera families (bottom).
-The image demonstrates that class imbalance is an inherent characteristic within the insect community. 
 
 ###### <h3> Metadata 
 In addition to the image dataset, we have also published a corresponding metadata file for our dataset, 
@@ -195,6 +191,11 @@ Two image-based classification experiments were conducted, focusing on the taxon
 The first set of experiments involved classifying BIOSCAN-1M Insect dataset's images into 16 Orders. 
 The second set of experiments specifically targeted the Order Diptera and 
 aimed to classify its members into 40 families, which constitute a significant portion of the order.
+
+![My Image](dataset/bioscan_images/BIOSCAN_Fig2_upd3.png "Class Distribution")
+Figure depicts class distribution and class imbalance in the BIOSCAN-1M Insect dataset. 
+We focus on the 16 most densely populated orders (top) and the 40 most densely populated diptera families (bottom).
+The image demonstrates that class imbalance is an inherent characteristic within the insect community. 
 
 ###### <h4> Train
 To train the model on a classification task using a baseline model, 
