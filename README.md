@@ -80,20 +80,20 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 <div align="center">
 
 | <img src="dataset/bioscan_images/Diptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Hymenoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Coleoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Hemiptera.jpg" width="200px" class="image"> |
-|:--------------------------------------------------------------------------:|:---:|:---:|:---:|
-|**Diptera**| **Hymenoptera** | **Coleoptera** | **Hemiptera** |
+|:--------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+|                            **Diptera: 896,324**                            |                            **Hymenoptera: 89,311**                             |                            **Coleoptera: 47,328**                             |                            **Hemiptera: 46,970**                             |
 
 | <img src="dataset/bioscan_images/Lepidoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Psocodea.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Thysanoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Trichoptera.jpg" width="200px" class="image"> |
-|:---:|:---:|:---:|:---:|
-| **Lepidoptera** | **Psocodea** | **Thysanoptera** | **Trichoptera** |
+|:------------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+|                            **Lepidoptera: 32,538**                             |                             **Psocodea: 9,635**                             |                             **Thysanoptera: 2,088**                             |                             **Trichoptera: 1,296**                             |
 
 | <img src="dataset/bioscan_images/Orthoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Blattodea.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Neuroptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Ephemeroptera.jpg" width="200px" class="image"> |
-|:---:|:---:|:-----------------------------------------------------------------------------:|:---:|
-| **Orthoptera** | **Blattodea** |                                **Neuroptera**                                 | **Ephemeroptera** |
+|:-----------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:--------------------------------------------------------------------------------:|
+|                             **Orthoptera: 1,057**                             |                              **Blattodea: 824**                              |                              **Neuroptera: 676**                              |                              **Ephemeroptera: 96**                               |
 
 | <img src="dataset/bioscan_images/Dermaptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Archaeognatha.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Plecoptera.jpg" width="200px" class="image"> | <img src="dataset/bioscan_images/Embioptera.jpg" width="200px" class="image"> |
-|:---:|:---:|:---:|:---:|
-| **Dermaptera** | **Archaeognatha** | **Plecoptera** | **Embioptera** |
+|:-----------------------------------------------------------------------------:|:--------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
+|                              **Dermaptera: 66**                               |                              **Archaeognatha: 63**                               |                              **Plecoptera: 30**                               |                               **Embioptera: 6**                               |
 
 </div>
 
