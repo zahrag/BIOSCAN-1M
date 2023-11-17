@@ -97,7 +97,7 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 |                              **Dermaptera: 66**                               |                              **Archaeognatha: 63**                               |                              **Plecoptera: 30**                               |                               **Embioptera: 6**                               |
 
 </div>
-Figure shows insect images from 16 orders of the BIOSCAN-1M Insect dataset. 
+Figure shows original insect images from 16 orders of the BIOSCAN-1M Insect dataset. 
 The numbers below each image identify the number of images in each class, and clearly illustrate 
 the degree of class imbalance in the BIOSCAN-1M Insect dataset.
 
