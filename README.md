@@ -100,7 +100,7 @@ Each chunk consists of 10,000 images, except for chunk 113, which contains 8,313
 
 </div>
 Figure shows original insect images from 16 orders of the BIOSCAN-1M Insect dataset. 
-The numbers below each image identify the number of images in each class, and clearly illustrate 
+The numbers below each image identify the number of images in each order group, and clearly illustrate 
 the degree of class imbalance in the BIOSCAN-1M Insect dataset.
 
 
