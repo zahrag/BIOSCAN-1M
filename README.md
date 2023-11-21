@@ -27,7 +27,7 @@ BIOSCAN dataset provides researchers with information about insects.
 Each record of the BIOSCAN-1M Insect dataset contains four primary attributes:
 * DNA Barcode Sequence
 * Barcode Index Number (BIN)
-* Biological Taxonomy Ranking Annotations
+* Biological Taxonomy Classification
 * RGB image
 
 ###### <h4> I. DNA Barcode Sequence
@@ -66,7 +66,7 @@ emphasizing the significance of genetic code in taxonomy.
 
 
 
-###### <h4> III. Biological Taxonomy Ranking (Linnean names)
+###### <h4> III. Biological Taxonomy Classification (Linnean names)
 Taxonomic group ranking annotations categorize organisms hierarchically based on evolutionary relationships. 
 It organizes species into groups based on shared characteristics and genetic relatedness.
 ![My Image](dataset/bioscan_images/taxonomy.png "Biological Taxonomy Ranking")
