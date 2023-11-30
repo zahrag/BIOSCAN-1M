@@ -71,6 +71,8 @@ Taxonomic group ranking annotations categorize organisms hierarchically based on
 It organizes species into groups based on shared characteristics and genetic relatedness.
 ![My Image](dataset/bioscan_images/taxonomy.jpg "Biological Taxonomy Ranking")
 
+Figure illustrates the taxonomic classifications of five distinct living organisms within the insect class.
+
 ###### <h4> IV. RGB Images 
 
 We have published six packages, each containing 1,128,313 BIOSCAN-1M Insect dataset's images. 
