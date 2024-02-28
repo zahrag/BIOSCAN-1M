@@ -152,7 +152,7 @@ class BioScan(Dataset):
                 data_names.append(data)
 
         for name in data_names:
-            indexes = [ind for ind in index if data_list[ind] == name]
+            indexes = [ind for ind in index if data_list[index.index(ind)] == name]
             data_dict[name] = indexes
 
         n_sample_per_class = [len(class_samples) for class_samples in list(data_dict.values())]
