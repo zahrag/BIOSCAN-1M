@@ -87,8 +87,7 @@ def set_configurations(configs=None):
     parser.add_argument('--max_num_sample', type=int, default=50000, choices=[50000, 200000],
                         help='Number of samples of each subset.')
     parser.add_argument('--experiment_names', type=str,
-                        default=['large_diptera_family'],
-                        choices=['large_diptera_family', 'medium_diptera_family', 'small_diptera_family',
+                        default=['large_diptera_family', 'medium_diptera_family', 'small_diptera_family',
                                  'large_insect_order', 'medium_insect_order', 'small_insect_order'],
                         help='Name of all experiments conducted with BIOSCAN_1M_Insect Dataset paper.')
 
