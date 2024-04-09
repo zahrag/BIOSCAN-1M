@@ -247,6 +247,11 @@ def make_tsv(df, name=None, path=None):
 
 
 def read_tsv(tsv_file):
+    df = pd.read_csv(tsv_file, sep='\t', low_memory=False)
+    return df
+
+
+def read_tsv_large(tsv_file):
     try:
         csv.field_size_limit(10 ** 9)
         df = pd.read_csv(tsv_file, sep='\t', low_memory=False, quoting=csv.QUOTE_NONE)
