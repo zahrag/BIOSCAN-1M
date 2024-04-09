@@ -247,8 +247,13 @@ def make_tsv(df, name=None, path=None):
 
 
 def read_tsv(tsv_file):
-    df = pd.read_csv(tsv_file, sep='\t', low_memory=False)
-    return df
+    try:
+        csv.field_size_limit(10 ** 9)
+        df = pd.read_csv(tsv_file, sep='\t', low_memory=False, quoting=csv.QUOTE_NONE)
+        print(df.head())
+        return df
+    except Exception as error:
+        print(f"Reading the file:\n{tsv_file} gives the error:\n{error}")
 
 
 def convert_tsv_to_jsonld(tsv_file, jsonld_file):
