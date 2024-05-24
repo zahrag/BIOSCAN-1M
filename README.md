@@ -15,9 +15,14 @@ Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding co
 ```
 @inproceedings{gharaee2023step,
     title={A Step Towards Worldwide Biodiversity Assessment: The {BIOSCAN-1M} Insect Dataset},
-    booktitle = {Advances in Neural Information Processing Systems ({NeurIPS}) Datasets \& Benchmarks Track},
+    booktitle={Advances in Neural Information Processing Systems},
     author={Gharaee, Z. and Gong, Z. and Pellegrino, N. and Zarubiieva, I. and Haurum, J. B. and Lowe, S. C. and McKeown, J. T. A. and Ho, C. Y. and McLeod, J. and Wei, Y. C. and Agda, J. and Ratnasingham, S. and Steinke, D. and Chang, A. X. and Taylor, G. W. and Fieguth, P.},
+    editor={A. Oh and T. Neumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
+    pages={43593--43619},
+    publisher={Curran Associates, Inc.},
     year={2023},
+    volume={36},
+    url={https://proceedings.neurips.cc/paper_files/paper/2023/file/87dbbdc3a685a97ad28489a1d57c45c1-Paper-Datasets_and_Benchmarks.pdf},
 }
 ```
 
