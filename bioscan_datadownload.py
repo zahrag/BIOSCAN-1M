@@ -52,7 +52,7 @@ def make_download(configs):
     dataset_original_256_zip = ['original_256.zip']
     dataset_cropped_256_zip = ['cropped_256.zip']
     dataset_original_256_hdf5 = ['original_256.hdf5']
-    dataset_cropped_256_hdf5 = ['original_256.hdf5']
+    dataset_cropped_256_hdf5 = ['cropped_256.hdf5']
     dataset_original_package = [f"bioscan_images_original_full_part{id + 1}.zip" for id in range(113)]
     dataset_cropped_package = [f"bioscan_images_cropped_full_part{id + 1}.zip" for id in range(113)]
     files_list = [dataset_metadata_tsv, dataset_metadata_jsonld, dataset_original_256_zip,
