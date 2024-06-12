@@ -136,8 +136,8 @@ python main.py --file_to_download <file_name>
 
 The list of files available for download from GoogleDrive are:
 
- - Metadata (TSV file format): BIOSCAN_Insect_Dataset_metadata.tsv
- - Metadata (JSONLD file format): BIOSCAN_Insect_Dataset_metadata.jsonld
+ - Metadata (TSV file format): BIOSCAN_1M_Insect_Dataset_metadata.tsv
+ - Metadata (JSONLD file format): BIOSCAN_1M_Insect_Dataset_metadata.jsonld
  - Original images resized to 256 on smaller dimension (ZIP file format): original_256.zip
  - Original images resized to 256 on smaller dimension (HDF5 file format): original_256.hdf5
  - Cropped images resized to 256 on smaller dimension (ZIP file format): cropped_256.zip
