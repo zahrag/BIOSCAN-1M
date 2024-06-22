@@ -6,7 +6,8 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from utils import make_directory, read_tsv
+from utils import make_directory, read_tsv, sort_dict_list
+from collections import defaultdict
 
 
 class BioScan(Dataset):
@@ -133,39 +134,22 @@ class BioScan(Dataset):
 
     def make_data_dict(self, data_list, index):
         """
-        This function creates data dictionary key:label(exe., order name), value:indexes in data list.
+        This function create data dict key:label(exe., order name), value:indexes in data list
         :return:
         """
 
-        data_dict = {}
-        for cnt, data in enumerate(data_list):
-            if not isinstance(data, str):
-                if math.isnan(data):
-                    data_list[cnt] = "not_classified"
+        data_dict = defaultdict(list)
+        if all(isinstance(item, list) or item == 'no_data' for item in data_list):
+            for ind, name in enumerate(data_list):
+                if name == 'no_data':
+                    data_dict[name].append(ind)
                 else:
-                    print("Not a string type data name is detected!")
-                    return
+                    data_dict[tuple(name)].append(ind)
+        else:
+            for ind, name in enumerate(data_list):
+                data_dict[name].append(ind)
 
-        data_names = []
-        for data in data_list:
-            if data not in data_names:
-                data_names.append(data)
-
-        for name in data_names:
-            indexes = [ind for ind in index if data_list[index.index(ind)] == name]
-            data_dict[name] = indexes
-
-        n_sample_per_class = [len(class_samples) for class_samples in list(data_dict.values())]
-        indexed_list = list(enumerate(n_sample_per_class))
-        sorted_list = sorted(indexed_list, key=lambda x: x[1], reverse=True)
-        original_indices_sorted = [x[0] for x in sorted_list]
-
-        class_names = list(data_dict.keys())
-        sorted_class_names = [class_names[ind] for ind in original_indices_sorted]
-
-        sorted_data_dict = {}
-        for name in sorted_class_names:
-            sorted_data_dict[name] = data_dict[name]
+        sorted_data_dict = sort_dict_list(data_dict)
 
         return sorted_data_dict
 

@@ -355,6 +355,25 @@ def get_f1_score(y_true, y_pred, metric='micro'):
     return f1_score(y_true.cpu().numpy().tolist(), torch.argmax(y_pred, dim=-1).cpu().numpy().tolist(), average=metric)
 
 
+def sort_dict_list(data_dict):
+    """data_dict is a dictionary of keys (strings) and values are lists or collections of samples.
+    It calculates the number of samples per class, then sorts the indices based on these counts in descending order.
+    sorted_data_dict where the classes are sorted based on the number of samples they contain."""
+    n_sample_per_class = [len(class_samples) for class_samples in list(data_dict.values())]
+    indexed_list = list(enumerate(n_sample_per_class))
+    sorted_list = sorted(indexed_list, key=lambda x: x[1], reverse=True)
+    original_indices_sorted = [x[0] for x in sorted_list]
+
+    class_names = list(data_dict.keys())
+    sorted_class_names = [class_names[ind] for ind in original_indices_sorted]
+
+    sorted_data_dict = {}
+    for name in sorted_class_names:
+        sorted_data_dict[name] = data_dict[name]
+
+    return sorted_data_dict
+
+
 class MulticlassFocalLoss(torch.nn.Module):
     def __init__(self, gamma=2.0, reduction='mean'):
         super(MulticlassFocalLoss, self).__init__()
