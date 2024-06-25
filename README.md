@@ -127,7 +127,8 @@ testing in the six experiments conducted in our paper.
 To run the following steps you first need to download dataset and the metadata file, 
 and make path settings appropriately.
 ###### <h3> Dataset Access
-The BIOSCAN-1M Insect dataset is available on [GoogleDrive](https://drive.google.com/drive/u/1/folders/1kD9cXuQ1FdL30etp7sjy_Gs_NAAJ3EXI), [Zenodo](https://doi.org/10.5281/zenodo.8030065), and [Kaggle](https://www.kaggle.com/ds/3870041).
+The BIOSCAN-1M Insect dataset is available on [GoogleDrive](https://drive.google.com/drive/u/1/folders/1kD9cXuQ1FdL30etp7sjy_Gs_NAAJ3EXI), 
+[Zenodo](https://doi.org/10.5281/zenodo.8030065), [Kaggle](https://www.kaggle.com/ds/3870041), and [HuggingFace](https://huggingface.co/datasets/Gharaee/BIOSCAN_1M_Insect_Dataset).
 To download a file from GoogleDrive run the following:
 
 ```bash
