@@ -25,6 +25,25 @@ Anyone interested in using BIOSCAN-1M Insect dataset and/or the corresponding co
     url={https://proceedings.neurips.cc/paper_files/paper/2023/file/87dbbdc3a685a97ad28489a1d57c45c1-Paper-Datasets_and_Benchmarks.pdf},
 }
 ```
+###### <h3> Dataset Access
+The BIOSCAN-1M Insect dataset is available on [GoogleDrive](https://drive.google.com/drive/u/1/folders/1kD9cXuQ1FdL30etp7sjy_Gs_NAAJ3EXI), 
+[Zenodo](https://doi.org/10.5281/zenodo.8030065), [Kaggle](https://www.kaggle.com/ds/3870041), and [HuggingFace](https://huggingface.co/datasets/Gharaee/BIOSCAN_1M_Insect_Dataset).
+To download a file from GoogleDrive run the following:
+
+```bash
+python main.py --file_to_download <file_name>
+``` 
+
+The list of files available for download from GoogleDrive are:
+ - Metadata (TSV file format): BIOSCAN_1M_Insect_Dataset_metadata.tsv
+ - Metadata (JSONLD file format): BIOSCAN_1M_Insect_Dataset_metadata.jsonld
+ - Original images resized to 256 on smaller dimension (ZIP file format): original_256.zip
+ - Original images resized to 256 on smaller dimension (HDF5 file format): original_256.hdf5
+ - Cropped images resized to 256 on smaller dimension (ZIP file format): cropped_256.zip
+ - Cropped images resized to 256 on smaller dimension (HDF5 file format): cropped_256.hdf5
+ - Original full size images (113 ZIP files): bioscan_images_original_full_part{1:113}.zip
+ - Cropped images (113 ZIP files): bioscan_images_cropped_full_part{1:113}.zip
+
 
 ###### <h3> Dataset
 
@@ -126,25 +145,6 @@ testing in the six experiments conducted in our paper.
 
 To run the following steps you first need to download dataset and the metadata file, 
 and make path settings appropriately.
-###### <h3> Dataset Access
-The BIOSCAN-1M Insect dataset is available on [GoogleDrive](https://drive.google.com/drive/u/1/folders/1kD9cXuQ1FdL30etp7sjy_Gs_NAAJ3EXI), 
-[Zenodo](https://doi.org/10.5281/zenodo.8030065), [Kaggle](https://www.kaggle.com/ds/3870041), and [HuggingFace](https://huggingface.co/datasets/Gharaee/BIOSCAN_1M_Insect_Dataset).
-To download a file from GoogleDrive run the following:
-
-```bash
-python main.py --file_to_download <file_name>
-``` 
-
-The list of files available for download from GoogleDrive are:
-
- - Metadata (TSV file format): BIOSCAN_1M_Insect_Dataset_metadata.tsv
- - Metadata (JSONLD file format): BIOSCAN_1M_Insect_Dataset_metadata.jsonld
- - Original images resized to 256 on smaller dimension (ZIP file format): original_256.zip
- - Original images resized to 256 on smaller dimension (HDF5 file format): original_256.hdf5
- - Cropped images resized to 256 on smaller dimension (ZIP file format): cropped_256.zip
- - Cropped images resized to 256 on smaller dimension (HDF5 file format): cropped_256.hdf5
- - Original full size images (113 ZIP files): bioscan_images_original_full_part{1:113}.zip
- - Cropped images (113 ZIP files): bioscan_images_cropped_full_part{1:113}.zip
 
 ###### <h3> Dataset Statistics
 To see the statistics of the BIOSCAN-1M Insect dataset, run the following:
